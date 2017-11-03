@@ -1,8 +1,10 @@
-# Project Title
+# Admission committee project.
 
 **Admission committee implementation.**
 
-#Plan
+# Plan
+***Creating Git remote (done) -> Push gradle template -> Front page's prototype approval -> Project's structure approval
+-> Delegating tasks -> In progress...***
 
 # Contrubuting
 
