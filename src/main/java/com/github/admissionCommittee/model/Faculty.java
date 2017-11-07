@@ -1,5 +1,6 @@
 package com.github.admissionCommittee.model;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -8,6 +9,8 @@ import java.util.Map;
 
 @Entity
 @Table(name = "faculties")
+@AttributeOverride(name = "id", column = @Column(name = "faculties_id",
+        nullable = false))
 public class Faculty extends NamedEntity {
 
     @Column(name = "max_students")

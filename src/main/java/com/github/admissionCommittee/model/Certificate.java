@@ -1,16 +1,14 @@
 package com.github.admissionCommittee.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Entity
 @Table(name = "certificates")
+@AttributeOverride(name = "id", column = @Column(name = "certificate_id",
+        nullable = false))
 public class Certificate extends NamedEntity {
 
     private Map<String, CertificateScore> scores;

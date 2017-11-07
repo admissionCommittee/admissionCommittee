@@ -1,11 +1,14 @@
 package com.github.admissionCommittee.model;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "certificate_scores")
+@AttributeOverride(name = "id", column = @Column(name = "certificate_score_id",
+        nullable = false))
 public class CertificateScore extends NamedEntity {
 
     private int scoreLimit;

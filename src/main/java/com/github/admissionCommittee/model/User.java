@@ -6,6 +6,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@AttributeOverride(name = "id", column = @Column(name = "user_id",
+        nullable = false))
 public class User extends NamedEntity {
 
     @Column(name = "role")
