@@ -3,8 +3,7 @@
 **Admission committee implementation.**
 
 # Plan
-***Creating Git remote (done) -> Push gradle template -> Front page's prototype approval -> Project's structure approval
--> Delegating tasks -> In progress...***
+***Creating Git remote (done) -> Push gradle template(done) -> Front page's prototype approval(done) -> Project's structure approval(done) -> Fixing Gradle and Hibernate configuration (done)-> Upgrading entities (in progress) -> Repository adding - > JPA task implementation -> Cypher mode on -> DRAM-HDD save-load mode on -> sServices layer approving -> Services adding -> Controller's level approving -> Controller's adding -> Connecting the Frontend -> test Services vs DB query efficiency -> Adding PSWcreator -> ...***
 
 # Contrubuting
 
