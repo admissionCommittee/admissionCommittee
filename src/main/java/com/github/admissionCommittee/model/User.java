@@ -1,36 +1,15 @@
 package com.github.admissionCommittee.model;
 
-import javax.persistence.*;
-//@Cache(usage = CacheConcurrencyStrategy.)
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "users")/*, uniqueConstraints = {
-        @UniqueConstraint(columnNames =
-                "email", name = "users_unique_email")
-})*/
+@Table(name = "users")
 public class User extends NamedEntity {
 
-   /*
-    @Column(name = "email", nullable = false, unique = true)
-    @SafeHtml
-    private String email;
-
-    @Column(name = "password", nullable = false)
-    @Length(min = 5)
-    @SafeHtml
-    private String password;
-
-    @Column(name = "registered", columnDefinition = "timestamp default now()")
-    private Date registered = new Date();*/
-
-    //@Cache(usage = CacheConcurrencyStrategy)
-//fetch = FetchType.LAZY?, cascade?
-    @ManyToOne
-    @JoinColumn(name = "role")
     private Role role;
 
-    public User() {
-    }
+    public User() { }
 
     public User(User user) {
         this(user.getName(), user.getRole());
@@ -38,7 +17,7 @@ public class User extends NamedEntity {
 
     public User(String name, Role role) {
         super(name);
-        setRole(role);
+        this.role = role;
     }
 
     public Role getRole() {
@@ -57,4 +36,5 @@ public class User extends NamedEntity {
                 ", role=" + role +
                 +'}';
     }
+
 }
