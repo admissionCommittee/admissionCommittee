@@ -1,0 +1,12 @@
+body{
+    margin:0;
+    font-family: tahoma;
+}
+
+A{
+    text-decoration: none; /* Убирает подчеркивание для ссылок */
+}
+A:hover {
+    text-decoration: none;  /* Добавляем подчеркивание при наведении курсора на ссылку */
+}
+
