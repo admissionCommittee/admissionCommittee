@@ -1,49 +1,29 @@
 package com.github.admissionCommittee.core;
 
 import com.github.admissionCommittee.core.enums.SubjectNameEnum;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
+@Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "subject")
+@EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
+@AttributeOverride(name = "id", column = @Column(name = "subject_id", nullable = false))
 public class Subject extends AbstractEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "name", nullable = false, unique = true)
     private SubjectNameEnum name;
-
-    public Subject() {
-    }
-
-    public Subject(SubjectNameEnum name) {
-        this.name = name;
-    }
-
-    public SubjectNameEnum getName() {
-        return name;
-    }
-
-    public void setName(SubjectNameEnum name) {
-        this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        final Subject subject = (Subject) o;
-
-        return name == subject.name;
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
 
 }

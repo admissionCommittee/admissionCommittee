@@ -1,5 +1,13 @@
 package com.github.admissionCommittee.core;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.ToString;
+
+import javax.persistence.AttributeOverride;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -10,11 +18,18 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Map;
 
+@Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "exam_certificate")
+@EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
+@AttributeOverride(name = "id", column = @Column(name = "exam_certificate_id", nullable = false))
+@ToString(exclude = {"user"})
 public class ExamCertificate extends AbstractEntity {
 
     @OneToOne
+    @NonNull
     private User user;
 
     @Column(name = "year")
@@ -27,56 +42,4 @@ public class ExamCertificate extends AbstractEntity {
     @Column(name = "score", nullable = false)
     private Map<Subject, Integer> subjects;
 
-    public ExamCertificate() {
-    }
-
-    public ExamCertificate(User user, int year, Map<Subject, Integer>
-            subjects) {
-        this.user = user;
-        this.year = year;
-        this.subjects = subjects;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public Map<Subject, Integer> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(Map<Subject, Integer> subjects) {
-        this.subjects = subjects;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        final ExamCertificate that = (ExamCertificate) o;
-
-        return year == that.year && user.equals(that.user) && subjects.equals
-                (that.subjects);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = user.hashCode();
-        result = 31 * result + year;
-        result = 31 * result + subjects.hashCode();
-        return result;
-    }
 }
