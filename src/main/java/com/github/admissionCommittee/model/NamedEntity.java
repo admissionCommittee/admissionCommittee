@@ -8,6 +8,7 @@ import javax.persistence.MappedSuperclass;
 
 
 @MappedSuperclass
+@Deprecated
 public class NamedEntity extends BaseEntity {
 //TODO link to hashcode obligatory link
     @Column(name = "name", nullable = false)

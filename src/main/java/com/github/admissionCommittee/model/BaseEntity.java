@@ -5,6 +5,7 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 
 @MappedSuperclass
+@Deprecated
 public class BaseEntity implements HasId {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

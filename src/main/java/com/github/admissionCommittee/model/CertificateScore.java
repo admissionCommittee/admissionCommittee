@@ -9,6 +9,7 @@ import javax.persistence.Table;
 @Table(name = "certificate_scores")
 @AttributeOverride(name = "id", column = @Column(name = "certificate_score_id",
         nullable = false))
+@Deprecated
 public class CertificateScore extends NamedEntity {
 
     private int scoreLimit;

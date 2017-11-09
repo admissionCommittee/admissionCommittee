@@ -8,6 +8,7 @@ import java.util.Set;
 @Table(name = "users")
 @AttributeOverride(name = "id", column = @Column(name = "user_id",
         nullable = false))
+@Deprecated
 public class User extends NamedEntity {
 
     @Column(name = "role")
