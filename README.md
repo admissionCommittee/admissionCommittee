@@ -3,14 +3,13 @@
 **Admission committee implementation.**
 
 # Plan
-***Creating Git remote (done) -> Push gradle template -> Front page's prototype approval -> Project's structure approval
--> Delegating tasks -> In progress...***
+***Creating Git remote (done) -> Push gradle template(done) -> Front page's prototype approval(done) -> Project's structure approval(done) -> Fixing Gradle and Hibernate configuration (done)-> Upgrading entities (in progress) -> Repository adding - > JPA task implementation -> Cypher mode on -> DRAM-HDD save-load mode on -> sServices layer approving -> Services adding -> Controller's level approving -> Controller's adding -> Connecting the Frontend -> test Services vs DB query efficiency -> Adding PSWcreator -> ...***
 
 # Contrubuting
 
 - **Fork this repository by clicking "Fork" button on the top of this page.**
-- **Clone this repository to your local environment.**
-- **Connect your branch to this repository by executing the following command:**
+- **Clone this repository com.github.admissionCommittee.to your local environment.**
+- **Connect your branch com.github.admissionCommittee.to this repository by executing the following command:**
 ```
 git remote add -t master production http://github.com/admissionCommittee/production.git
 ```
@@ -25,19 +24,19 @@ origin
 ```
 git pull production master
 ```
-- **Send changes from your local repository to remote:**
+- **Send changes from your local repository com.github.admissionCommittee.to remote:**
 ```
 git push origin master
 ```
-- **The following step is to switch to your private branch:**
+- **The following step is com.github.admissionCommittee.to switch com.github.admissionCommittee.to your private branch:**
 ```
 git checkout <PRIVATE_BRANCH_NAME>
 ```
-- **When ready you can push your changes to your own remote repository:**
+- **When ready you can push your changes com.github.admissionCommittee.to your own remote repository:**
  ```
 git push origin <PRIVATE_BRANCH_NAME>
 ```
-- **When your changes are pushed to your own fork, you should create a pull-request.**
+- **When your changes are pushed com.github.admissionCommittee.to your own fork, you should create a pull-request.**
 
 ## Prerequisites
 
@@ -45,15 +44,15 @@ Apache Tomcat.
 
 ## Installing
 
-How to install.
+How com.github.admissionCommittee.to install.
 
 ## Running the tests
 
-How to run the automated tests.
+How com.github.admissionCommittee.to run the automated tests.
 
 ## Deployment
 
-How to deploy this on a live system.
+How com.github.admissionCommittee.to deploy this on a live system.
 
 ## Built With
 
@@ -71,4 +70,4 @@ Konstantin Bobrov, Konstantin Mavropulo, Timur Aliberdov.
 
 ## Acknowledgments
 
-Hat tip to anyone who's code was used
+Hat tip com.github.admissionCommittee.to anyone who's code was used

@@ -1,16 +1,17 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: PharuS
-  Date: 03.11.2017
-  Time: 18:23
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<fmt:setLocale value="${not empty sessionScope['lang'] ? sessionScope['lang'] : 'Ru'}" />
+<fmt:setBundle basename="localization"/>
+
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title><fmt:message key="welcome"/></title>
+  <link rel="stylesheet" media="screen" href="${pageContext.request.contextPath}css/styles.css" >
+  <link rel="shortcut icon" href="${pageContext.request.contextPath}favicon.ico"/>
+</head>
+<body bgcolor=#edeef0>
+
+</body>
 </html>
