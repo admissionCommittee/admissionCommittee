@@ -3,6 +3,7 @@ package com.github.admissionCommittee.util;
 import com.github.admissionCommittee.core.ExamCertificate;
 import com.github.admissionCommittee.core.Faculty;
 import com.github.admissionCommittee.core.SchoolCertificate;
+import com.github.admissionCommittee.core.Sheet;
 import com.github.admissionCommittee.core.Subject;
 import com.github.admissionCommittee.core.User;
 import com.github.admissionCommittee.core.enums.SubjectNameEnum;
@@ -29,9 +30,12 @@ public class DummyDatabaseInit {
 
         UserDao userDao = new UserDao();
 
-        final User user1 = new User(UserTypeEnum.USER, "Peter", "Ivanov", 20);
-        final User admin1 = new User(UserTypeEnum.ADMIN, "Julia", "Semenova", 31);
-        final User user2 = new User(UserTypeEnum.USER, "Maxim", "Kasyanov", 18);
+        final User user1 = new User(UserTypeEnum.USER, "Иванов", "Пётр", "Сергеевич",
+            "ivanov_piotr@epam.com", 20);
+        final User admin1 = new User(UserTypeEnum.ADMIN, "Семёнова", "Юлия", "Викторовна",
+            "iuliia_semionova@epam.com", 31);
+        final User user2 = new User(UserTypeEnum.USER, "Касьянов", "Максим", "Евгеньевич",
+            "kasianov_maksim@epam.com", 18);
 
         userDao.create(user1);
         userDao.create(admin1);
@@ -105,8 +109,12 @@ public class DummyDatabaseInit {
 
 
         SheetDao sheetDao = new SheetDao();
+        final Sheet sheet = new Sheet(user2, faculty1, 0, 0);
+        sheetDao.create(sheet);
 
-
+        final User byMail = userDao.getByMail("kasianov_maksim@epam.com");
+        System.out.println(byMail.getExamCertificate().getSubjects().entrySet().iterator().next()
+            .getKey().getName());
 
     }
 
