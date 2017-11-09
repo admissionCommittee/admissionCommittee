@@ -12,9 +12,12 @@ public class UserDao extends GenericDao<User> {
     //for DB search by mail implementation
     public User getByMail(String mail) {
         openSessionWithTransaction();
-        //TODO
+        final User result = (User) getSession()
+            .createQuery("from User u where u.mail=:mail")
+            .setParameter("mail", mail)
+            .uniqueResult();
         closeSessionWithTransaction();
-        return null;
+        return result;
     }
 
 }
