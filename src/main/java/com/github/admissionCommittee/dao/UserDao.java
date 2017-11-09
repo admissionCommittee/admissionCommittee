@@ -2,8 +2,6 @@ package com.github.admissionCommittee.dao;
 
 import com.github.admissionCommittee.core.User;
 
-import java.util.List;
-
 
 public class UserDao extends GenericDao<User> {
 
@@ -12,7 +10,7 @@ public class UserDao extends GenericDao<User> {
     }
 
     //for DB search by mail implementation
-    public User getByName(String mail) {
+    public User getByMail(String mail) {
         openSessionWithTransaction();
         //TODO
         closeSessionWithTransaction();

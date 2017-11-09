@@ -1,23 +1,34 @@
 package com.github.admissionCommittee.service;
 
+import com.github.admissionCommittee.core.Faculty;
 import com.github.admissionCommittee.core.User;
-import javassist.NotFoundException;
+import com.github.admissionCommittee.dao.UserDao;
+import com.github.admissionCommittee.util.Validator;
 
-import java.util.List;
+import java.util.Map;
 
-public interface UserService {
+public class UserService extends GenericService<User> {
 
-    void save(User user);
+    public UserService(UserDao userDao) {
+        super(User.class, userDao);
+    }
 
-    User get(int id) throws NotFoundException;
+    @Override
+    public void save(User user) {
+        Validator.validateNotNull(user, Validator.MESSAGE_FOR_SOURCE_IF_NULL);
+        if (getByMail(user.getMail()) == null) {
+            getDao().save(user);
+        }
+    }
+
     //for DB search by mail implementation
-    User getByMail(String mail) throws NotFoundException;
+    public User getByMail(String mail) {
+        return ((UserDao) getDao()).getByMail(mail);
+    }
 
-    List<User> getAll();
-
-    List<User> getAppropriate();
-
-    void delete(int id) throws NotFoundException;
-
-    void update(User user);
+    //get only attendees that satisfy the attendee demands
+    public Map<Faculty, User> getAppropriate() {
+        //TODO
+        return null;
+    }
 }
