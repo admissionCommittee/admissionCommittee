@@ -22,7 +22,8 @@ public class Sheet extends AbstractEntity {
     @Column(name = "average_school_certificate_score")
     private int averageSchoolCertificateScore;
 
-    public Sheet() { }
+    public Sheet() {
+    }
 
     public Sheet(User user, Faculty faculty, int averageExamCertificateScore,
                  int averageSchoolCertificateScore) {
@@ -72,8 +73,9 @@ public class Sheet extends AbstractEntity {
         final Sheet sheet = (Sheet) o;
 
         return averageExamCertificateScore == sheet.averageExamCertificateScore
-            && averageSchoolCertificateScore == sheet.averageSchoolCertificateScore
-            && user.equals(sheet.user) && faculty.equals(sheet.faculty);
+                && averageSchoolCertificateScore == sheet
+                .averageSchoolCertificateScore
+                && user.equals(sheet.user) && faculty.equals(sheet.faculty);
     }
 
     @Override

@@ -21,7 +21,8 @@ public class Faculty extends AbstractEntity {
     @JoinTable(name = "subject_faculty")
     private Set<Subject> subjects;
 
-    public Faculty() { }
+    public Faculty() {
+    }
 
     public Faculty(String name, int peopleLimit, Set<Subject> subjects) {
         this.name = name;
@@ -61,7 +62,7 @@ public class Faculty extends AbstractEntity {
         final Faculty faculty = (Faculty) o;
 
         return peopleLimit == faculty.peopleLimit && name.equals(faculty.name)
-            && subjects.equals(faculty.subjects);
+                && subjects.equals(faculty.subjects);
     }
 
     @Override

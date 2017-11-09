@@ -16,7 +16,7 @@ public abstract class GenericDao<T> {
         this.type = type;
     }
 
-    public void create(T instance) {
+    public void save(T instance) {
         openSessionWithTransaction();
         session.save(instance);
         closeSessionWithTransaction();
@@ -28,7 +28,7 @@ public abstract class GenericDao<T> {
         closeSessionWithTransaction();
     }
 
-    public T read(long id) {
+    public T get(long id) {
         openSessionWithTransaction();
         T instance = session.get(type, id);
         closeSessionWithTransaction();
@@ -36,7 +36,7 @@ public abstract class GenericDao<T> {
     }
 
     public void delete(long id) {
-        T instance = read(id);
+        T instance = get(id);
         if (instance != null) {
             openSessionWithTransaction();
             session.delete(instance);

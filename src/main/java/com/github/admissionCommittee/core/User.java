@@ -2,17 +2,12 @@ package com.github.admissionCommittee.core;
 
 import com.github.admissionCommittee.core.enums.UserTypeEnum;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
+@AttributeOverride(name = "id", column = @Column(name = "user_id",
+        nullable = false))
 public class User extends AbstractEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -37,7 +32,8 @@ public class User extends AbstractEntity {
     @Column(name = "age")
     private int age;
 
-    public User() { }
+    public User() {
+    }
 
     public User(UserTypeEnum type, String firstName, String lastName, int age) {
         this.type = type;
@@ -85,22 +81,25 @@ public class User extends AbstractEntity {
 
         final User user = (User) o;
 
-        return age == user.age && (sheet != null ? sheet.equals(user.sheet) : user.sheet == null)
-            && (examCertificate != null
+        return age == user.age && (sheet != null ? sheet.equals(user.sheet) :
+                user.sheet == null)
+                && (examCertificate != null
                 ? examCertificate.equals(user.examCertificate)
                 : user.examCertificate == null)
-            && (schoolCertificate != null
+                && (schoolCertificate != null
                 ? schoolCertificate.equals(user.schoolCertificate)
                 : user.schoolCertificate == null)
-            && type == user.type && firstName.equals(user.firstName)
-            && lastName.equals(user.lastName);
+                && type == user.type && firstName.equals(user.firstName)
+                && lastName.equals(user.lastName);
     }
 
     @Override
     public int hashCode() {
         int result = sheet != null ? sheet.hashCode() : 0;
-        result = 31 * result + (examCertificate != null ? examCertificate.hashCode() : 0);
-        result = 31 * result + (schoolCertificate != null ? schoolCertificate.hashCode() : 0);
+        result = 31 * result + (examCertificate != null ? examCertificate
+                .hashCode() : 0);
+        result = 31 * result + (schoolCertificate != null ? schoolCertificate
+                .hashCode() : 0);
         result = 31 * result + type.hashCode();
         result = 31 * result + firstName.hashCode();
         result = 31 * result + lastName.hashCode();

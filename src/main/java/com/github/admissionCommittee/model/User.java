@@ -28,10 +28,10 @@ public class User extends NamedEntity {
     @OneToMany(mappedBy = "user")
     @Column(name = "faculty")
     private Set<Faculty> faculty;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @Column(name = "school_certificate")
     private Certificate schoolCertificate;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @Column(name = "unified_Exam_Certificate")
     private Certificate unifiedExamCertificate;
 

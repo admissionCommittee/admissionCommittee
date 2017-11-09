@@ -22,14 +22,16 @@ public class SchoolCertificate extends AbstractEntity {
 
     @ElementCollection
     @CollectionTable(name = "subject_school_certificate",
-        joinColumns = @JoinColumn(name = "school_certificate_id"))
+            joinColumns = @JoinColumn(name = "school_certificate_id"))
     @MapKeyJoinColumn(name = "subject_id")
     @Column(name = "score")
     private Map<Subject, Integer> subjects;
 
-    public SchoolCertificate() { }
+    public SchoolCertificate() {
+    }
 
-    public SchoolCertificate(User user, int year, Map<Subject, Integer> subjects) {
+    public SchoolCertificate(User user, int year, Map<Subject, Integer>
+            subjects) {
         this.user = user;
         this.year = year;
         this.subjects = subjects;
@@ -66,7 +68,8 @@ public class SchoolCertificate extends AbstractEntity {
 
         final SchoolCertificate that = (SchoolCertificate) o;
 
-        return year == that.year && user.equals(that.user) && subjects.equals(that.subjects);
+        return year == that.year && user.equals(that.user) && subjects.equals
+                (that.subjects);
     }
 
     @Override

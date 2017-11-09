@@ -16,7 +16,8 @@ public class Subject extends AbstractEntity {
     @Column(name = "name", nullable = false, unique = true)
     private SubjectNameEnum name;
 
-    public Subject() { }
+    public Subject() {
+    }
 
     public Subject(SubjectNameEnum name) {
         this.name = name;
