@@ -17,7 +17,7 @@ public class UserService extends GenericService<User> {
     public void save(User user) {
         Validator.validateNotNull(user, Validator.MESSAGE_FOR_SOURCE_IF_NULL);
         if (getByMail(user.getMail()) == null) {
-            getDao().save(user);
+            getDao().create(user);
         }
     }
 

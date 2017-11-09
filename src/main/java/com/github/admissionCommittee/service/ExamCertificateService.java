@@ -16,7 +16,7 @@ public class ExamCertificateService extends GenericService<ExamCertificate> {
     public void save(ExamCertificate schoolCertificate) {
         Validator.validateNotNull(schoolCertificate, Validator
                 .MESSAGE_FOR_SOURCE_IF_NULL);
-        //TODO save/update
+        //TODO create/update
 
         //TODO calculate average and execute
         new SheetService(new SheetDao()).save(new Sheet());

@@ -18,7 +18,7 @@ public abstract class GenericService<T> {
     public void save(T instance) {
         Validator.validateNotNull(instance, Validator
                 .MESSAGE_FOR_SOURCE_IF_NULL);
-    //TODO save or update
+    //TODO create or update
     }
 
     public T get(long id) {

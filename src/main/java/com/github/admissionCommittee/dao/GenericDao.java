@@ -16,7 +16,7 @@ public abstract class GenericDao<T> {
         this.type = type;
     }
 
-    public void save(T instance) {
+    public void create(T instance) {
         openSessionWithTransaction();
         session.save(instance);
         closeSessionWithTransaction();
