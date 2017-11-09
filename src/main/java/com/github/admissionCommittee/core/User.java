@@ -19,6 +19,10 @@ public class User extends AbstractEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private SchoolCertificate schoolCertificate;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "faculty_id", nullable = false)
+    public Faculty faculty;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private UserTypeEnum type;
@@ -38,6 +42,30 @@ public class User extends AbstractEntity {
     @Column(name = "age")
     private int age;
 
+    public Sheet getSheet() {
+        return sheet;
+    }
+
+    public void setSheet(Sheet sheet) {
+        this.sheet = sheet;
+    }
+
+    public ExamCertificate getExamCertificate() {
+        return examCertificate;
+    }
+
+    public void setExamCertificate(ExamCertificate examCertificate) {
+        this.examCertificate = examCertificate;
+    }
+
+    public SchoolCertificate getSchoolCertificate() {
+        return schoolCertificate;
+    }
+
+    public void setSchoolCertificate(SchoolCertificate schoolCertificate) {
+        this.schoolCertificate = schoolCertificate;
+    }
+
     public String getPatronymic() {
         return patronymic;
     }
@@ -54,6 +82,13 @@ public class User extends AbstractEntity {
         this.mail = mail;
     }
 
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
 
     public User() {
     }
@@ -99,8 +134,12 @@ public class User extends AbstractEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         final User user = (User) o;
 

@@ -1,18 +1,20 @@
 package com.github.admissionCommittee.core;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "faculty")
+@AttributeOverride(name = "id", column = @Column(name = "faculty_id",
+        nullable = false))
 public class Faculty extends AbstractEntity {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "faculty")
+    Set<User> users =new HashSet<User>();
 
     @Column(name = "people_limit")
     private int peopleLimit;
@@ -44,6 +46,14 @@ public class Faculty extends AbstractEntity {
 
     public void setPeopleLimit(int peopleLimit) {
         this.peopleLimit = peopleLimit;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     public Set<Subject> getSubjects() {
