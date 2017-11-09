@@ -29,8 +29,31 @@ public class User extends AbstractEntity {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "patronymic")
+    private String patronymic;
+
+    @Column(name = "mail")
+    private String mail;
+
     @Column(name = "age")
     private int age;
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
 
     public User() {
     }

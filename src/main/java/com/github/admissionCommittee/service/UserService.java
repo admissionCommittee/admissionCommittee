@@ -10,6 +10,8 @@ public interface UserService {
     void save(User user);
 
     User get(int id) throws NotFoundException;
+    //for DB search by mail implementation
+    User getByMail(String mail) throws NotFoundException;
 
     List<User> getAll();
 

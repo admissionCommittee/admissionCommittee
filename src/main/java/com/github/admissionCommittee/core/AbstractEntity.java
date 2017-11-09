@@ -8,9 +8,7 @@ import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 @MappedSuperclass
-public abstract class AbstractEntity implements Serializable {
-
-    private static final long serialVersionUID = 42L;
+public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -35,6 +35,16 @@ public abstract class GenericDao<T> {
         return instance;
     }
 
+
+    @SuppressWarnings("unchecked")
+    public List<T> getAll() {
+        openSessionWithTransaction();
+        List<T> instances = (List<T>) session.createQuery("from " + type
+                .getName()).list();
+        closeSessionWithTransaction();
+        return instances;
+    }
+
     public void delete(long id) {
         T instance = get(id);
         if (instance != null) {
@@ -42,14 +52,6 @@ public abstract class GenericDao<T> {
             session.delete(instance);
             closeSession();
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<T> getAll() {
-        openSessionWithTransaction();
-        List<T> instances = (List<T>) session.createQuery("from " + type.getName()).list();
-        closeSessionWithTransaction();
-        return instances;
     }
 
     public Class<T> getType() {

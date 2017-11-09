@@ -18,7 +18,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         Validator.validateNotNull(user, Validator.MESSAGE_FOR_SOURCE_IF_NULL);
-        repository.save(user);
+        if(getByMail(user.getMail())==null){
+        repository.save(user);}
     }
 
     @Override
@@ -32,6 +33,12 @@ public class UserServiceImpl implements UserService {
         return repository.getAll();
     }
 
+    //for DB search by mail implementation
+    @Override
+    public User getByMail(String mail) {
+        return repository.getByName(mail);
+    }
+
     @Override
     public List<User> getAppropriate() {
         //TODO
@@ -41,7 +48,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(User user) {
         Validator.validateNotNull(user, Validator.MESSAGE_FOR_SOURCE_IF_NULL);
-        repository.save(user);
+        repository.update(user);
     }
 
     @Override
