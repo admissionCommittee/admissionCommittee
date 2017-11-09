@@ -9,6 +9,7 @@ import java.util.Map;
 @Table(name = "certificates")
 @AttributeOverride(name = "id", column = @Column(name = "certificate_id",
         nullable = false))
+@Deprecated
 public class Certificate extends NamedEntity {
 
     private Map<String, CertificateScore> scores;

@@ -11,6 +11,7 @@ import java.util.Map;
 @Table(name = "faculties")
 @AttributeOverride(name = "id", column = @Column(name = "faculties_id",
         nullable = false))
+@Deprecated
 public class Faculty extends NamedEntity {
 
     @Column(name = "max_students")

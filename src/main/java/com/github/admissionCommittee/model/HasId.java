@@ -1,5 +1,6 @@
 package com.github.admissionCommittee.model;
 
+@Deprecated
 public interface HasId {
     Integer getId();
 
