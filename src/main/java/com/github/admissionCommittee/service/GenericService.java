@@ -1,11 +1,12 @@
 package com.github.admissionCommittee.service;
 
+import com.github.admissionCommittee.core.AbstractEntity;
 import com.github.admissionCommittee.dao.GenericDao;
 import com.github.admissionCommittee.util.Validator;
 
 import java.util.List;
 
-public abstract class GenericService<T> {
+public abstract class GenericService<T extends AbstractEntity> {
 
     private Class<T> modelType;
     private GenericDao<T> dao;
@@ -18,7 +19,9 @@ public abstract class GenericService<T> {
     public void save(T instance) {
         Validator.validateNotNull(instance, Validator
                 .MESSAGE_FOR_SOURCE_IF_NULL);
-    //TODO create or update
+        if (instance.isNew()) {
+            getDao().create(instance);
+        }
     }
 
     public T get(long id) {

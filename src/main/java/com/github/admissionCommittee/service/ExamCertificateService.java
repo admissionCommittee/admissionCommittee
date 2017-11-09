@@ -4,7 +4,6 @@ import com.github.admissionCommittee.core.ExamCertificate;
 import com.github.admissionCommittee.core.Sheet;
 import com.github.admissionCommittee.dao.ExamCertificateDao;
 import com.github.admissionCommittee.dao.SheetDao;
-import com.github.admissionCommittee.util.Validator;
 
 public class ExamCertificateService extends GenericService<ExamCertificate> {
 
@@ -13,10 +12,8 @@ public class ExamCertificateService extends GenericService<ExamCertificate> {
     }
 
     @Override
-    public void save(ExamCertificate schoolCertificate) {
-        Validator.validateNotNull(schoolCertificate, Validator
-                .MESSAGE_FOR_SOURCE_IF_NULL);
-        //TODO create/update
+    public void save(ExamCertificate examCertificate) {
+        super.save(examCertificate);
 
         //TODO calculate average and execute
         new SheetService(new SheetDao()).save(new Sheet());
