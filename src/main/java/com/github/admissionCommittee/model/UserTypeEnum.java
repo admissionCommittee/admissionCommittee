@@ -1,4 +1,4 @@
-package com.github.admissionCommittee.core.enums;
+package com.github.admissionCommittee.model;
 
 public enum UserTypeEnum {
     USER,

@@ -1,4 +1,4 @@
-package com.github.admissionCommittee.core;
+package com.github.admissionCommittee.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

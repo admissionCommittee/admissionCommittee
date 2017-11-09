@@ -1,6 +1,6 @@
 package com.github.admissionCommittee.service;
 
-import com.github.admissionCommittee.core.AbstractEntity;
+import com.github.admissionCommittee.model.AbstractEntity;
 import com.github.admissionCommittee.dao.GenericDao;
 import com.github.admissionCommittee.util.Validator;
 
@@ -21,6 +21,8 @@ public abstract class GenericService<T extends AbstractEntity> {
                 .MESSAGE_FOR_SOURCE_IF_NULL);
         if (instance.isNew()) {
             getDao().create(instance);
+        }else{
+            getDao().update(instance);
         }
     }
 

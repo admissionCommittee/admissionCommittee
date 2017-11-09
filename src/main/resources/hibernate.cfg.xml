@@ -27,12 +27,12 @@
         <property name="hbm2ddl.auto">create</property>
 
         <!-- Names the annotated entity class -->
-        <mapping class="com.github.admissionCommittee.core.User"/>
-        <mapping class="com.github.admissionCommittee.core.Subject"/>
-        <mapping class="com.github.admissionCommittee.core.Faculty"/>
-        <mapping class="com.github.admissionCommittee.core.SchoolCertificate"/>
-        <mapping class="com.github.admissionCommittee.core.ExamCertificate"/>
-        <mapping class="com.github.admissionCommittee.core.Sheet"/>
+        <mapping class="com.github.admissionCommittee.model.User"/>
+        <mapping class="com.github.admissionCommittee.model.Subject"/>
+        <mapping class="com.github.admissionCommittee.model.Faculty"/>
+        <mapping class="com.github.admissionCommittee.model.SchoolCertificate"/>
+        <mapping class="com.github.admissionCommittee.model.ExamCertificate"/>
+        <mapping class="com.github.admissionCommittee.model.Sheet"/>
 
     </session-factory>
 

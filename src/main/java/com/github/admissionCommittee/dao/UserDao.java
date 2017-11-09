@@ -1,7 +1,6 @@
 package com.github.admissionCommittee.dao;
 
-import com.github.admissionCommittee.core.User;
-
+import com.github.admissionCommittee.model.User;
 
 public class UserDao extends GenericDao<User> {
 

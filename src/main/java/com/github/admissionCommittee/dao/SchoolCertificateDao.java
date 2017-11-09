@@ -1,9 +1,6 @@
 package com.github.admissionCommittee.dao;
 
-import com.github.admissionCommittee.core.SchoolCertificate;
-import org.hibernate.Session;
-
-import java.util.List;
+import com.github.admissionCommittee.model.SchoolCertificate;
 
 public class SchoolCertificateDao extends GenericDao<SchoolCertificate> {
 

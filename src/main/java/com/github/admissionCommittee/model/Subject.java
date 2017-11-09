@@ -1,4 +1,4 @@
-package com.github.admissionCommittee.core;
+package com.github.admissionCommittee.model;
 
 import com.github.admissionCommittee.core.enums.SubjectNameEnum;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package com.github.admissionCommittee.service;
 
-import com.github.admissionCommittee.core.ExamCertificate;
-import com.github.admissionCommittee.core.Sheet;
+import com.github.admissionCommittee.model.ExamCertificate;
+import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.dao.ExamCertificateDao;
 import com.github.admissionCommittee.dao.SheetDao;
 

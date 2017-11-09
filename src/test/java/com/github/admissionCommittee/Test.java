@@ -1,6 +1,6 @@
 package com.github.admissionCommittee;
 
-import com.github.admissionCommittee.core.User;
+import com.github.admissionCommittee.model.User;
 
 
 public class Test {
