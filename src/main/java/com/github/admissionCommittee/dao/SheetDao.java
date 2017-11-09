@@ -1,7 +1,7 @@
 package com.github.admissionCommittee.dao;
 
-import com.github.admissionCommittee.core.Faculty;
-import com.github.admissionCommittee.core.Sheet;
+import com.github.admissionCommittee.model.Faculty;
+import com.github.admissionCommittee.model.Sheet;
 
 import java.util.List;
 

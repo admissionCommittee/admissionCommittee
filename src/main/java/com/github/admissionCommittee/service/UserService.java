@@ -1,6 +1,6 @@
 package com.github.admissionCommittee.service;
 
-import com.github.admissionCommittee.core.User;
+import com.github.admissionCommittee.model.User;
 import com.github.admissionCommittee.dao.UserDao;
 
 public class UserService extends GenericService<User> {

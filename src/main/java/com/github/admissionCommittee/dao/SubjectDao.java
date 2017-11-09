@@ -1,9 +1,6 @@
 package com.github.admissionCommittee.dao;
 
-import com.github.admissionCommittee.core.Subject;
-import org.hibernate.Session;
-
-import java.util.List;
+import com.github.admissionCommittee.model.Subject;
 
 public class SubjectDao extends GenericDao<Subject> {
 

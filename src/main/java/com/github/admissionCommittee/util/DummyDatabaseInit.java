@@ -1,12 +1,12 @@
 package com.github.admissionCommittee.util;
 
-import com.github.admissionCommittee.core.ExamCertificate;
-import com.github.admissionCommittee.core.Faculty;
-import com.github.admissionCommittee.core.SchoolCertificate;
-import com.github.admissionCommittee.core.Subject;
-import com.github.admissionCommittee.core.User;
-import com.github.admissionCommittee.core.enums.SubjectNameEnum;
-import com.github.admissionCommittee.core.enums.UserTypeEnum;
+import com.github.admissionCommittee.model.ExamCertificate;
+import com.github.admissionCommittee.model.Faculty;
+import com.github.admissionCommittee.model.SchoolCertificate;
+import com.github.admissionCommittee.model.Subject;
+import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.model.SubjectNameEnum;
+import com.github.admissionCommittee.model.UserTypeEnum;
 import com.github.admissionCommittee.dao.ExamCertificateDao;
 import com.github.admissionCommittee.dao.FacultyDao;
 import com.github.admissionCommittee.dao.SchoolCertificateDao;

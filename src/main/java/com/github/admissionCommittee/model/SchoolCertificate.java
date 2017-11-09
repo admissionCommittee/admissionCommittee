@@ -1,4 +1,4 @@
-package com.github.admissionCommittee.core;
+package com.github.admissionCommittee.model;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -11,8 +11,8 @@ import javax.persistence.Table;
 import java.util.Map;
 
 @Entity
-@Table(name = "exam_certificate")
-public class ExamCertificate extends AbstractEntity {
+@Table(name = "school_certificate_id")
+public class SchoolCertificate extends AbstractEntity {
 
     @OneToOne
     private User user;
@@ -21,16 +21,16 @@ public class ExamCertificate extends AbstractEntity {
     private int year;
 
     @ElementCollection
-    @CollectionTable(name = "subject_exam_certificate",
-            joinColumns = @JoinColumn(name = "exam_certificate_id"))
+    @CollectionTable(name = "subject_school_certificate",
+            joinColumns = @JoinColumn(name = "school_certificate_id"))
     @MapKeyJoinColumn(name = "subject_id")
-    @Column(name = "score", nullable = false)
+    @Column(name = "score")
     private Map<Subject, Integer> subjects;
 
-    public ExamCertificate() {
+    public SchoolCertificate() {
     }
 
-    public ExamCertificate(User user, int year, Map<Subject, Integer>
+    public SchoolCertificate(User user, int year, Map<Subject, Integer>
             subjects) {
         this.user = user;
         this.year = year;
@@ -66,7 +66,7 @@ public class ExamCertificate extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        final ExamCertificate that = (ExamCertificate) o;
+        final SchoolCertificate that = (SchoolCertificate) o;
 
         return year == that.year && user.equals(that.user) && subjects.equals
                 (that.subjects);
@@ -78,5 +78,14 @@ public class ExamCertificate extends AbstractEntity {
         result = 31 * result + year;
         result = 31 * result + subjects.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "SchoolCertificate{" +
+                "user=" + user +
+                ", year=" + year +
+                ", subjects=" + subjects +
+                '}';
     }
 }

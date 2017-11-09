@@ -1,6 +1,4 @@
-package com.github.admissionCommittee.core;
-
-import com.github.admissionCommittee.core.enums.SubjectNameEnum;
+package com.github.admissionCommittee.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,4 +44,10 @@ public class Subject extends AbstractEntity {
         return name.hashCode();
     }
 
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "name=" + name +
+                '}';
+    }
 }

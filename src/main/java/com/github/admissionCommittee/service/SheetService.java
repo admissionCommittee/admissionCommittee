@@ -1,7 +1,7 @@
 package com.github.admissionCommittee.service;
 
-import com.github.admissionCommittee.core.Faculty;
-import com.github.admissionCommittee.core.Sheet;
+import com.github.admissionCommittee.model.Faculty;
+import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.dao.FacultyDao;
 import com.github.admissionCommittee.dao.SheetDao;
 
@@ -31,7 +31,6 @@ public class SheetService extends GenericService<Sheet> {
 
     public Map<Integer, Sheet> getApprovedSheets(List<Sheet> sheetList,
                                                  Integer attendeesLimit) {
-
         //getApprovedSheets - that belonging to successful attendees
         Map<Integer, Sheet> userMap = new TreeMap<>();
         sheetList.parallelStream().forEachOrdered(element -> {
@@ -41,8 +40,7 @@ public class SheetService extends GenericService<Sheet> {
                         element);
             } else {
                 if (element.getAverageSchoolCertificateScore() > userMap
-                        .get(
-                                element.getAverageExamCertificateScore())
+                        .get(element.getAverageExamCertificateScore())
                         .getAverageSchoolCertificateScore()) {
                     userMap.put(element.getAverageExamCertificateScore(),
                             element);
@@ -58,7 +56,6 @@ public class SheetService extends GenericService<Sheet> {
                 iterator.remove();
                 counter++;
             }
-
         }
         return userMap;
     }

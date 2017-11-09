@@ -1,4 +1,4 @@
-package com.github.admissionCommittee.core;
+package com.github.admissionCommittee.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -85,5 +85,16 @@ public class Sheet extends AbstractEntity {
         result = 31 * result + averageExamCertificateScore;
         result = 31 * result + averageSchoolCertificateScore;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Sheet{" +
+                "user=" + user +
+                ", faculty=" + faculty +
+                ", averageExamCertificateScore=" + averageExamCertificateScore +
+                ", averageSchoolCertificateScore=" +
+                averageSchoolCertificateScore +
+                '}';
     }
 }

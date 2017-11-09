@@ -1,6 +1,6 @@
 package com.github.admissionCommittee.dao;
 
-import com.github.admissionCommittee.core.User;
+import com.github.admissionCommittee.model.User;
 
 import java.util.List;
 
