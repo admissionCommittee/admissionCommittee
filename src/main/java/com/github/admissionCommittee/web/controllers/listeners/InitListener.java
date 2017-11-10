@@ -28,7 +28,7 @@ public class InitListener implements ServletContextListener{
             // Service layer injection
             //ToDo инициализация базы
             DummyDatabaseInit.main(null);
-            UserService userService = new UserService(new UserDao());
+            UserService userService = new UserService();
             sce.getServletContext().setAttribute("userService", userService);
             log.info("End Servlet initialization");
         }

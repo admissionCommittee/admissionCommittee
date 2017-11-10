@@ -1,5 +1,6 @@
 package com.github.admissionCommittee.service;
 
+import com.github.admissionCommittee.dao.DaoFactory;
 import com.github.admissionCommittee.model.ExamCertificate;
 import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.dao.ExamCertificateDao;
@@ -13,8 +14,8 @@ import java.util.stream.Collectors;
 
 public class ExamCertificateService extends GenericService<ExamCertificate> {
 
-    public ExamCertificateService(ExamCertificateDao examCertificateDao) {
-        super(ExamCertificate.class, examCertificateDao);
+    public ExamCertificateService() {
+        super(ExamCertificate.class, DaoFactory.getExamCertificateDao());
     }
 
     @Override
@@ -22,7 +23,7 @@ public class ExamCertificateService extends GenericService<ExamCertificate> {
         super.save(examCertificate);
 
         //TODO calculate average and execute
-        new SheetService(new SheetDao()).save(new Sheet(examCertificate.getUser(), examCertificate
+        new SheetService().save(new Sheet(examCertificate.getUser(), examCertificate
                 .getUser().getSheet().getFaculty(), sumExamScore(examCertificate),
                 examCertificate.getUser().getSheet().getAverageSchoolCertificateScore()));
     }

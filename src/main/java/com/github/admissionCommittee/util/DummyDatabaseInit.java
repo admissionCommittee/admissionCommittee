@@ -118,7 +118,7 @@ public class DummyDatabaseInit {
 
         final User byMail = userDao.getByMail("kasianov_maksim@epam.com");
 
-        UserService userService = new UserService(userDao);
+        UserService userService = new UserService();
 
         User user = userService.getByMail("user@epam.com");
         System.out.println("!! " +  user.getPassword() + " !!!!!!!!!!!!!!! " );

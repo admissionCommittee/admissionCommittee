@@ -1,5 +1,6 @@
 package com.github.admissionCommittee.service;
 
+import com.github.admissionCommittee.dao.DaoFactory;
 import com.github.admissionCommittee.model.Faculty;
 import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.dao.FacultyDao;
@@ -8,8 +9,8 @@ import com.github.admissionCommittee.dao.SheetDao;
 import java.util.*;
 
 public class SheetService extends GenericService<Sheet> {
-    public SheetService(SheetDao sheetDao) {
-        super(Sheet.class, sheetDao);
+    public SheetService() {
+        super(Sheet.class, DaoFactory.getSheetDao());
     }
 
     public List<Sheet> getByFaculty(Faculty faculty) {
@@ -19,7 +20,7 @@ public class SheetService extends GenericService<Sheet> {
     //get only attendees that satisfy the attendee demands
     public Map<Faculty, Map<Integer, Sheet>> getApprovedAttendees() {
         Map<Faculty, Map<Integer, Sheet>> approvedMap = new HashMap<>();
-        List<Faculty> facultyList = new FacultyService(new FacultyDao())
+        List<Faculty> facultyList = new FacultyService()
                 .getAll();
         facultyList.sort(Comparator.comparing(Faculty::getName));
         facultyList.parallelStream().forEachOrdered(faculty -> {
@@ -59,5 +60,4 @@ public class SheetService extends GenericService<Sheet> {
         }
         return userMap;
     }
-
 }
