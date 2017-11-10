@@ -7,7 +7,7 @@ import com.github.admissionCommittee.dao.UserDao;
 public class UserService extends GenericService<User> {
 
     public UserService() {
-        super(User.class, DaoFactory.getUserDao());
+        super(User.class, DaoFactory.getDaoFactory().getUserDao());
     }
 
     //for DB search by mail implementation

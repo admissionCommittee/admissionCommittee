@@ -10,7 +10,7 @@ import java.util.*;
 
 public class SheetService extends GenericService<Sheet> {
     public SheetService() {
-        super(Sheet.class, DaoFactory.getSheetDao());
+        super(Sheet.class, DaoFactory.getDaoFactory().getSheetDao());
     }
 
     public List<Sheet> getByFaculty(Faculty faculty) {

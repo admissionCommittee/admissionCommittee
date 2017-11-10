@@ -7,6 +7,6 @@ import com.github.admissionCommittee.dao.FacultyDao;
 public class FacultyService extends GenericService<Faculty> {
 
     public FacultyService() {
-        super(Faculty.class, DaoFactory.getFacultyDao());
+        super(Faculty.class, DaoFactory.getDaoFactory().getFacultyDao());
     }
 }

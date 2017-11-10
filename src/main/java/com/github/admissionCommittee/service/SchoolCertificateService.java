@@ -9,7 +9,7 @@ import com.github.admissionCommittee.dao.SheetDao;
 public class SchoolCertificateService extends
         GenericService<SchoolCertificate> {
     public SchoolCertificateService() {
-        super(SchoolCertificate.class, DaoFactory.getSchoolCertificateDao());
+        super(SchoolCertificate.class, DaoFactory.getDaoFactory().getSchoolCertificateDao());
     }
 
     @Override

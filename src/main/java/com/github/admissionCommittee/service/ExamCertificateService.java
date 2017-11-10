@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class ExamCertificateService extends GenericService<ExamCertificate> {
 
     public ExamCertificateService() {
-        super(ExamCertificate.class, DaoFactory.getExamCertificateDao());
+        super(ExamCertificate.class, DaoFactory.getDaoFactory().getExamCertificateDao());
     }
 
     @Override

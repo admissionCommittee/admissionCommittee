@@ -10,49 +10,55 @@ public class DaoFactory {
     private static SheetDao sheetDao;
     private static SubjectDao subjectDao;
     private static UserDao userDao;
+    private static volatile DaoFactory daoFactory;
 
-    private static volatile DaoFactory daoFactory = new DaoFactory();
-
-    public static synchronized DaoFactory getDaoFactory() {
+    public static DaoFactory getDaoFactory() {
+        if (daoFactory == null) {
+            synchronized (DaoFactory.class) {
+                if (daoFactory == null) {
+                    daoFactory = new DaoFactory();
+                }
+            }
+        }
         return daoFactory;
     }
 
-    public static ExamCertificateDao getExamCertificateDao() {
+    public ExamCertificateDao getExamCertificateDao() {
         if (examCertificateDao == null) {
             examCertificateDao = new ExamCertificateDao();
         }
         return examCertificateDao;
     }
 
-    public static SchoolCertificateDao getSchoolCertificateDao() {
+    public SchoolCertificateDao getSchoolCertificateDao() {
         if (schoolCertificateDao == null) {
             schoolCertificateDao = new SchoolCertificateDao();
         }
         return schoolCertificateDao;
     }
 
-    public static SheetDao getSheetDao() {
+    public SheetDao getSheetDao() {
         if (sheetDao == null) {
             sheetDao = new SheetDao();
         }
         return sheetDao;
     }
 
-    public static SubjectDao getSubjectDao() {
+    public SubjectDao getSubjectDao() {
         if (subjectDao == null) {
             subjectDao = new SubjectDao();
         }
         return subjectDao;
     }
 
-    public static UserDao getUserDao() {
+    public UserDao getUserDao() {
         if (userDao == null) {
             userDao = new UserDao();
         }
         return userDao;
     }
 
-    public static FacultyDao getFacultyDao() {
+    public FacultyDao getFacultyDao() {
         if (facultyDao == null) {
             facultyDao = new FacultyDao();
         }
