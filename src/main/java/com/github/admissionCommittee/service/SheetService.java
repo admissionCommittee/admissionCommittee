@@ -34,15 +34,15 @@ public class SheetService extends GenericService<Sheet> {
         //getApprovedSheets - that belonging to successful attendees
         Map<Integer, Sheet> userMap = new TreeMap<>();
         sheetList.parallelStream().forEachOrdered(element -> {
-            if (userMap.get(element.getAverageExamCertificateScore())
+            if (userMap.get(element.getSumExamCertificateScore())
                     == null) {
-                userMap.put(element.getAverageExamCertificateScore(),
+                userMap.put(element.getSumExamCertificateScore(),
                         element);
             } else {
                 if (element.getAverageSchoolCertificateScore() > userMap
-                        .get(element.getAverageExamCertificateScore())
+                        .get(element.getSumExamCertificateScore())
                         .getAverageSchoolCertificateScore()) {
-                    userMap.put(element.getAverageExamCertificateScore(),
+                    userMap.put(element.getSumExamCertificateScore(),
                             element);
                 }
             }

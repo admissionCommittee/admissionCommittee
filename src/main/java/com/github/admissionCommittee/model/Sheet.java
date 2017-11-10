@@ -31,10 +31,10 @@ public class Sheet extends AbstractEntity {
     @NonNull
     private Faculty faculty;
 
-    @Column(name = "average_exam_certificate_score")
-    private int averageExamCertificateScore;
+    @Column(name = "sum_exam_certificate_score")
+    private int sumExamCertificateScore;
 
     @Column(name = "average_school_certificate_score")
-    private int averageSchoolCertificateScore;
+    private double averageSchoolCertificateScore;
 
 }

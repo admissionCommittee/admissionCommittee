@@ -16,6 +16,15 @@ public class SchoolCertificateService extends
         super.save(schoolCertificate);
 
         //TODO calculate average and execute
-        new SheetService(new SheetDao()).save(new Sheet());
+        new SheetService(new SheetDao()).save(new Sheet(schoolCertificate.getUser(),
+                schoolCertificate.getUser().getSheet().getFaculty(), schoolCertificate.getUser()
+                .getSheet().getSumExamCertificateScore(), averageSchoolCertificateScore
+                (schoolCertificate)));
+    }
+
+    private double averageSchoolCertificateScore(SchoolCertificate schoolCertificate) {
+        Integer sum = schoolCertificate.getSubjects().values().parallelStream()
+                .reduce(0, (a, b) -> a + b);
+        return (double) sum / schoolCertificate.getSubjects().size();
     }
 }
