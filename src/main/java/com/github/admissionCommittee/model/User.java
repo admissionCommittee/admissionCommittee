@@ -56,16 +56,20 @@ public class User extends AbstractEntity {
     @Column(name = "mail", nullable = false, unique = true)
     private String mail;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Column(name = "age")
     private int age;
 
     public User(UserTypeEnum type, String firstName, String lastName, String patronymic,
-                String mail, int age) {
+                String mail, String password, int age) {
         this.type = type;
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
         this.mail = mail;
+        this.password = password;
         this.age = age;
     }
 

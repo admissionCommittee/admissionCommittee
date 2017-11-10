@@ -31,11 +31,11 @@ public class DummyDatabaseInit {
         UserDao userDao = new UserDao();
 
         final User user1 = new User(UserTypeEnum.USER, "Иванов", "Пётр", "Сергеевич",
-            "ivanov_piotr@epam.com", 20);
+            "ivanov_piotr@epam.com", "qwerty", 20);
         final User admin1 = new User(UserTypeEnum.ADMIN, "Семёнова", "Юлия", "Викторовна",
-            "iuliia_semionova@epam.com", 31);
+            "iuliia_semionova@epam.com", "123456", 31);
         final User user2 = new User(UserTypeEnum.USER, "Касьянов", "Максим", "Евгеньевич",
-            "kasianov_maksim@epam.com", 18);
+            "kasianov_maksim@epam.com", "PaSsWoRd", 18);
 
         userDao.create(user1);
         userDao.create(admin1);
