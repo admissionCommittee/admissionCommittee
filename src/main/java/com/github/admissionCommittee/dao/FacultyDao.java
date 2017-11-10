@@ -4,7 +4,7 @@ import com.github.admissionCommittee.model.Faculty;
 
 public class FacultyDao extends GenericDao<Faculty> {
 
-    public FacultyDao() {
+    protected FacultyDao() {
         super(Faculty.class);
     }
 }

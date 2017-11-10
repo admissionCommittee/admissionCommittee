@@ -4,7 +4,7 @@ import com.github.admissionCommittee.model.User;
 
 public class UserDao extends GenericDao<User> {
 
-    public UserDao() {
+    protected UserDao() {
         super(User.class);
     }
 
