@@ -5,13 +5,19 @@
         <!-- encoders are  by default assigned the userRole
              ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <!-- <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern> -->
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
     <root level="debug">
         <appender-ref ref="STDOUT" />
     </root>
+
+    <logger name="org.hibernate" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
 
     <logger name="ch.qos.logback" level="OFF" additivity="false" />
 
