@@ -1,30 +1,52 @@
 package com.github.admissionCommittee.model;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.ToString;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "faculty")
-@AttributeOverride(name = "id", column = @Column(name = "faculty_id",
-        nullable = false))
+@EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
+@AttributeOverride(name = "id", column = @Column(name = "faculty_id", nullable = false))
+@ToString(exclude = {"users", "sheet"})
 public class Faculty extends AbstractEntity {
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @NonNull
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "faculty")
-    private Set<User> users =new HashSet<User>();
+    private Set<User> users = new HashSet<>();
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "faculty")
+    private Sheet sheet;
 
     @Column(name = "people_limit")
     private int peopleLimit;
 
+    @NonNull
     @ManyToMany
     @JoinTable(name = "subject_faculty")
     private Set<Subject> subjects;
-
-    public Faculty() {
-    }
 
     public Faculty(String name, int peopleLimit, Set<Subject> subjects) {
         this.name = name;
@@ -32,64 +54,4 @@ public class Faculty extends AbstractEntity {
         this.subjects = subjects;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getPeopleLimit() {
-        return peopleLimit;
-    }
-
-    public void setPeopleLimit(int peopleLimit) {
-        this.peopleLimit = peopleLimit;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    public Set<Subject> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(Set<Subject> subjects) {
-        this.subjects = subjects;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        final Faculty faculty = (Faculty) o;
-
-        return peopleLimit == faculty.peopleLimit && name.equals(faculty.name)
-                && subjects.equals(faculty.subjects);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + peopleLimit;
-        result = 31 * result + subjects.hashCode();
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Faculty{" +
-                "name='" + name + '\'' +
-                ", users=" + users +
-                ", peopleLimit=" + peopleLimit +
-                ", subjects=" + subjects +
-                '}';
-    }
 }

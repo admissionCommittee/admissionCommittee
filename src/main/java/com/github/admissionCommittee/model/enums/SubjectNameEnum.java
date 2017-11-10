@@ -1,4 +1,4 @@
-package com.github.admissionCommittee.model;
+package com.github.admissionCommittee.model.enums;
 
 public enum SubjectNameEnum {
     RUSSIAN,

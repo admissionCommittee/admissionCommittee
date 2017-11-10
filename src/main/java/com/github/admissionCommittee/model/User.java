@@ -1,185 +1,72 @@
 package com.github.admissionCommittee.model;
 
-import javax.persistence.*;
+import com.github.admissionCommittee.model.enums.UserTypeEnum;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+
+@Data
 @Entity
+@NoArgsConstructor
 @Table(name = "user")
-@AttributeOverride(name = "id", column = @Column(name = "user_id",
-        nullable = false))
+@EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
+@AttributeOverride(name = "id", column = @Column(name = "user_id", nullable = false))
 public class User extends AbstractEntity {
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private Sheet sheet;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private ExamCertificate examCertificate;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private SchoolCertificate schoolCertificate;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "faculty_id", nullable = false)
-    public Faculty faculty;
+    @ManyToOne
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type")
+    @Column(name = "type", nullable = false)
     private UserTypeEnum type;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Column(name = "patronymic")
     private String patronymic;
 
-    @Column(name = "mail")
+    @Email
+    @Column(name = "mail", nullable = false, unique = true)
     private String mail;
 
     @Column(name = "age")
     private int age;
 
-    public Sheet getSheet() {
-        return sheet;
-    }
-
-    public void setSheet(Sheet sheet) {
-        this.sheet = sheet;
-    }
-
-    public ExamCertificate getExamCertificate() {
-        return examCertificate;
-    }
-
-    public void setExamCertificate(ExamCertificate examCertificate) {
-        this.examCertificate = examCertificate;
-    }
-
-    public SchoolCertificate getSchoolCertificate() {
-        return schoolCertificate;
-    }
-
-    public void setSchoolCertificate(SchoolCertificate schoolCertificate) {
-        this.schoolCertificate = schoolCertificate;
-    }
-
-    public String getPatronymic() {
-        return patronymic;
-    }
-
-    public void setPatronymic(String patronymic) {
+    public User(UserTypeEnum type, String firstName, String lastName, String patronymic,
+                String mail, int age) {
+        this.type = type;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.patronymic = patronymic;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
         this.mail = mail;
-    }
-
-    public Faculty getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
-
-    public User() {
-    }
-
-    public User(UserTypeEnum type, String firstName, String lastName, int age) {
-        this.type = type;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.age = age;
     }
 
-    public UserTypeEnum getType() {
-        return type;
-    }
-
-    public void setType(UserTypeEnum type) {
-        this.type = type;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        final User user = (User) o;
-
-        return age == user.age && (sheet != null ? sheet.equals(user.sheet) :
-                user.sheet == null)
-                && (examCertificate != null
-                ? examCertificate.equals(user.examCertificate)
-                : user.examCertificate == null)
-                && (schoolCertificate != null
-                ? schoolCertificate.equals(user.schoolCertificate)
-                : user.schoolCertificate == null)
-                && type == user.type && firstName.equals(user.firstName)
-                && lastName.equals(user.lastName);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = sheet != null ? sheet.hashCode() : 0;
-        result = 31 * result + (examCertificate != null ? examCertificate
-                .hashCode() : 0);
-        result = 31 * result + (schoolCertificate != null ? schoolCertificate
-                .hashCode() : 0);
-        result = 31 * result + type.hashCode();
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + lastName.hashCode();
-        result = 31 * result + age;
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "sheet=" + sheet +
-                ", examCertificate=" + examCertificate +
-                ", schoolCertificate=" + schoolCertificate +
-                ", faculty=" + faculty +
-                ", type=" + type +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", patronymic='" + patronymic + '\'' +
-                ", mail='" + mail + '\'' +
-                ", age=" + age +
-                '}';
-    }
 }

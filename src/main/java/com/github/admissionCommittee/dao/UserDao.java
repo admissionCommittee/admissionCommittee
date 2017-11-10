@@ -2,9 +2,6 @@ package com.github.admissionCommittee.dao;
 
 import com.github.admissionCommittee.model.User;
 
-import java.util.List;
-
-
 public class UserDao extends GenericDao<User> {
 
     public UserDao() {
@@ -14,10 +11,12 @@ public class UserDao extends GenericDao<User> {
     //for DB search by mail implementation
     public User getByMail(String mail) {
         openSessionWithTransaction();
-        List userByMail = getSession().createQuery("SELECT u " +
-                "from User u where u.mail=:mail").setParameter(
-                "mail", mail).list();
+        final User result = (User) getSession()
+            .createQuery("from User u where u.mail=:mail")
+            .setParameter("mail", mail)
+            .uniqueResult();
         closeSessionWithTransaction();
-        return (User) userByMail.get(0);
+        return result;
     }
+
 }

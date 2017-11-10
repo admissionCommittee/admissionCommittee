@@ -9,6 +9,7 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 // this turns logging on in tests:
@@ -28,4 +29,6 @@ dependencies {
 
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.12.Final'
     compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.4.Final'
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
+
 }

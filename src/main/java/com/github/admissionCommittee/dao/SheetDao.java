@@ -12,11 +12,12 @@ public class SheetDao extends GenericDao<Sheet> {
     }
 
     //for DB search by mail implementation
+    @SuppressWarnings("unchecked")
     public List<Sheet> getByFaculty(Faculty faculty) {
         openSessionWithTransaction();
-        List sheetsByFaculty = getSession().createQuery("SELECT sh " +
-                "from Sheet sh where sh.faculty=:faculty").setParameter(
-                "faculty", faculty).list();
+        final List<Sheet> sheetsByFaculty = (List<Sheet>) getSession()
+            .createQuery("from Sheet S where s.faculty=:faculty")
+            .setParameter("faculty", faculty).list();
         closeSessionWithTransaction();
         return sheetsByFaculty;
     }
