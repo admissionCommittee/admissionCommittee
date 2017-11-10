@@ -7,7 +7,7 @@ import java.util.List;
 
 public class SheetDao extends GenericDao<Sheet> {
 
-    public SheetDao() {
+    protected SheetDao() {
         super(Sheet.class);
     }
 

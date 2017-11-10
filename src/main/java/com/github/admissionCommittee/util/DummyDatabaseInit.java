@@ -1,5 +1,6 @@
 package com.github.admissionCommittee.util;
 
+import com.github.admissionCommittee.dao.DaoFactory;
 import com.github.admissionCommittee.model.ExamCertificate;
 import com.github.admissionCommittee.model.Faculty;
 import com.github.admissionCommittee.model.SchoolCertificate;
@@ -31,16 +32,16 @@ public class DummyDatabaseInit {
 
     private void setUp() {
 
-        UserDao userDao = new UserDao();
+        UserDao userDao = DaoFactory.getDaoFactory().getUserDao();
 
         final User user1 = new User(UserTypeEnum.USER, "Иванов", "Пётр", "Сергеевич",
-            "ivanov_piotr@epam.com", "qwerty", LocalDate.of(1992, Month.AUGUST, 12));
+                "ivanov_piotr@epam.com", "qwerty", LocalDate.of(1992, Month.AUGUST, 12));
         final User user3 = new User(UserTypeEnum.USER, "Петров", "Пётр", "Сергеевич",
                 "user@epam.com", "123", LocalDate.of(1990, Month.APRIL, 2));
         final User admin1 = new User(UserTypeEnum.ADMIN, "Семёнова", "Юлия", "Викторовна",
-            "iuliia_semionova@epam.com", "123456", LocalDate.of(1985, Month.DECEMBER, 22));
+                "iuliia_semionova@epam.com", "123456", LocalDate.of(1985, Month.DECEMBER, 22));
         final User user2 = new User(UserTypeEnum.USER, "Касьянов", "Максим", "Евгеньевич",
-            "kasianov_maksim@epam.com", "PaSsWoRd", LocalDate.of(1997, Month.FEBRUARY, 17));
+                "kasianov_maksim@epam.com", "PaSsWoRd", LocalDate.of(1997, Month.FEBRUARY, 17));
 
         userDao.create(user1);
         userDao.create(admin1);
@@ -48,7 +49,7 @@ public class DummyDatabaseInit {
         userDao.create(user3);
 
 
-        SubjectDao subjectDao = new SubjectDao();
+        SubjectDao subjectDao = DaoFactory.getDaoFactory().getSubjectDao();
 
         final Subject subject1 = new Subject(SubjectNameEnum.BIOLOGY);
         final Subject subject2 = new Subject(SubjectNameEnum.ALGEBRA);
@@ -59,7 +60,7 @@ public class DummyDatabaseInit {
         subjectDao.create(subject3);
 
 
-        FacultyDao facultyDao = new FacultyDao();
+        FacultyDao facultyDao = DaoFactory.getDaoFactory().getFacultyDao();
 
         final HashSet<Subject> faculty1Subjects = new HashSet<>();
         faculty1Subjects.add(subject1);
@@ -80,25 +81,26 @@ public class DummyDatabaseInit {
         facultyDao.create(faculty3);
 
 
-        SchoolCertificateDao schoolCertificateDao = new SchoolCertificateDao();
+        SchoolCertificateDao schoolCertificateDao = DaoFactory.getDaoFactory()
+                .getSchoolCertificateDao();
 
         final HashMap<Subject, Integer> sc1Subjects = new HashMap<>();
         sc1Subjects.put(subject1, 5);
         sc1Subjects.put(subject3, 4);
         final SchoolCertificate schoolCertificate1 =
-            new SchoolCertificate(user1, 2017, sc1Subjects);
+                new SchoolCertificate(user1, 2017, sc1Subjects);
 
         final HashMap<Subject, Integer> sc2Subjects = new HashMap<>();
         sc2Subjects.put(subject2, 4);
         sc2Subjects.put(subject3, 3);
         final SchoolCertificate schoolCertificate2 =
-            new SchoolCertificate(user2, 2016, sc2Subjects);
+                new SchoolCertificate(user2, 2016, sc2Subjects);
 
         schoolCertificateDao.create(schoolCertificate1);
         schoolCertificateDao.create(schoolCertificate2);
 
 
-        ExamCertificateDao examCertificateDao = new ExamCertificateDao();
+        ExamCertificateDao examCertificateDao = DaoFactory.getDaoFactory().getExamCertificateDao();
 
         final HashMap<Subject, Integer> ec1Subjects = new HashMap<>();
         ec1Subjects.put(subject1, 87);
@@ -114,7 +116,7 @@ public class DummyDatabaseInit {
         examCertificateDao.create(examCertificate2);
 
 
-        SheetDao sheetDao = new SheetDao();
+        SheetDao sheetDao = DaoFactory.getDaoFactory().getSheetDao();
         final Sheet sheet = new Sheet(user2, faculty1, 0, 0);
         sheetDao.create(sheet);
 
@@ -123,7 +125,7 @@ public class DummyDatabaseInit {
         UserService userService = new UserService();
 
         User user = userService.getByMail("user@epam.com");
-        System.out.println("!! " +  user.getPassword() + " !!!!!!!!!!!!!!! " );
+        System.out.println("!! " + user.getPassword() + " !!!!!!!!!!!!!!! ");
 
     }
 

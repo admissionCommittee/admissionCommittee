@@ -4,7 +4,7 @@ import com.github.admissionCommittee.model.SchoolCertificate;
 
 public class SchoolCertificateDao extends GenericDao<SchoolCertificate> {
 
-    public SchoolCertificateDao() {
+    protected SchoolCertificateDao() {
         super(SchoolCertificate.class);
     }
 

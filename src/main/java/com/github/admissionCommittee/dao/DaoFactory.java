@@ -25,42 +25,66 @@ public class DaoFactory {
 
     public ExamCertificateDao getExamCertificateDao() {
         if (examCertificateDao == null) {
-            examCertificateDao = new ExamCertificateDao();
+            synchronized (DaoFactory.class) {
+                if (examCertificateDao == null) {
+                    examCertificateDao = new ExamCertificateDao();
+                }
+            }
         }
         return examCertificateDao;
     }
 
     public SchoolCertificateDao getSchoolCertificateDao() {
         if (schoolCertificateDao == null) {
-            schoolCertificateDao = new SchoolCertificateDao();
+            synchronized (DaoFactory.class) {
+                if (schoolCertificateDao == null) {
+                    schoolCertificateDao = new SchoolCertificateDao();
+                }
+            }
         }
         return schoolCertificateDao;
     }
 
     public SheetDao getSheetDao() {
         if (sheetDao == null) {
-            sheetDao = new SheetDao();
+            synchronized (DaoFactory.class) {
+                if (sheetDao == null) {
+                    sheetDao = new SheetDao();
+                }
+            }
         }
         return sheetDao;
     }
 
     public SubjectDao getSubjectDao() {
         if (subjectDao == null) {
-            subjectDao = new SubjectDao();
+            synchronized (DaoFactory.class) {
+                if (subjectDao == null) {
+                    subjectDao = new SubjectDao();
+                }
+            }
         }
         return subjectDao;
     }
 
     public UserDao getUserDao() {
         if (userDao == null) {
-            userDao = new UserDao();
+            synchronized (DaoFactory.class) {
+                if (userDao == null) {
+                    userDao = new UserDao();
+                }
+            }
         }
         return userDao;
     }
 
     public FacultyDao getFacultyDao() {
         if (facultyDao == null) {
-            facultyDao = new FacultyDao();
+            synchronized (DaoFactory.class) {
+                if (facultyDao == null) {
+                    facultyDao = new FacultyDao();
+                }
+            }
         }
         return facultyDao;
     }
