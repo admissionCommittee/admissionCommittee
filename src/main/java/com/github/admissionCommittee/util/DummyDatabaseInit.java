@@ -16,6 +16,8 @@ import com.github.admissionCommittee.dao.SubjectDao;
 import com.github.admissionCommittee.dao.UserDao;
 import com.github.admissionCommittee.service.UserService;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -32,13 +34,13 @@ public class DummyDatabaseInit {
         UserDao userDao = new UserDao();
 
         final User user1 = new User(UserTypeEnum.USER, "Иванов", "Пётр", "Сергеевич",
-            "ivanov_piotr@epam.com", "qwerty", 20);
+            "ivanov_piotr@epam.com", "qwerty", LocalDate.of(1992, Month.AUGUST, 12));
         final User user3 = new User(UserTypeEnum.USER, "Петров", "Пётр", "Сергеевич",
-                "user@epam.com", "123", 20);
+                "user@epam.com", "123", LocalDate.of(1990, Month.APRIL, 2));
         final User admin1 = new User(UserTypeEnum.ADMIN, "Семёнова", "Юлия", "Викторовна",
-            "iuliia_semionova@epam.com", "123456", 31);
+            "iuliia_semionova@epam.com", "123456", LocalDate.of(1985, Month.DECEMBER, 22));
         final User user2 = new User(UserTypeEnum.USER, "Касьянов", "Максим", "Евгеньевич",
-            "kasianov_maksim@epam.com", "PaSsWoRd", 18);
+            "kasianov_maksim@epam.com", "PaSsWoRd", LocalDate.of(1997, Month.FEBRUARY, 17));
 
         userDao.create(user1);
         userDao.create(admin1);

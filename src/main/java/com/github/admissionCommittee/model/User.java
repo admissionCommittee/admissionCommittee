@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -59,18 +60,18 @@ public class User extends AbstractEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "age")
-    private int age;
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 
     public User(UserTypeEnum userRole, String firstName, String lastName, String patronymic,
-                String mail, String password, int age) {
+                String mail, String password, LocalDate birthDate) {
         this.userRole = userRole;
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
         this.mail = mail;
         this.password = password;
-        this.age = age;
+        this.birthDate = birthDate;
     }
 
 }
