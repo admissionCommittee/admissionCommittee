@@ -27,7 +27,7 @@ public class ExamCertificateService extends GenericService<ExamCertificate> {
                 examCertificate.getUser().getSheet().getAverageSchoolCertificateScore()));
     }
 
-    private double sumExamScore(ExamCertificate examCertificate) {
+    private int sumExamScore(ExamCertificate examCertificate) {
         Set<Subject> subjects = examCertificate.getUser().getSheet().getFaculty().getSubjects();
         Map<Subject, Integer> subjects1 = examCertificate.getSubjects();
         return subjects1.keySet().parallelStream()
