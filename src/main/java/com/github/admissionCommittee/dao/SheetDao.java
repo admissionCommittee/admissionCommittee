@@ -16,7 +16,7 @@ public class SheetDao extends GenericDao<Sheet> {
     public List<Sheet> getByFaculty(Faculty faculty) {
         openSessionWithTransaction();
         final List<Sheet> sheetsByFaculty = (List<Sheet>) getSession()
-            .createQuery("from Sheet S where s.faculty=:faculty")
+            .createQuery("from Sheet s where s.faculty=:faculty")
             .setParameter("faculty", faculty).list();
         closeSessionWithTransaction();
         return sheetsByFaculty;
