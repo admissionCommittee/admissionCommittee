@@ -40,8 +40,8 @@ public class User extends AbstractEntity {
     private Faculty faculty;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
-    private UserTypeEnum type;
+    @Column(name = "userRole", nullable = false)
+    private UserTypeEnum userRole;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -62,9 +62,9 @@ public class User extends AbstractEntity {
     @Column(name = "age")
     private int age;
 
-    public User(UserTypeEnum type, String firstName, String lastName, String patronymic,
+    public User(UserTypeEnum userRole, String firstName, String lastName, String patronymic,
                 String mail, String password, int age) {
-        this.type = type;
+        this.userRole = userRole;
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;

@@ -8,7 +8,7 @@ public class UserDao extends GenericDao<User> {
         super(User.class);
     }
 
-    //for DB search by mail implementation
+    //for DB search by email implementation
     public User getByMail(String mail) {
         openSessionWithTransaction();
         final User result = (User) getSession()
