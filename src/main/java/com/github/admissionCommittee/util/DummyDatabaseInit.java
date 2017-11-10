@@ -3,10 +3,11 @@ package com.github.admissionCommittee.util;
 import com.github.admissionCommittee.model.ExamCertificate;
 import com.github.admissionCommittee.model.Faculty;
 import com.github.admissionCommittee.model.SchoolCertificate;
+import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
-import com.github.admissionCommittee.model.SubjectNameEnum;
-import com.github.admissionCommittee.model.UserTypeEnum;
+import com.github.admissionCommittee.model.enums.SubjectNameEnum;
+import com.github.admissionCommittee.model.enums.UserTypeEnum;
 import com.github.admissionCommittee.dao.ExamCertificateDao;
 import com.github.admissionCommittee.dao.FacultyDao;
 import com.github.admissionCommittee.dao.SchoolCertificateDao;
@@ -112,8 +113,6 @@ public class DummyDatabaseInit {
         sheetDao.create(sheet);
 
         final User byMail = userDao.getByMail("kasianov_maksim@epam.com");
-        System.out.println(byMail.getExamCertificate().getSubjects().entrySet().iterator().next()
-            .getKey().getName());
 
     }
 

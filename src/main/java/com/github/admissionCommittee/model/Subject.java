@@ -1,6 +1,6 @@
 package com.github.admissionCommittee.model;
 
-import com.github.admissionCommittee.core.enums.SubjectNameEnum;
+import com.github.admissionCommittee.model.enums.SubjectNameEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
