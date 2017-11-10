@@ -50,6 +50,7 @@ public abstract class GenericDao<T> {
         if (instance != null) {
             openSessionWithTransaction();
             session.delete(instance);
+            session.flush();
             closeSession();
         }
     }
