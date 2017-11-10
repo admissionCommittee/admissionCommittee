@@ -2,6 +2,7 @@ package com.github.admissionCommittee.web.controllers.listeners;
 
 import com.github.admissionCommittee.dao.UserDao;
 import com.github.admissionCommittee.service.UserService;
+import com.github.admissionCommittee.util.DummyDatabaseInit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +26,8 @@ public class InitListener implements ServletContextListener{
             log.info("Start Servlet initialization");
 
             // Service layer injection
-            //ToDo добавить параметр экземпляр DAO вместо null
+            //ToDo инициализация базы
+            DummyDatabaseInit.main(null);
             UserService userService = new UserService(new UserDao());
             sce.getServletContext().setAttribute("userService", userService);
             log.info("End Servlet initialization");

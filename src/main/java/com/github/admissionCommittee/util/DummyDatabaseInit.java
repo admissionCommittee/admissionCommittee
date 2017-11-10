@@ -14,6 +14,7 @@ import com.github.admissionCommittee.dao.SchoolCertificateDao;
 import com.github.admissionCommittee.dao.SheetDao;
 import com.github.admissionCommittee.dao.SubjectDao;
 import com.github.admissionCommittee.dao.UserDao;
+import com.github.admissionCommittee.service.UserService;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,7 +24,7 @@ public class DummyDatabaseInit {
     public static void main(String[] args) {
         final DummyDatabaseInit instance = new DummyDatabaseInit();
         instance.setUp();
-        HibernateUtil.getSessionFactory().close();
+        //HibernateUtil.getSessionFactory().close();
     }
 
     private void setUp() {
@@ -32,6 +33,8 @@ public class DummyDatabaseInit {
 
         final User user1 = new User(UserTypeEnum.USER, "Иванов", "Пётр", "Сергеевич",
             "ivanov_piotr@epam.com", "qwerty", 20);
+        final User user3 = new User(UserTypeEnum.USER, "Петров", "Пётр", "Сергеевич",
+                "user@epam.com", "123", 20);
         final User admin1 = new User(UserTypeEnum.ADMIN, "Семёнова", "Юлия", "Викторовна",
             "iuliia_semionova@epam.com", "123456", 31);
         final User user2 = new User(UserTypeEnum.USER, "Касьянов", "Максим", "Евгеньевич",
@@ -40,6 +43,7 @@ public class DummyDatabaseInit {
         userDao.create(user1);
         userDao.create(admin1);
         userDao.create(user2);
+        userDao.create(user3);
 
 
         SubjectDao subjectDao = new SubjectDao();
@@ -113,6 +117,11 @@ public class DummyDatabaseInit {
         sheetDao.create(sheet);
 
         final User byMail = userDao.getByMail("kasianov_maksim@epam.com");
+
+        UserService userService = new UserService(userDao);
+
+        User user = userService.getByMail("user@epam.com");
+        System.out.println("!! " +  user.getPassword() + " !!!!!!!!!!!!!!! " );
 
     }
 

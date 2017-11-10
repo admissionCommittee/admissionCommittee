@@ -55,6 +55,7 @@ public class LoginController extends HttpServlet {
         if ("/login".equalsIgnoreCase(request.getServletPath())) {
             User tmpUser = new User();
             tmpUser.setMail(request.getParameter("login_email"));
+            tmpUser.setPassword(request.getParameter("password"));
             //tmpUser.setPassword(request.getParameter("password"));
             log.debug(String.format("Try to login with login: %s", tmpUser.getMail()));
 
