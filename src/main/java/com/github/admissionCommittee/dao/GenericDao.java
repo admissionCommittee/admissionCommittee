@@ -46,9 +46,9 @@ public abstract class GenericDao<T> {
     }
 
     public void delete(long id) {
-        T instance = get(id);
+        openSessionWithTransaction();
+        T instance = session.get(type, id);
         if (instance != null) {
-            openSessionWithTransaction();
             session.delete(instance);
             session.flush();
             closeSession();

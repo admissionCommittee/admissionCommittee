@@ -63,6 +63,19 @@ public class User extends AbstractEntity {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
+    @Column(name = "is_enlisted")
+    private boolean isEnlisted;
+
+    //TODO service check
+
+    public boolean isEnlisted() {
+        return isEnlisted;
+    }
+
+    public void setEnlisted(boolean enlisted) {
+        isEnlisted = enlisted;
+    }
+
     public User(UserTypeEnum userRole, String firstName, String lastName, String patronymic,
                 String mail, String password, LocalDate birthDate) {
         this.userRole = userRole;
