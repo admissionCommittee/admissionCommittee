@@ -50,9 +50,8 @@ public abstract class GenericDao<T> {
         T instance = session.get(type, id);
         if (instance != null) {
             session.delete(instance);
-            session.flush();
-            closeSession();
         }
+        closeSessionWithTransaction();
     }
 
     public Class<T> getType() {
