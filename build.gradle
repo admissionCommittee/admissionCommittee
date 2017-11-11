@@ -25,10 +25,9 @@ dependencies {
     compile 'ch.qos.logback:logback-classic:+',
             'com.h2database:h2:+',
             'org.glassfish.web:javax.servlet.jsp.jstl:+',
-            'org.glassfish:javax.el:3.0.1-b08'
-
-    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.12.Final'
-    compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.4.Final'
-    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
+            'org.glassfish:javax.el:3.0.1-b08',
+            'org.hibernate:hibernate-core:+',
+            'org.hibernate.validator:hibernate-validator:+',
+			'org.projectlombok:lombok:+'
 
 }
