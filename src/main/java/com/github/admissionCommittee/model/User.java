@@ -1,5 +1,6 @@
 package com.github.admissionCommittee.model;
 
+import com.github.admissionCommittee.model.enums.UserAttendeeState;
 import com.github.admissionCommittee.model.enums.UserTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -41,6 +42,10 @@ public class User extends AbstractEntity {
     @Column(name = "userRole", nullable = false)
     private UserTypeEnum userRole;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "userAttendeeStatus",nullable = false)
+    private UserAttendeeState userAttendeeState;
+
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
@@ -60,6 +65,7 @@ public class User extends AbstractEntity {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
+    @Deprecated
     @Column(name = "is_enlisted")
     private boolean enlisted;
 
