@@ -28,9 +28,6 @@ import java.time.LocalDate;
 public class User extends AbstractEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private Sheet sheet;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private ExamCertificate examCertificate;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
@@ -64,17 +61,9 @@ public class User extends AbstractEntity {
     private LocalDate birthDate;
 
     @Column(name = "is_enlisted")
-    private boolean isEnlisted;
+    private boolean enlisted;
 
     //TODO service check
-
-    public boolean isEnlisted() {
-        return isEnlisted;
-    }
-
-    public void setEnlisted(boolean enlisted) {
-        isEnlisted = enlisted;
-    }
 
     public User(UserTypeEnum userRole, String firstName, String lastName, String patronymic,
                 String mail, String password, LocalDate birthDate) {

@@ -27,7 +27,7 @@ import java.util.Set;
 @Table(name = "faculty")
 @EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
 @AttributeOverride(name = "id", column = @Column(name = "faculty_id", nullable = false))
-@ToString(exclude = {"users", "sheet"})
+@ToString(exclude = {"users"})
 public class Faculty extends AbstractEntity {
 
     @Column(name = "name", nullable = false)
@@ -36,9 +36,6 @@ public class Faculty extends AbstractEntity {
     @NonNull
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "faculty")
     private Set<User> users = new HashSet<>();
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "faculty")
-    private Sheet sheet;
 
     @Column(name = "people_limit")
     private int peopleLimit;
