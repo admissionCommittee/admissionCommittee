@@ -6,7 +6,7 @@ public enum SubjectNameEnum {
     ALGEBRA,
     GEOMETRY,
     BIOLOGY,
-    GEOGRAFY,
+    GEOGRAPHY,
     PHYSICS,
     CHEMISTRY,
     ENGLISH,
