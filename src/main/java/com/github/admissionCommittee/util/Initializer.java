@@ -462,8 +462,10 @@ final class Initializer {
 
     }
 
-    public static void main(String[] args) {
-        System.out.println(true);
-    }
+//    public static void main(String[] args) {
+//        final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//        System.out.println(true);
+//        sessionFactory.close();
+//    }
 
 }

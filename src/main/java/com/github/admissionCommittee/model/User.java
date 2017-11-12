@@ -74,6 +74,7 @@ public class User extends AbstractEntity {
     public User(UserTypeEnum userRole, String firstName, String lastName, String patronymic,
                 String mail, String password, LocalDate birthDate) {
         this.userRole = userRole;
+        this.userAttendeeState = UserAttendeeState.ABSENTEE;
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
