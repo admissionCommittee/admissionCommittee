@@ -15,7 +15,7 @@ import java.io.IOException;
  *
  */
 
-@WebFilter({"/user", "/admin"})
+@WebFilter({"/user", "/admin","/certificate", "/profile"})
 public class AuthorizationFilter implements Filter {
     private static final Logger log = LoggerFactory.getLogger(AuthorizationFilter.class);
 
