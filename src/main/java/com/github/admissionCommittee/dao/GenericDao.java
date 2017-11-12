@@ -1,12 +1,13 @@
 package com.github.admissionCommittee.dao;
 
+import com.github.admissionCommittee.model.AbstractEntity;
 import com.github.admissionCommittee.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
-public abstract class GenericDao<T> {
+public abstract class GenericDao<T extends AbstractEntity> {
 
     private Class<T> type;
     private Session session;
@@ -16,15 +17,25 @@ public abstract class GenericDao<T> {
         this.type = type;
     }
 
-    public void create(T instance) {
+    public void save(T instance) {
         openSessionWithTransaction();
-        session.save(instance);
+        if (instance.isNew()) {
+            session.save(instance);
+        } else {
+            session.update(instance);
+        }
         closeSessionWithTransaction();
     }
 
-    public void update(T instance) {
+    public void save(List<T> instance) {
         openSessionWithTransaction();
-        session.update(instance);
+        instance.parallelStream().forEachOrdered(t -> {
+            if (t.isNew()) {
+                session.save(instance);
+            } else {
+                session.update(instance);
+            }
+        });
         closeSessionWithTransaction();
     }
 

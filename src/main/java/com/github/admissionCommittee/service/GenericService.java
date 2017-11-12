@@ -19,11 +19,13 @@ public abstract class GenericService<T extends AbstractEntity> {
     public void save(T instance) {
         Validator.validateNotNull(instance, Validator
                 .MESSAGE_FOR_SOURCE_IF_NULL);
-        if (instance.isNew()) {
-            getDao().create(instance);
-        }else{
-            getDao().update(instance);
-        }
+        getDao().save(instance);
+    }
+
+    public void save(List<T> instance) {
+        Validator.validateNotNull(instance, Validator
+                .MESSAGE_FOR_SOURCE_IF_NULL);
+        getDao().save(instance);
     }
 
     public T get(long id) {

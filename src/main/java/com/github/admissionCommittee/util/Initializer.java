@@ -23,7 +23,6 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 final class Initializer {
@@ -93,17 +92,17 @@ final class Initializer {
         final Subject subjectGeography = new Subject(SubjectNameEnum.GEOGRAPHY);
 
         final SubjectDao subjectDao = DaoFactory.getDaoFactory().getSubjectDao();
-        subjectDao.create(subjectPhysics);
-        subjectDao.create(subjectInformatics);
-        subjectDao.create(subjectChemistry);
-        subjectDao.create(subjectBiology);
-        subjectDao.create(subjectEnglish);
-        subjectDao.create(subjectHistory);
-        subjectDao.create(subjectRussian);
-        subjectDao.create(subjectLiterature);
-        subjectDao.create(subjectAlgebra);
-        subjectDao.create(subjectGeometry);
-        subjectDao.create(subjectGeography);
+        subjectDao.save(subjectPhysics);
+        subjectDao.save(subjectInformatics);
+        subjectDao.save(subjectChemistry);
+        subjectDao.save(subjectBiology);
+        subjectDao.save(subjectEnglish);
+        subjectDao.save(subjectHistory);
+        subjectDao.save(subjectRussian);
+        subjectDao.save(subjectLiterature);
+        subjectDao.save(subjectAlgebra);
+        subjectDao.save(subjectGeometry);
+        subjectDao.save(subjectGeography);
 
         // init faculties
         final Faculty facultyStomatology = new Faculty(
@@ -461,6 +460,10 @@ final class Initializer {
 //        final User userByMail2 = userService.getByMail("kad@epam.com");
 //        final User userByMail3 = userService.getByMail("kad@epam.com");
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println(true);
     }
 
 }
