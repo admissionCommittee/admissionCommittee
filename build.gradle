@@ -28,6 +28,6 @@ dependencies {
             'org.glassfish:javax.el:3.0.1-b08',
             'org.hibernate:hibernate-core:+',
             'org.hibernate.validator:hibernate-validator:+',
-			'org.projectlombok:lombok:+'
+            'org.projectlombok:lombok:+'
 
 }
