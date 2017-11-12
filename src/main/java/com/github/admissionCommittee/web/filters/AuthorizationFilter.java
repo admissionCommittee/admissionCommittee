@@ -1,4 +1,4 @@
-package com.github.admissionCommittee.web.controllers.filters;
+package com.github.admissionCommittee.web.filters;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

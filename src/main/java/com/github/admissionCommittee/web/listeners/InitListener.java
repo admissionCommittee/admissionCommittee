@@ -1,5 +1,7 @@
-package com.github.admissionCommittee.web.controllers.listeners;
+package com.github.admissionCommittee.web.listeners;
 
+import com.github.admissionCommittee.service.FacultyService;
+import com.github.admissionCommittee.service.SchoolCertificateService;
 import com.github.admissionCommittee.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +26,10 @@ public class InitListener implements ServletContextListener{
             log.info("Start Servlet initialization");
 
             // Service layer injection
-            //ToDo инициализация базы
-            UserService userService = new UserService();
-            sce.getServletContext().setAttribute("userService", userService);
+            sce.getServletContext().setAttribute("userService", new UserService());
+            sce.getServletContext().setAttribute("certificateService", new SchoolCertificateService());
+            sce.getServletContext().setAttribute("facultyService", new FacultyService());
+
             log.info("End Servlet initialization");
         }
 }

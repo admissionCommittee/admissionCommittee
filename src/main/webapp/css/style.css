@@ -1,6 +1,8 @@
 body{
     margin:0;
     font-family: tahoma;
+    background-color: #edeef0;
+    text-align: center;
 }
 
 A{
@@ -14,6 +16,18 @@ A:hover {
     color: #d45252;
 }
 
+.none{
+    height: 60px;
+}
+
+.div-none-small{
+    height: 15px;
+}
+
+.div-space{
+    width: 10px;
+}
+
 div#header{
     display: flex;
     flex-direction: row;
@@ -25,35 +39,83 @@ div#header{
     z-index: 9999;
 }
 
-div#gohome, #searchinhead, #logout{
+div#left_header, #center_header, #logout_header{
     height: 40px;
+    line-height: 40px;
 }
 
-div#gohome{
+div#left_header{
     width:190px;
 }
 
-div#searchinhead{
+div#center_header{
     text-align: left;
     width:600px;
 }
 
-div#logout{
+div#logout_header{
     color:white;
     padding-left:15px;
-    text-align: left;
     width:175px;
 }
-div#logout a{
+div#logout_header a{
     color:white;
 }
-
-div#logout:hover{
+div#logout_header:hover{
     background: #3c9125;
 }
 
-div#none{
-    height:60px;
+div#contentconteiner{
+    margin:0 auto;
+    width:900px;
+    display: flex;
+    flex-direction: column;
+}
+
+div#infopanel{
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+}
+
+div#left-infopanel{
+    width: 450px;
+}
+
+div#right-infopanel{
+    border-radius: 7px;
+    background: #fafafa;
+    width: 430px;
+
+}
+
+div#avatarcontainter{
+    border-radius: 7px;
+    background-color: white;
+    height: 340px;
+    padding:9px;
+}
+
+div#bavatar{
+    border-radius: 7px;
+    height:100%;
+    background-size: auto 100%;
+}
+
+div#certificate-info{
+    margin: 10px;
+    padding:10px;
+    border-radius: 7px;
+    background-size: auto 100%;
+    background-color: white;
+}
+
+div#faculty-info{
+    margin: 10px;
+    padding:10px;
+    border-radius: 7px;
+    background-size: auto 100%;
+    background-color: white;
 }
 
 .login_form {
@@ -78,6 +140,12 @@ li{
     position:relative;
 }
 
+dt {
+    text-align: right;
+    float: left;
+    width: 130px;
+}
+
 /* у первого и последнего li - выделенная черта
 li:first-child, li:last-child {
     border-bottom:1px solid #777;
@@ -90,7 +158,11 @@ input {
 }
 
 input:required {
-   background: #fff "*" no-repeat 98% center;
+    background: #fff "*" no-repeat 98% center;
+}
+
+.score {
+    width: 5em;
 }
 
 button {
