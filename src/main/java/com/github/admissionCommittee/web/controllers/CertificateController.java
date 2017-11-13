@@ -5,6 +5,7 @@ import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
 import com.github.admissionCommittee.service.FacultyService;
 import com.github.admissionCommittee.service.SchoolCertificateService;
+import com.github.admissionCommittee.service.SubjectService;
 import com.github.admissionCommittee.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet({"/certificate"})
@@ -46,11 +49,22 @@ public class CertificateController extends HttpServlet {
         User user = userService.get((long) session.getAttribute("user_id"));
         SchoolCertificate certificate = user.getSchoolCertificate();
 
+        if (request.getParameter("save") != null) {
+            SchoolCertificate newCertificate = new SchoolCertificate();
+        }
+
 
         if(certificate != null){
-            Map<Subject, Integer> map = certificate.getSubjects();
-
+            Map<Subject, Integer> mapSubjectsScores = certificate.getSubjects();
+            request.setAttribute("mapSubjectsScores", mapSubjectsScores);
+            request.setAttribute("certificate", user.getSchoolCertificate());
         }
+
+        //todo add service injection
+        List<Subject> list = new SubjectService().getAll();
+        list.sort(Comparator.comparing(p -> p.getName().toString()));
+        request.setAttribute("listSubjects", list);
+        //Collections.sort(list);
 
         request.getRequestDispatcher("/WEB-INF/jsp/certificate.jsp").forward(request, response);
     }
