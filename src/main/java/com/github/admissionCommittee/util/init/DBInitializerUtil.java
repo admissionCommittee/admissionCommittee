@@ -20,8 +20,8 @@ final class DBInitializerUtil {
 
         // init users
         List<User> userList = new UserInitializerUtil().initEntities(
-                16403, "./src/main/resources/db" +
-                        "/UserInitData.txt", "no path");
+                16403, DBInitializerUtil.class.getResource("/db" +
+                        "/UserInitData.txt").getPath(), "no path");
         final UserService userService = new UserService();
         userService.save(userList);
 
@@ -34,8 +34,8 @@ final class DBInitializerUtil {
 
         // init faculties //TODO check
         List<Faculty> facultyList = new FacultyInitializerUtil().initEntities
-                (17, "./src/main/resources/db/FacultyInitData.txt",
-                        "no output");
+                (17, DBInitializerUtil.class.getResource("/db/FacultyInitData" +
+                        ".txt").toString(), "no output");
         FacultyService facultyService = new FacultyService();
         facultyService.save(facultyList);
 
