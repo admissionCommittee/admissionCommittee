@@ -46,7 +46,7 @@ public class User extends AbstractEntity {
     private UserTypeEnum userRole;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "userAttendeeStatus",nullable = false)
+    @Column(name = "userAttendeeStatus", nullable = false)
     private UserAttendeeState userAttendeeState;
 
     @Column(name = "first_name", nullable = false)
@@ -74,10 +74,12 @@ public class User extends AbstractEntity {
 
     //TODO service check
 
-    public User(UserTypeEnum userRole, String lastName, String firstName, String patronymic,
+    public User(UserAttendeeState userAttendeeState, UserTypeEnum userRole, String lastName,
+                String firstName,
+                String patronymic,
                 String mail, String password, LocalDate birthDate) {
         this.userRole = userRole;
-        this.userAttendeeState = UserAttendeeState.ABSENTEE;
+        this.userAttendeeState = UserAttendeeState.NONPARTICIPANT;
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;

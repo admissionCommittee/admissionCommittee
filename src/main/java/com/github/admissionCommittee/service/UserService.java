@@ -15,7 +15,7 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import static com.github.admissionCommittee.model.enums.UserAttendeeState
-        .ABSENTEE;
+        .NONPARTICIPANT;
 import static com.github.admissionCommittee.model.enums.UserAttendeeState
         .EXCLUDED;
 import static com.github.admissionCommittee.model.enums.UserAttendeeState
@@ -36,10 +36,8 @@ public class UserService extends GenericService<User> {
 
     @Deprecated
     public void updateIsEnlisted(Map<Faculty, List<User>> facultyAttendeeList) {
-        facultyAttendeeList.values().parallelStream()
-                .forEachOrdered(list -> list.parallelStream().forEachOrdered
-                        (user -> user
-                                .setEnlisted(true)));
+        facultyAttendeeList.values().forEach((list -> list.forEach((user -> user
+                .setEnlisted(true)))));
     }
 
     //get only attendees that satisfy the attendee demands
@@ -48,14 +46,14 @@ public class UserService extends GenericService<User> {
         List<Faculty> facultyList = new FacultyService()
                 .getAll();
         facultyList.sort(Comparator.comparing(Faculty::getName));
-        facultyList.parallelStream().forEachOrdered(faculty -> {
+        facultyList.forEach(faculty -> {
             approvedMap.put(faculty, getApprovedSheets(sheetService.getByFaculty
                             (faculty),
                     faculty.getPeopleLimit()));
         });
 
         //updateIsEnlisted
-       // updateIsEnlisted(approvedMap);
+        // updateIsEnlisted(approvedMap);
         return approvedMap;
     }
 
@@ -63,7 +61,7 @@ public class UserService extends GenericService<User> {
                                         Integer attendeesLimit) {
         //getApprovedSheets - that belonging to successful attendees
         Map<Integer, Sheet> userMap = new TreeMap<>();
-        sheetList.parallelStream().forEachOrdered(element -> {
+        sheetList.forEach(element -> {
             if (userMap.get(element.getSumExamCertificateScore())
                     == null) {
                 userMap.put(element.getSumExamCertificateScore(),
@@ -87,7 +85,7 @@ public class UserService extends GenericService<User> {
             counter++;
         }
 
-        List<User> students = userMap.values().parallelStream().map
+        List<User> students = userMap.values().stream().map
                 (Sheet::getUser)
                 .collect(Collectors.toList());
 
@@ -99,11 +97,11 @@ public class UserService extends GenericService<User> {
     //updateAttendeeState
     public void updateAttendeeState(List<User> students) {
         List<User> allUsers = getAll();
-        students.parallelStream().forEachOrdered(user -> {
+        students.forEach(user -> {
             if (students.contains(user)) {
                 user.setUserAttendeeState(STUDENT);
             } else {
-                if (user.getUserAttendeeState() != ABSENTEE) {
+                if (user.getUserAttendeeState() != NONPARTICIPANT) {
                     user.setUserAttendeeState(EXCLUDED);
                 }
             }
