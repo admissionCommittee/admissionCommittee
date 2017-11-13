@@ -71,7 +71,7 @@ public class User extends AbstractEntity {
 
     //TODO service check
 
-    public User(UserTypeEnum userRole, String firstName, String lastName, String patronymic,
+    public User(UserTypeEnum userRole, String lastName, String firstName, String patronymic,
                 String mail, String password, LocalDate birthDate) {
         this.userRole = userRole;
         this.userAttendeeState = UserAttendeeState.ABSENTEE;
