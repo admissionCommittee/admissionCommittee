@@ -5,32 +5,10 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
         version="2.1">
 
-    <tlib-version>2.0</tlib-version>
-    <short-name>ptags</short-name>
-    <uri>http://web.ru/taglibs</uri>
+    <tlib-version>1.0</tlib-version>
+    <short-name>myshortname</short-name>
+    <uri>http://mycompany.com</uri>
 
     <!-- Invoke 'Generate' action to add tags or functions -->
-
-    <tag>
-        <name>FormatLocalDate</name>
-        <tag-class>com.github.admissionCommittee.web.jstlTags.FormatLocalDate</tag-class>
-        <body-content>empty</body-content>
-        <attribute>
-            <name>date</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-    </tag>
-
-    <tag>
-        <name>SelectFromList</name>
-        <tag-class>com.github.admissionCommittee.web.jstlTags.SelectFromList</tag-class>
-        <body-content>empty</body-content>
-        <attribute>
-            <name>list</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-    </tag>
 
 </taglib>

@@ -6,7 +6,8 @@ import com.github.admissionCommittee.model.ExamCertificate;
 public class ExamCertificateService extends GenericService<ExamCertificate> {
 
     public ExamCertificateService() {
-        super(ExamCertificate.class, DaoFactory.getDaoFactory().getExamCertificateDao());
+        super(ExamCertificate.class, DaoFactory.getDaoFactory()
+                .getExamCertificateDao());
     }
 
 }
