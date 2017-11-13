@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @WebServlet({"/admin"})
 public class AdminController extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(AdminController.class);
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
     private UserService service;
 
     @Override

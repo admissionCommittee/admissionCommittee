@@ -1,4 +1,12 @@
-package com.github.admissionCommittee.util;
+package com.github.admissionCommittee.util.validate;
+
+import com.github.admissionCommittee.model.AbstractEntity;
+import com.github.admissionCommittee.model.ExamCertificate;
+import com.github.admissionCommittee.model.Faculty;
+import com.github.admissionCommittee.model.SchoolCertificate;
+import com.github.admissionCommittee.model.Sheet;
+import com.github.admissionCommittee.model.Subject;
+import com.github.admissionCommittee.model.User;
 
 import java.util.Collection;
 import java.util.regex.Matcher;
@@ -7,7 +15,7 @@ import java.util.regex.Pattern;
 /**
  * Validation utility.
  */
-public class Validator {
+public abstract class ValidatorUtil {
     public static final String MESSAGE_FOR_FIRST_PARAMETER_IF_NULL
             = "first parameter can't be null";
     public static final String MESSAGE_FOR_SECOND_PARAMETER_IF_NULL
@@ -48,6 +56,20 @@ public class Validator {
             "IP Address not in correct";
     public static final String MESSAGE_IF_STRING_EMPTY =
             "input string is empty";
+    public static final String MESSAGE_IF_NAME_EMPTY =
+            "name is empty";
+    public static final String MESSAGE_IF_PATRONYMIC_EMPTY =
+            "patronymic is empty";
+    public static final String MESSAGE_IF_LAST_NAME_EMPTY =
+            "last name is empty";
+    public static final String MESSAGE_IF_PASSWORD_EMPTY =
+            "password is empty";
+    public static final String MESSAGE_IF_EMAIL_EMPTY =
+            "EMAIL is empty";
+    public static final String MESSAGE_IF_USER_ATTENDEE_STATE_EMPTY =
+            "user attendee state is empty";
+    public static final String MESSAGE_IF_USER_ROLE_EMPTY =
+            "user role is empty";
 
     /**
      * Validates parameters not null.
@@ -369,7 +391,7 @@ public class Validator {
             throw new IllegalArgumentException("IPv4 Address not in correct");
         } else {
             for (int i = 1; i < 8; i += 2) {
-                if (!Validator.validateValueRange(Integer.parseInt(matcher
+                if (!ValidatorUtil.validateValueRange(Integer.parseInt(matcher
                                 .group(i)), 0, 255,
                         messageIfViolatesLowerBorder,
                         messageIfViolatesUpperBorder)) {
@@ -394,4 +416,38 @@ public class Validator {
         }
         return false;
     }
+
+    //TODO
+    public static void validateStringEmpty(String stringToCheckFirst, String
+            stringToCheckSecond, String messageIfEmpty) {
+        validateStringEmpty(stringToCheckFirst, messageIfEmpty);
+        validateStringEmpty(stringToCheckSecond, messageIfEmpty);
+    }
+
+    public static ValidatorUtil getValidator(Class<? extends AbstractEntity>
+                                                     modelType) {
+        if (modelType == User.class) {
+            return new UserValidatorUtil();
+        }
+        if (modelType == Subject.class) {
+            return new SubjectValidatorUtil();
+        }
+        if (modelType == Faculty.class) {
+            return new FacultyValidatorUtil();
+        }
+        if (modelType == SchoolCertificate.class) {
+            return new SchoolCertificateValidatorUtil();
+        }
+        if (modelType == ExamCertificate.class) {
+            return new ExamCertificateValidatorUtil();
+        }
+        if (modelType == Sheet.class) {
+            return new SheetValidatorUtil();
+        }
+        return null;
+    }
+
+    public abstract void validateEntity(AbstractEntity entityToValidate);
+
+    public abstract void validateInit();
 }

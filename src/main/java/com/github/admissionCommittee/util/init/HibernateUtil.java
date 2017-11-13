@@ -1,4 +1,4 @@
-package com.github.admissionCommittee.util;
+package com.github.admissionCommittee.util.init;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -11,7 +11,7 @@ public class HibernateUtil {
         try {
             Configuration configuration = new Configuration().configure();
             sessionFactory = configuration.buildSessionFactory();
-            Initializer.initDatabase();
+            DBInitializerUtil.initDatabase();
         } catch (Throwable t) {
             throw new ExceptionInInitializerError(t);
         }
@@ -20,5 +20,4 @@ public class HibernateUtil {
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
-
 }

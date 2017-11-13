@@ -25,17 +25,17 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Table(name = "user")
 @EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
-@AttributeOverride(name = "id", column = @Column(name = "user_id", nullable = false))
+@AttributeOverride(name = "id", column = @Column(name = "user_id", nullable =
+        false))
 public class User extends AbstractEntity {
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy =
+            "user")
     private ExamCertificate examCertificate;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy =
+            "user")
     private SchoolCertificate schoolCertificate;
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
-    private Sheet sheet;
 
     @ManyToOne
     @JoinColumn(name = "faculty_id")
@@ -46,7 +46,7 @@ public class User extends AbstractEntity {
     private UserTypeEnum userRole;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "userAttendeeStatus",nullable = false)
+    @Column(name = "userAttendeeStatus", nullable = false)
     private UserAttendeeState userAttendeeState;
 
     @Column(name = "first_name", nullable = false)
@@ -68,22 +68,18 @@ public class User extends AbstractEntity {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    @Deprecated
-    @Column(name = "is_enlisted")
-    private boolean enlisted;
-
     //TODO service check
 
-    public User(UserTypeEnum userRole, String lastName, String firstName, String patronymic,
-                String mail, String password, LocalDate birthDate) {
+    public User(UserAttendeeState attendeeState, UserTypeEnum userRole, String
+            firstName, String patronymic, String lastName, String mail,
+                String password, LocalDate birthDate) {
+        this.userAttendeeState = attendeeState;
         this.userRole = userRole;
-        this.userAttendeeState = UserAttendeeState.ABSENTEE;
         this.firstName = firstName;
-        this.lastName = lastName;
         this.patronymic = patronymic;
+        this.lastName = lastName;
         this.mail = mail;
         this.password = password;
         this.birthDate = birthDate;
     }
-
 }

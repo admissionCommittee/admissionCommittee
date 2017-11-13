@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * By default anonymous user redirect to index.jsp
  */
 
-@WebServlet({"", "/login", "/logout"})
+@WebServlet({"", "/login", "/logout", "/registration"})
 public class LoginController extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
     private UserService service;
@@ -33,11 +33,6 @@ public class LoginController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        doGet(request, response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
 
         HttpSession session = request.getSession();
@@ -61,15 +56,16 @@ public class LoginController extends HttpServlet {
             User tmpUser = new User();
             tmpUser.setMail(request.getParameter("login_email"));
             tmpUser.setPassword(request.getParameter("password"));
-            log.debug(String.format("Try to login with email: %s", tmpUser.getMail()));
+            //tmpUser.setPassword(request.getParameter("password"));
+            log.debug(String.format("Try to login with login: %s", tmpUser.getMail()));
 
 
             User logUser = service.getByMail(tmpUser.getMail());
 
             if (logUser != null) {
+                log.debug(String.format("!!! User with login: %s was founded", logUser.getMail()));
                 if (tmpUser.getPassword().equals(logUser.getPassword())) {
-                    //TODO - if admin. check Role
-                    log.info(String.format("User %s is logged and going to user page", logUser.getMail()));
+                    log.info(String.format("User %s logged and going to user page", logUser.getMail()));
                     session.setAttribute("user_id", logUser.getId());
                     session.setAttribute("login", logUser.getMail());
                     response.sendRedirect("/user");
@@ -77,16 +73,19 @@ public class LoginController extends HttpServlet {
                 }
             }
 
-            log.debug(String.format("The enter with login: %s has failed", tmpUser.getMail()));
-            //ToDo - localization is not working
+            // Если попытка входа была неудачной - кидаем в сессию сообщение об ошибке
+            //ToDo разобраться почему не подхватывается локализация
             ResourceBundle bundle = ResourceBundle.getBundle("localization");
             session.setAttribute("errLogin", bundle.getString("errLogin"));
-            request.setAttribute("user", tmpUser);
+            //request.setAttribute("user", tmpUser);
         }
 
-
-
         request.getRequestDispatcher("/index.jsp").forward(request, response);
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        doPost(request, response);
     }
 
 
