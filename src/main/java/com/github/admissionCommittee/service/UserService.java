@@ -15,7 +15,7 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import static com.github.admissionCommittee.model.enums.UserAttendeeState
-        .NONPARTICIPANT;
+        .ABSENTEE;
 import static com.github.admissionCommittee.model.enums.UserAttendeeState
         .EXCLUDED;
 import static com.github.admissionCommittee.model.enums.UserAttendeeState
@@ -36,9 +36,10 @@ public class UserService extends GenericService<User> {
 
     @Deprecated
     public void updateIsEnlisted(Map<Faculty, List<User>> facultyAttendeeList) {
-       /* facultyAttendeeList.values().parallelStream()
+        facultyAttendeeList.values().parallelStream()
                 .forEachOrdered(list -> list.parallelStream().forEachOrdered
-                        (user -> user.setEnlisted(true)));*/
+                        (user -> user
+                                .setEnlisted(true)));
     }
 
     //get only attendees that satisfy the attendee demands
@@ -53,8 +54,8 @@ public class UserService extends GenericService<User> {
                     faculty.getPeopleLimit()));
         });
 
-
-        // deprecated - updateIsEnlisted(approvedMap);
+        //updateIsEnlisted
+       // updateIsEnlisted(approvedMap);
         return approvedMap;
     }
 
@@ -102,7 +103,7 @@ public class UserService extends GenericService<User> {
             if (students.contains(user)) {
                 user.setUserAttendeeState(STUDENT);
             } else {
-                if (user.getUserAttendeeState() != NONPARTICIPANT) {
+                if (user.getUserAttendeeState() != ABSENTEE) {
                     user.setUserAttendeeState(EXCLUDED);
                 }
             }

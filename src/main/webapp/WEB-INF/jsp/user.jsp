@@ -6,6 +6,7 @@
 
 <jsp:useBean id="user" class="com.github.admissionCommittee.model.User" scope="request"/>
 <jsp:useBean id="certificate" class="com.github.admissionCommittee.model.SchoolCertificate" scope="request"/>
+<jsp:useBean id="sheet" class="com.github.admissionCommittee.model.Sheet" scope="request"/>
 <jsp:useBean id="listFaculty" type="java.util.List" scope="request"/>
 
 <fmt:setLocale value="${not empty sessionScope['lang'] ? sessionScope['lang'] : 'Ru'}"/>
@@ -49,15 +50,16 @@
     <p>
     <table width="100%" border=1>
         <tr>
-            <td></td>
+            <!--<td></td>-->
             <td><fmt:message key="certificate.year"/></td>
             <td><fmt:message key="certificate.averagescore"/></td>
         </tr>
 
         <tr>
-            <td></td>
+            <!--<td></td>-->
             <td>${certificate.year}</td>
-            <td></td>
+            <td>${sheet.averageSchoolCertificateScore}</td>
+            <!--<td></td>-->
         </tr>
     </table>
 
