@@ -34,6 +34,9 @@ public class User extends AbstractEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private SchoolCertificate schoolCertificate;
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+    private Sheet sheet;
+
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;

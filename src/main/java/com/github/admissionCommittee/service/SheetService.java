@@ -45,7 +45,8 @@ public class SheetService extends GenericService<Sheet> {
         final Integer schoolScoreSum = schoolScoreMap.values().stream()
             .mapToInt(Integer::intValue)
             .sum();
-        return (double) schoolScoreSum / schoolScoreMap.size();
+        // return average rounded by 2 decimal places
+        return Math.round(100.0 * schoolScoreSum / schoolScoreMap.size()) / 100.0;
     }
 
     public List<Sheet> getByFaculty(Faculty faculty) {
