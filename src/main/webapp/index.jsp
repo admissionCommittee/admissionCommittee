@@ -10,8 +10,8 @@
 <head>
     <meta charset="utf-8">
     <title><fmt:message key="welcome"/></title>
-    <link rel="stylesheet" media="screen" href="${pageContext.request.contextPath}css/style.css">
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}favicon.ico"/>
+    <link rel="stylesheet" media="screen" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico"/>
 </head>
 <body>
 
