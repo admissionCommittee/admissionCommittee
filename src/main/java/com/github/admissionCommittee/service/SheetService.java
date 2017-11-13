@@ -34,8 +34,8 @@ public class SheetService extends GenericService<Sheet> {
         final Set<Subject> facultySubjects = faculty.getSubjects();
         return examScoreMap.keySet().stream()
             .filter(facultySubjects::contains)
-            .map(examScoreMap::get)
-            .reduce(0, Integer::sum);
+            .mapToInt(examScoreMap::get)
+            .sum();
     }
 
     private double calculateSchoolScoreAverage(Sheet instance) {
@@ -43,8 +43,10 @@ public class SheetService extends GenericService<Sheet> {
         final SchoolCertificate userSchoolCertificate = user.getSchoolCertificate();
         final Map<Subject, Integer> schoolScoreMap = userSchoolCertificate.getSubjects();
         final Integer schoolScoreSum = schoolScoreMap.values().stream()
-            .reduce(0, Integer::sum);
-        return (double) schoolScoreSum / schoolScoreMap.size();
+            .mapToInt(Integer::intValue)
+            .sum();
+        // return average rounded by 2 decimal places
+        return Math.round(100.0 * schoolScoreSum / schoolScoreMap.size()) / 100.0;
     }
 
     public List<Sheet> getByFaculty(Faculty faculty) {

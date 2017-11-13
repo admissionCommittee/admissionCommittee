@@ -2,7 +2,7 @@ package com.github.admissionCommittee.service;
 
 import com.github.admissionCommittee.model.AbstractEntity;
 import com.github.admissionCommittee.dao.GenericDao;
-import com.github.admissionCommittee.util.validate.ValidatorUtil;
+import com.github.admissionCommittee.util.Validator;
 
 import java.util.List;
 
@@ -17,19 +17,19 @@ public abstract class GenericService<T extends AbstractEntity> {
     }
 
     public void save(T instance) {
-        ValidatorUtil.validateNotNull(instance, ValidatorUtil
+        Validator.validateNotNull(instance, Validator
                 .MESSAGE_FOR_SOURCE_IF_NULL);
         getDao().save(instance);
     }
 
     public void save(List<T> instance) {
-        ValidatorUtil.validateNotNull(instance, ValidatorUtil
+        Validator.validateNotNull(instance, Validator
                 .MESSAGE_FOR_SOURCE_IF_NULL);
         getDao().save(instance);
     }
 
     public T get(long id) {
-        ValidatorUtil.validateNotNegative(id, ValidatorUtil.MESSAGE_IF_NEGATIVE);
+        Validator.validateNotNegative(id, Validator.MESSAGE_IF_NEGATIVE);
         return dao.get(id);
     }
 
@@ -40,7 +40,7 @@ public abstract class GenericService<T extends AbstractEntity> {
     }
 
     public void delete(long id) {
-        ValidatorUtil.validateNotNegative(id, ValidatorUtil.MESSAGE_IF_NEGATIVE);
+        Validator.validateNotNegative(id, Validator.MESSAGE_IF_NEGATIVE);
         dao.delete(id);
     }
 
@@ -49,7 +49,7 @@ public abstract class GenericService<T extends AbstractEntity> {
     }
 
     public void setDao(GenericDao<T> dao) {
-        ValidatorUtil.validateNotNull(dao, ValidatorUtil.MESSAGE_FOR_SOURCE_IF_NULL);
+        Validator.validateNotNull(dao, Validator.MESSAGE_FOR_SOURCE_IF_NULL);
         this.dao = dao;
     }
 
@@ -58,7 +58,7 @@ public abstract class GenericService<T extends AbstractEntity> {
     }
 
     public void setModelType(Class<T> modelType) {
-        ValidatorUtil.validateNotNull(modelType, ValidatorUtil
+        Validator.validateNotNull(modelType, Validator
                 .MESSAGE_FOR_SOURCE_IF_NULL);
         this.modelType = modelType;
     }

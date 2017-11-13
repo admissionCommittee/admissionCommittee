@@ -1,7 +1,7 @@
 package com.github.admissionCommittee.model.enums;
 
 public enum UserAttendeeState {
-    NONPARTICIPANT,
+    ABSENTEE,
     CHALLENGER,
     STUDENT,
     EXCLUDED
