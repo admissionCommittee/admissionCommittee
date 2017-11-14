@@ -1,15 +1,14 @@
 package com.github.admissionCommittee.util.init;
 
 import com.github.admissionCommittee.model.ExamCertificate;
-import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.model.enums.UserTypeEnum;
 import com.github.admissionCommittee.service.ServiceFactory;
+import com.github.admissionCommittee.util.ScoresUtil;
 import com.github.admissionCommittee.util.validate.ValidatorUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class ExamCertificateInitializerUtil implements
         EntityInitializerUtil<ExamCertificate> {
@@ -23,17 +22,26 @@ public class ExamCertificateInitializerUtil implements
                 .getUserService().getAll();
         ValidatorUtil validator = ValidatorUtil.getValidator(ExamCertificate
                 .class);
-        userList.forEach(user -> {
-            ExamCertificate examCertificate = new ExamCertificate
-                    (user, 17 + user.getBirthDate().getYear(),
-                            getRandomExamScores(new ArrayList<>(user
-                                    .getFaculty()
-                                    .getSubjects())));
-            validator.validateEntity(examCertificate);
-            examCertificates.add(examCertificate);
-            //assign exam certificate to user
-            user.setExamCertificate(examCertificate);
-        });
+        userList.stream().filter(user -> user.getUserRole() != UserTypeEnum
+                .ADMIN)
+                .forEach(user -> {
+                    System.out.println("1");
+                    System.out.println(user
+                            .getFaculty()
+                            .getSubjects());
+                    System.out.println("2");
+                    ExamCertificate examCertificate = new ExamCertificate
+                            (user, 17 + user.getBirthDate().getYear(),
+                                    ScoresUtil.getRandomScores(new
+                                                    ArrayList<>(user
+                                                    .getFaculty()
+                                                    .getSubjects()),
+                                            0, 100));
+                    validator.validateEntity(examCertificate);
+                    examCertificates.add(examCertificate);
+                    //assign exam certificate to user
+                    user.setExamCertificate(examCertificate);
+                });
         ServiceFactory.getServiceFactory().getExamCertificateService().save
                 (examCertificates);
         validator.validateInit(examCertificates);
@@ -43,14 +51,5 @@ public class ExamCertificateInitializerUtil implements
         return examCertificates;
     }
 
-    private HashMap<Subject, Integer> getRandomExamScores(
-            List<Subject> subjectList) {
-        HashMap<Subject, Integer> randomScores = new HashMap<>();
-        Random random = new Random();
-        subjectList.forEach(subject -> {
-                    randomScores.put(subject, random.nextInt(101));
-                }
-        );
-        return randomScores;
-    }
+
 }

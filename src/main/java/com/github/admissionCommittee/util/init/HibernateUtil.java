@@ -12,7 +12,6 @@ public class HibernateUtil {
             Configuration configuration = new Configuration().configure();
             sessionFactory = configuration.buildSessionFactory();
             DBInitializerUtil.initDatabase();
-            //DummyInitializer.initDatabase();
         } catch (Throwable t) {
             throw new ExceptionInInitializerError(t);
         }

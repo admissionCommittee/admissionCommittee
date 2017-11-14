@@ -81,7 +81,7 @@ public class User extends AbstractEntity {
                 String patronymic,
                 String mail, String password, LocalDate birthDate) {
         this.userRole = userRole;
-        this.userAttendeeState = UserAttendeeState.NONPARTICIPANT;
+        this.userAttendeeState = userAttendeeState;
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;

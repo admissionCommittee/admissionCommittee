@@ -3,17 +3,16 @@ package com.github.admissionCommittee.util.init;
 import com.github.admissionCommittee.model.SchoolCertificate;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.model.enums.UserTypeEnum;
 import com.github.admissionCommittee.service.ServiceFactory;
 import com.github.admissionCommittee.service.SubjectService;
 import com.github.admissionCommittee.service.UserService;
+import com.github.admissionCommittee.util.ScoresUtil;
 import com.github.admissionCommittee.util.validate
         .SchoolCertificateValidatorUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.IntStream;
 
 public class SchoolCertificateInitializerUtil implements
         EntityInitializerUtil<SchoolCertificate> {
@@ -25,13 +24,13 @@ public class SchoolCertificateInitializerUtil implements
         List<SchoolCertificate> schoolCertificates = new ArrayList<>();
         List<User> userList = new UserService().getAll();
         List<Subject> subjectList = new SubjectService().getAll();
-        IntStream.rangeClosed(1, entitiesNumber)
-                .forEach(i -> {
-                    User user = userList.get(i);
+        userList.stream().filter(user -> user.getUserRole() != UserTypeEnum
+                .ADMIN)
+                .forEach(user -> {
                     SchoolCertificate schoolCertificate = new
                             SchoolCertificate(user, user.getBirthDate()
                             .getYear() + 17,
-                            getRandomSchoolScores(subjectList));
+                            ScoresUtil.getRandomScores(subjectList, 3, 2));
                     validator.validateEntity(schoolCertificate);
                     schoolCertificates.add(schoolCertificate);
                     //assign school certificate to user
@@ -46,14 +45,5 @@ public class SchoolCertificateInitializerUtil implements
         return schoolCertificates;
     }
 
-    private HashMap<Subject, Integer> getRandomSchoolScores(
-            List<Subject> subjectList) {
-        HashMap<Subject, Integer> randomScores = new HashMap<>();
-        Random random = new Random();
-        subjectList.forEach(subject -> {
-                    randomScores.put(subject, 3 + random.nextInt(3));
-                }
-        );
-        return randomScores;
-    }
+
 }

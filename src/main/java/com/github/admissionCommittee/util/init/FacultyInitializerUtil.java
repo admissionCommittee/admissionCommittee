@@ -3,7 +3,6 @@ package com.github.admissionCommittee.util.init;
 import com.github.admissionCommittee.model.Faculty;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
-import com.github.admissionCommittee.model.enums.UserAttendeeState;
 import com.github.admissionCommittee.service.ServiceFactory;
 import com.github.admissionCommittee.service.SubjectService;
 import com.github.admissionCommittee.util.validate.FacultyValidatorUtil;
@@ -16,6 +15,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
+import static com.github.admissionCommittee.model.enums.UserTypeEnum.ADMIN;
 
 public class FacultyInitializerUtil implements EntityInitializerUtil<Faculty> {
     @Override
@@ -64,8 +65,7 @@ public class FacultyInitializerUtil implements EntityInitializerUtil<Faculty> {
         List<User> userList = ServiceFactory.getServiceFactory()
                 .getUserService()
                 .getAll();
-        userList.stream().filter(user -> user.getUserAttendeeState() !=
-                UserAttendeeState.NONPARTICIPANT)
+        userList.stream().filter(user -> user.getUserRole() != ADMIN)
                 .forEach(user -> {
                     Random random = new Random();
                     user.setFaculty(facultyList.get(random.nextInt

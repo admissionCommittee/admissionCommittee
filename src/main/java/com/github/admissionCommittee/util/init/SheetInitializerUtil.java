@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.github.admissionCommittee.model.enums.UserTypeEnum.ADMIN;
+
 public class SheetInitializerUtil implements EntityInitializerUtil<Sheet> {
     @Override
     public List<Sheet> initEntities(int entitiesNumber, String outputFile,
@@ -22,19 +24,22 @@ public class SheetInitializerUtil implements EntityInitializerUtil<Sheet> {
                 .getSheetService();
         ValidatorUtil validator = ValidatorUtil.getValidator(Sheet
                 .class);
-        userList.forEach(user -> {
-            Sheet sheet = new Sheet(user, user.getFaculty(),
-                    calculateScoreSum(user.getSchoolCertificate().getSubjects
-                            ()), calculateScoreSum(
-                    user.getExamCertificate()
-                            .getSubjects()) / user.getExamCertificate()
-                    .getSubjects()
-                    .size());
-            validator.validateEntity(sheet);
-            sheets.add(sheet);
-            //assign sheet to user
-            user.setSheet(sheet);
-        });
+        userList.stream().filter(user -> user.getUserRole() != ADMIN).forEach
+                (user -> {
+                    Sheet sheet = new Sheet(user, user.getFaculty(),
+                            calculateScoreSum(user.getSchoolCertificate()
+                                    .getSubjects()),
+                            calculateScoreSum(
+                                    user.getExamCertificate()
+                                            .getSubjects()) / user
+                                    .getExamCertificate()
+                                    .getSubjects()
+                                    .size());
+                    validator.validateEntity(sheet);
+                    sheets.add(sheet);
+                    //assign sheet to user
+                    user.setSheet(sheet);
+                });
         ServiceFactory.getServiceFactory().getSheetService().save
                 (sheets);
         validator.validateInit(sheets);
