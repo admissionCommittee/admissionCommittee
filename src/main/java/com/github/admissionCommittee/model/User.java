@@ -5,6 +5,7 @@ import com.github.admissionCommittee.model.enums.UserTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
@@ -26,6 +27,7 @@ import java.time.LocalDate;
 @Table(name = "user")
 @EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
 @AttributeOverride(name = "id", column = @Column(name = "user_id", nullable = false))
+@ToString(callSuper = true)
 public class User extends AbstractEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
@@ -79,7 +81,7 @@ public class User extends AbstractEntity {
                 String patronymic,
                 String mail, String password, LocalDate birthDate) {
         this.userRole = userRole;
-        this.userAttendeeState = UserAttendeeState.NONPARTICIPANT;
+        this.userAttendeeState = userAttendeeState;
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;

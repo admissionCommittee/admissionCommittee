@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "sheet")
 @EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
 @AttributeOverride(name = "id", column = @Column(name = "sheet_id", nullable = false))
-@ToString(exclude = "user")
+@ToString(callSuper = true,exclude = "user")
 public class Sheet extends AbstractEntity {
 
     @OneToOne

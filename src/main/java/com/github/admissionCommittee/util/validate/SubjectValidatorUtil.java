@@ -8,8 +8,4 @@ public class SubjectValidatorUtil extends ValidatorUtil {
         //TODO
     }
 
-    @Override
-    public void validateInit() {
-        //TODO
-    }
 }

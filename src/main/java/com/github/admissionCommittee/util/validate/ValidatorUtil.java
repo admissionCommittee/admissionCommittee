@@ -7,8 +7,10 @@ import com.github.admissionCommittee.model.SchoolCertificate;
 import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.service.ServiceFactory;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,6 +72,8 @@ public abstract class ValidatorUtil {
             "user attendee state is empty";
     public static final String MESSAGE_IF_USER_ROLE_EMPTY =
             "user role is empty";
+    public static final String MESSAGE_IF_INITIALIZATION_FAIL =
+            "users table initialization fail";
 
     /**
      * Validates parameters not null.
@@ -447,7 +451,25 @@ public abstract class ValidatorUtil {
         return null;
     }
 
-    public abstract void validateEntity(AbstractEntity entityToValidate);
 
-    public abstract void validateInit();
+    public void validateInit(List<? extends AbstractEntity> toValidate) {
+        List<? extends AbstractEntity> entitiesList = ServiceFactory
+                .getServiceFactory().getService(toValidate.get(0).getClass())
+                .getAll();
+        //why id 1
+        System.out.println("CHECK > from DB: " + entitiesList);
+        System.out.println("initial: " + toValidate);
+
+        if (!(entitiesList.containsAll(toValidate) && toValidate.containsAll
+                (entitiesList))) {
+
+            System.out.println(entitiesList.containsAll(toValidate));
+            System.out.println(toValidate.containsAll(entitiesList));
+            System.out.println("ERROR INIT");
+            throw new IllegalStateException(ValidatorUtil
+                    .MESSAGE_IF_INITIALIZATION_FAIL + ": " + toValidate);
+        }
+    }
+
+    public abstract void validateEntity(AbstractEntity entityToValidate);
 }
