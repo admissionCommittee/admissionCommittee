@@ -462,6 +462,9 @@ public abstract class ValidatorUtil {
 
         if (!(entitiesList.containsAll(toValidate) && toValidate.containsAll
                 (entitiesList))) {
+
+            System.out.println(entitiesList.containsAll(toValidate));
+            System.out.println(toValidate.containsAll(entitiesList));
             System.out.println("ERROR INIT");
             throw new IllegalStateException(ValidatorUtil
                     .MESSAGE_IF_INITIALIZATION_FAIL+": "+ toValidate);

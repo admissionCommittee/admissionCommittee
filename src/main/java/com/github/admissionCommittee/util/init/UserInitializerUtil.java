@@ -66,7 +66,7 @@ public class UserInitializerUtil implements EntityInitializerUtil<User> {
                         (splittedLine[4]), splittedLine[5], splittedLine[6],
                         splittedLine[7], splittedLine[8], splittedLine[9],
                         LocalDate.of(Integer.parseInt(splittedLine[10]
-                                        .substring(6, 8)),
+                                        .substring(6, 10)),
                                 Integer.parseInt(splittedLine[10].substring
                                         (3, 5)),
                                 Integer.parseInt(splittedLine[10].substring
