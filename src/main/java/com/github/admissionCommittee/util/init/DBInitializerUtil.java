@@ -1,8 +1,8 @@
 package com.github.admissionCommittee.util.init;
 
-import com.github.admissionCommittee.model.Subject;
+import com.github.admissionCommittee.model.SchoolCertificate;
 import com.github.admissionCommittee.model.User;
-import com.github.admissionCommittee.service.SubjectService;
+import com.github.admissionCommittee.service.SchoolCertificateService;
 import com.github.admissionCommittee.service.UserService;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,7 @@ final class DBInitializerUtil {
         System.out.println("DONE");
 
         //init subjects
-        List<Subject> subjectList = new SubjectInitializerUtil().initEntities
+       /* List<Subject> subjectList = new SubjectInitializerUtil().initEntities
                 (11, "no input", "no output");
         final SubjectService subjectService = new SubjectService();
         System.out.println("SUBJ" + subjectList);
@@ -32,7 +32,7 @@ final class DBInitializerUtil {
 
 
         // init faculties //TODO check
-       /* List<Faculty> facultyList = new FacultyInitializerUtil().initEntities
+       List<Faculty> facultyList = new FacultyInitializerUtil().initEntities
                 (17, DBInitializerUtil.class.getResource("db/FacultyInitData" +
                         ".txt").getPath().replaceFirst("^/(.:/)"
                         , "$1"), "no output");
@@ -41,200 +41,14 @@ final class DBInitializerUtil {
 
         //System.out.println("out"+facultyService.getAll());
 
-        // init school certificates
-       /* final SchoolCertificate schoolCertificateIvanov = new 
-                SchoolCertificate(
-                userList.get(0),
-                2017,
-                new HashMap<Subject, Integer>() {{
-                    put(subjectPhysics, 3);
-                    put(subjectInformatics, 3);
-                    put(subjectChemistry, 3);
-                    put(subjectBiology, 4);
-                    put(subjectEnglish, 4);
-                    put(subjectHistory, 4);
-                    put(subjectRussian, 4);
-                    put(subjectLiterature, 4);
-                    put(subjectAlgebra, 3);
-                    put(subjectGeometry, 3);
-                    put(subjectGeography, 3);
-                }}
-        );
-        final SchoolCertificate schoolCertificateVolkova = new
-                SchoolCertificate(
-                userList.get(1),
-                2017,
-                new HashMap<Subject, Integer>() {{
-                    put(subjectPhysics, 5);
-                    put(subjectInformatics, 5);
-                    put(subjectChemistry, 4);
-                    put(subjectBiology, 4);
-                    put(subjectEnglish, 4);
-                    put(subjectHistory, 3);
-                    put(subjectRussian, 5);
-                    put(subjectLiterature, 3);
-                    put(subjectAlgebra, 5);
-                    put(subjectGeometry, 5);
-                    put(subjectGeography, 4);
-                }}
-        );
-        final SchoolCertificate schoolCertificateAutlev = new SchoolCertificate(
-                userList.get(2),
-                2017,
-                new HashMap<Subject, Integer>() {{
-                    put(subjectPhysics, 3);
-                    put(subjectInformatics, 5);
-                    put(subjectChemistry, 3);
-                    put(subjectBiology, 3);
-                    put(subjectEnglish, 4);
-                    put(subjectHistory, 4);
-                    put(subjectRussian, 5);
-                    put(subjectLiterature, 4);
-                    put(subjectAlgebra, 3);
-                    put(subjectGeometry, 4);
-                    put(subjectGeography, 3);
-                }}
-        );
-        final SchoolCertificate schoolCertificateKanina = new SchoolCertificate(
-                userList.get(3),
-                2017,
-                new HashMap<Subject, Integer>() {{
-                    put(subjectPhysics, 5);
-                    put(subjectInformatics, 3);
-                    put(subjectChemistry, 3);
-                    put(subjectBiology, 3);
-                    put(subjectEnglish, 3);
-                    put(subjectHistory, 4);
-                    put(subjectRussian, 5);
-                    put(subjectLiterature, 4);
-                    put(subjectAlgebra, 4);
-                    put(subjectGeometry, 4);
-                    put(subjectGeography, 4);
-                }}
-        );
-        final SchoolCertificate schoolCertificateBorisenko = new
-                SchoolCertificate(
-                userList.get(4),
-                2017,
-                new HashMap<Subject, Integer>() {{
-                    put(subjectPhysics, 4);
-                    put(subjectInformatics, 5);
-                    put(subjectChemistry, 3);
-                    put(subjectBiology, 3);
-                    put(subjectEnglish, 4);
-                    put(subjectHistory, 3);
-                    put(subjectRussian, 3);
-                    put(subjectLiterature, 5);
-                    put(subjectAlgebra, 3);
-                    put(subjectGeometry, 3);
-                    put(subjectGeography, 4);
-                }}
-        );
-        final SchoolCertificate schoolCertificateSkokova = new
-                SchoolCertificate(
-                userList.get(5),
-                2017,
-                new HashMap<Subject, Integer>() {{
-                    put(subjectPhysics, 4);
-                    put(subjectInformatics, 4);
-                    put(subjectChemistry, 4);
-                    put(subjectBiology, 3);
-                    put(subjectEnglish, 5);
-                    put(subjectHistory, 3);
-                    put(subjectRussian, 3);
-                    put(subjectLiterature, 3);
-                    put(subjectAlgebra, 5);
-                    put(subjectGeometry, 5);
-                    put(subjectGeography, 5);
-                }}
-        );
-        final SchoolCertificate schoolCertificateSaprunov = new
-                SchoolCertificate(
-                userList.get(6),
-                2017,
-                new HashMap<Subject, Integer>() {{
-                    put(subjectPhysics, 4);
-                    put(subjectInformatics, 4);
-                    put(subjectChemistry, 4);
-                    put(subjectBiology, 5);
-                    put(subjectEnglish, 5);
-                    put(subjectHistory, 3);
-                    put(subjectRussian, 5);
-                    put(subjectLiterature, 3);
-                    put(subjectAlgebra, 5);
-                    put(subjectGeometry, 4);
-                    put(subjectGeography, 3);
-                }}
-        );
-        final SchoolCertificate schoolCertificateNovikova = new
-                SchoolCertificate(
-                userList.get(7),
-                2017,
-                new HashMap<Subject, Integer>() {{
-                    put(subjectPhysics, 4);
-                    put(subjectInformatics, 5);
-                    put(subjectChemistry, 3);
-                    put(subjectBiology, 4);
-                    put(subjectEnglish, 3);
-                    put(subjectHistory, 3);
-                    put(subjectRussian, 5);
-                    put(subjectLiterature, 3);
-                    put(subjectAlgebra, 3);
-                    put(subjectGeometry, 4);
-                    put(subjectGeography, 5);
-                }}
-        );
-        final SchoolCertificate schoolCertificateMakarenko = new
-                SchoolCertificate(
-                userList.get(8),
-                2017,
-                new HashMap<Subject, Integer>() {{
-                    put(subjectPhysics, 5);
-                    put(subjectInformatics, 3);
-                    put(subjectChemistry, 4);
-                    put(subjectBiology, 3);
-                    put(subjectEnglish, 3);
-                    put(subjectHistory, 3);
-                    put(subjectRussian, 3);
-                    put(subjectLiterature, 4);
-                    put(subjectAlgebra, 4);
-                    put(subjectGeometry, 3);
-                    put(subjectGeography, 5);
-                }}
-        );
-        final SchoolCertificate schoolCertificateKoshkin = new
-                SchoolCertificate(
-                userList.get(9),
-                2017,
-                new HashMap<Subject, Integer>() {{
-                    put(subjectPhysics, 5);
-                    put(subjectInformatics, 4);
-                    put(subjectChemistry, 4);
-                    put(subjectBiology, 4);
-                    put(subjectEnglish, 4);
-                    put(subjectHistory, 4);
-                    put(subjectRussian, 3);
-                    put(subjectLiterature, 4);
-                    put(subjectAlgebra, 3);
-                    put(subjectGeometry, 5);
-                    put(subjectGeography, 3);
-                }}
-        );
-
-        final SchoolCertificateService schoolCertificateService = new
+        List<SchoolCertificate> schoolCertificates = new
+                SchoolCertificateInitializerUtil().initEntities(10,
+                "no input", "no output");
+        SchoolCertificateService schoolCertificateService = new
                 SchoolCertificateService();
-        schoolCertificateService.save(schoolCertificateIvanov);
-        schoolCertificateService.save(schoolCertificateVolkova);
-        schoolCertificateService.save(schoolCertificateAutlev);
-        schoolCertificateService.save(schoolCertificateKanina);
-        schoolCertificateService.save(schoolCertificateBorisenko);
-        schoolCertificateService.save(schoolCertificateSkokova);
-        schoolCertificateService.save(schoolCertificateSaprunov);
-        schoolCertificateService.save(schoolCertificateNovikova);
-        schoolCertificateService.save(schoolCertificateMakarenko);
-        schoolCertificateService.save(schoolCertificateKoshkin);
+        schoolCertificateService.save(schoolCertificates);
 
-        // init exam certificates
+       /* // init exam certificates
         final ExamCertificate examCertificateIvanov = new ExamCertificate(
                 userService.get(userList.get(0).getId()),
                 2017,

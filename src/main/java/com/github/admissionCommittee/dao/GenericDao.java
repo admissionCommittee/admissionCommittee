@@ -32,10 +32,10 @@ public abstract class GenericDao<T extends AbstractEntity> {
         instance.stream().forEach(t -> {
             if (t.isNew()) {
                 session.save(t);
-                System.out.println("Saved"+t);
+                System.out.println("Saved: "+t);
             } else {
                 session.update(t);
-                System.out.println("Updated"+t);
+                System.out.println("Updated: "+t);
             }
         });
         closeSessionWithTransaction();
