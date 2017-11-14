@@ -1,14 +1,11 @@
 package com.github.admissionCommittee.util.init;
 
-import com.github.admissionCommittee.model.Faculty;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
-import com.github.admissionCommittee.service.FacultyService;
 import com.github.admissionCommittee.service.SubjectService;
 import com.github.admissionCommittee.service.UserService;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.hibernate.SessionFactory;
 
 import java.util.List;
 
@@ -17,27 +14,30 @@ final class DBInitializerUtil {
 
 
     static void initDatabase() {
-
         // init users
         List<User> userList = new UserInitializerUtil().initEntities(
-                16403, DBInitializerUtil.class.getResource("/db" +
-                        "/UserInitData.txt").getPath(), "no path");
+                10, DBInitializerUtil.class.getResource("/db" +
+                        "/UserInitData.txt").getPath().replaceFirst("^/(.:/)"
+                        , "$1"), "no path");
         final UserService userService = new UserService();
         userService.save(userList);
+        System.out.println("DONE");
 
         //init subjects
         List<Subject> subjectList = new SubjectInitializerUtil().initEntities
                 (11, "no input", "no output");
         final SubjectService subjectService = new SubjectService();
+        System.out.println("SUBJ" + subjectList);
         subjectService.save(subjectList);
 
 
         // init faculties //TODO check
-        List<Faculty> facultyList = new FacultyInitializerUtil().initEntities
-                (17, DBInitializerUtil.class.getResource("/db/FacultyInitData" +
-                        ".txt").toString(), "no output");
+       /* List<Faculty> facultyList = new FacultyInitializerUtil().initEntities
+                (17, DBInitializerUtil.class.getResource("db/FacultyInitData" +
+                        ".txt").getPath().replaceFirst("^/(.:/)"
+                        , "$1"), "no output");
         FacultyService facultyService = new FacultyService();
-        facultyService.save(facultyList);
+        facultyService.save(facultyList);*/
 
         //System.out.println("out"+facultyService.getAll());
 
@@ -398,10 +398,7 @@ final class DBInitializerUtil {
     }
 
     public static void main(String[] args) {
-        final SessionFactory sessionFactory = HibernateUtil
-                .getSessionFactory();
-        System.out.println(true);
-        sessionFactory.close();
+        initDatabase();
     }
 
 }

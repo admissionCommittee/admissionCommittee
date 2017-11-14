@@ -5,16 +5,16 @@ import com.github.admissionCommittee.model.enums.UserAttendeeState;
 import com.github.admissionCommittee.model.enums.UserTypeEnum;
 import com.github.admissionCommittee.util.validate.ValidatorUtil;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserInitializerUtil implements EntityInitializerUtil<User> {
 
-    @Override
+  /*  @Override
     public List<User> initEntities(int entitiesNumber, String inputFile,
                                    String outputFile) {
         try {
@@ -41,6 +41,41 @@ public class UserInitializerUtil implements EntityInitializerUtil<User> {
             return userList;
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+        return null;
+    }*/
+
+    @Override
+    public List<User> initEntities(int entitiesNumber, String inputFile,
+                                   String outputFile) {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader
+                    (inputFile));
+            ArrayList<User> userList = new ArrayList<>();
+            String line = "";
+            int counter = 0;
+            while ((line = bufferedReader.readLine()) != null && counter <=
+                    entitiesNumber) {
+                String[] splittedLine = line.split("\u200B");
+
+                User user = new User(UserAttendeeState.valueOf
+                        (splittedLine[3]), UserTypeEnum.valueOf
+                        (splittedLine[4]), splittedLine[5], splittedLine[6],
+                        splittedLine[7], splittedLine[8], splittedLine[9],
+                        LocalDate.of(Integer.parseInt(splittedLine[10]
+                                        .substring(6, 8)),
+                                Integer.parseInt(splittedLine[10].substring
+                                        (3, 5)),
+                                Integer.parseInt(splittedLine[10].substring
+                                        (0, 2))));
+                ValidatorUtil.getValidator(User.class)
+                        .validateEntity(user);
+                userList.add(user);
+                counter++;
+            }
+            return userList;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }

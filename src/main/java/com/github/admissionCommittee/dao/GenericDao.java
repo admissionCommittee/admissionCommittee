@@ -29,11 +29,13 @@ public abstract class GenericDao<T extends AbstractEntity> {
 
     public void save(List<T> instance) {
         openSessionWithTransaction();
-        instance.forEach(t -> {
+        instance.stream().forEach(t -> {
             if (t.isNew()) {
                 session.save(t);
+                System.out.println("Saved"+t);
             } else {
                 session.update(t);
+                System.out.println("Updated"+t);
             }
         });
         closeSessionWithTransaction();
