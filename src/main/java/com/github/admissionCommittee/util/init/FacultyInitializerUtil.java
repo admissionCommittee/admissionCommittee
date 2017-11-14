@@ -3,6 +3,7 @@ package com.github.admissionCommittee.util.init;
 import com.github.admissionCommittee.model.Faculty;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.model.enums.UserAttendeeState;
 import com.github.admissionCommittee.service.ServiceFactory;
 import com.github.admissionCommittee.service.SubjectService;
 import com.github.admissionCommittee.util.validate.FacultyValidatorUtil;
@@ -63,11 +64,13 @@ public class FacultyInitializerUtil implements EntityInitializerUtil<Faculty> {
         List<User> userList = ServiceFactory.getServiceFactory()
                 .getUserService()
                 .getAll();
-        userList.forEach(user -> {
-            Random random = new Random();
-            user.setFaculty(facultyList.get(random.nextInt
-                    (facultyList.size())));
-        });
+        userList.stream().filter(user -> user.getUserAttendeeState() !=
+                UserAttendeeState.NONPARTICIPANT)
+                .forEach(user -> {
+                    Random random = new Random();
+                    user.setFaculty(facultyList.get(random.nextInt
+                            (facultyList.size())));
+                });
         ServiceFactory.getServiceFactory().getUserService().save(userList);
     }
 }

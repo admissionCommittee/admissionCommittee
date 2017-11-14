@@ -37,6 +37,7 @@ public class ExamCertificateInitializerUtil implements
         ServiceFactory.getServiceFactory().getExamCertificateService().save
                 (examCertificates);
         validator.validateInit(examCertificates);
+        //update users
         ServiceFactory.getServiceFactory().getUserService().save(userList);
         System.out.println("EXAM INIT DONE");
         return examCertificates;

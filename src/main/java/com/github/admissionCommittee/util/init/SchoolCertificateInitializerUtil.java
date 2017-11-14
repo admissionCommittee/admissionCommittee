@@ -40,6 +40,7 @@ public class SchoolCertificateInitializerUtil implements
         ServiceFactory.getServiceFactory().getSchoolCertificateService().save
                 (schoolCertificates);
         validator.validateInit(schoolCertificates);
+        //update users
         ServiceFactory.getServiceFactory().getUserService().save(userList);
         System.out.println("SCHOOL INIT DONE");
         return schoolCertificates;
