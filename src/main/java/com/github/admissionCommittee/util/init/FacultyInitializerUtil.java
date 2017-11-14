@@ -2,8 +2,9 @@ package com.github.admissionCommittee.util.init;
 
 import com.github.admissionCommittee.model.Faculty;
 import com.github.admissionCommittee.model.Subject;
+import com.github.admissionCommittee.service.ServiceFactory;
 import com.github.admissionCommittee.service.SubjectService;
-import com.github.admissionCommittee.util.validate.ValidatorUtil;
+import com.github.admissionCommittee.util.validate.FacultyValidatorUtil;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,6 +20,8 @@ public class FacultyInitializerUtil implements EntityInitializerUtil<Faculty> {
     public List<Faculty> initEntities(int entitiesNumber, String inputFile,
                                       String outputFile) {
         try {
+            FacultyValidatorUtil validator = new
+                    FacultyValidatorUtil();
             List<Faculty> facultyList = new ArrayList<>();
             Files.lines(Paths.get(inputFile))
                     .map(line -> line.split("\u200B"))
@@ -26,10 +29,13 @@ public class FacultyInitializerUtil implements EntityInitializerUtil<Faculty> {
                         Faculty faculty = new Faculty(substring[2], Integer
                                 .parseInt(substring[3]), getRandomSubject(
                                 3));
-                        ValidatorUtil.getValidator(Faculty.class)
-                                .validateEntity(faculty);
+                        validator.validateEntity(faculty);
                         facultyList.add(faculty);
                     });
+            ServiceFactory.getServiceFactory().getFacultyService().save
+                    (facultyList);
+            validator.validateInit(facultyList);
+            System.out.println("FACULTY INIT DONE");
             return facultyList;
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -38,7 +44,8 @@ public class FacultyInitializerUtil implements EntityInitializerUtil<Faculty> {
     }
 
     private Set<Subject> getRandomSubject(int subjectsNumber) {
-        SubjectService subjectService = new SubjectService();
+        SubjectService subjectService = ServiceFactory.getServiceFactory()
+                .getSubjectService();
         List<Subject> subjectList = subjectService.getAll();
         Set<Subject> subjectSet = new HashSet<>();
         for (int i = 0; i < subjectsNumber; i++) {

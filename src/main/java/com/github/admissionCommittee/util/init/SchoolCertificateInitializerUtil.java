@@ -3,9 +3,11 @@ package com.github.admissionCommittee.util.init;
 import com.github.admissionCommittee.model.SchoolCertificate;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.service.ServiceFactory;
 import com.github.admissionCommittee.service.SubjectService;
 import com.github.admissionCommittee.service.UserService;
-import com.github.admissionCommittee.util.validate.ValidatorUtil;
+import com.github.admissionCommittee.util.validate
+        .SchoolCertificateValidatorUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +20,8 @@ public class SchoolCertificateInitializerUtil implements
     @Override
     public List<SchoolCertificate> initEntities(int entitiesNumber, String
             inputFile, String outputFile) {
-
+        SchoolCertificateValidatorUtil validator = new
+                SchoolCertificateValidatorUtil();
         List<SchoolCertificate> schoolCertificates = new ArrayList<>();
         List<User> userList = new UserService().getAll();
         List<Subject> subjectList = new SubjectService().getAll();
@@ -27,13 +30,15 @@ public class SchoolCertificateInitializerUtil implements
                     User user = userList.get(i);
                     SchoolCertificate schoolCertificate = new
                             SchoolCertificate(user, user.getBirthDate()
-                            .getYear()+17,
+                            .getYear() + 17,
                             getRandomSchoolScores(subjectList));
-                    ValidatorUtil.getValidator(SchoolCertificate.class)
-                            .validateEntity(schoolCertificate);
+                    validator.validateEntity(schoolCertificate);
                     schoolCertificates.add(schoolCertificate);
                 });
-        //TODO
+        ServiceFactory.getServiceFactory().getSchoolCertificateService().save
+                (schoolCertificates);
+        validator.validateInit(schoolCertificates);
+        System.out.println("SCHOOL INIT DONE");
         return schoolCertificates;
     }
 
@@ -47,23 +52,4 @@ public class SchoolCertificateInitializerUtil implements
         );
         return randomScores;
     }
-
-     /* final SchoolCertificate schoolCertificateIvanov = new
-                SchoolCertificate(
-                userList.get(0),
-                2017,
-                new HashMap<Subject, Integer>() {{
-                    put(subjectPhysics, 3);
-                    put(subjectInformatics, 3);
-                    put(subjectChemistry, 3);
-                    put(subjectBiology, 4);
-                    put(subjectEnglish, 4);
-                    put(subjectHistory, 4);
-                    put(subjectRussian, 4);
-                    put(subjectLiterature, 4);
-                    put(subjectAlgebra, 3);
-                    put(subjectGeometry, 3);
-                    put(subjectGeography, 3);
-                }}
-        );*/
 }

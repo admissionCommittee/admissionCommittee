@@ -29,8 +29,13 @@ public class UserValidatorUtil extends ValidatorUtil {
         //TODO other validation
     }
 
-    @Override
-    public void validateInit() {
-        //TODO
-    }
+    /*@Override
+    public void validateInit(List toValidate) {
+        List<User> userList = new UserService().getAll();
+        if (!(userList.containsAll(toValidate) && toValidate.containsAll
+                (userList))) {
+            throw new IllegalStateException(ValidatorUtil
+                    .MESSAGE_IF_USERS_TABLE_INIT_FAIL);
+        }
+    }*/
 }

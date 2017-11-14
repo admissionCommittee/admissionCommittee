@@ -7,9 +7,4 @@ public class FacultyValidatorUtil extends ValidatorUtil {
     public void validateEntity(AbstractEntity entityToValidate) {
         //TODO
     }
-
-    @Override
-    public void validateInit() {
-        //TODO
-    }
 }

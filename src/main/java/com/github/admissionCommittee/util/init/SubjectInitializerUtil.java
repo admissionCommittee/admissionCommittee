@@ -2,7 +2,8 @@ package com.github.admissionCommittee.util.init;
 
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.enums.SubjectNameEnum;
-import com.github.admissionCommittee.util.validate.ValidatorUtil;
+import com.github.admissionCommittee.service.ServiceFactory;
+import com.github.admissionCommittee.util.validate.SubjectValidatorUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,14 +14,18 @@ public class SubjectInitializerUtil implements EntityInitializerUtil<Subject> {
     public List<Subject> initEntities(int entitiesNumber, String outputFile,
                                       String inputFile) {
         List<Subject> subjectList = new ArrayList<>();
+        SubjectValidatorUtil validator = new SubjectValidatorUtil();
 
         Arrays.stream(SubjectNameEnum.values())
                 .forEach(value -> {
                     Subject subject = new Subject(value);
-                    ValidatorUtil.getValidator(Subject.class)
-                            .validateEntity(subject);
+                    validator.validateEntity(subject);
                     subjectList.add(subject);
                 });
+        ServiceFactory.getServiceFactory().getSubjectService().save
+                (subjectList);
+        validator.validateInit(subjectList);
+        System.out.println("SUBJECTS INIT DONE");
         return subjectList;
     }
 }

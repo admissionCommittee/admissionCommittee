@@ -8,8 +8,4 @@ public class ExamCertificateValidatorUtil extends ValidatorUtil {
         //TODO
     }
 
-    @Override
-    public void validateInit() {
-        //TODO
-    }
 }

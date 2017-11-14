@@ -3,6 +3,8 @@ package com.github.admissionCommittee.util.init;
 import com.github.admissionCommittee.model.User;
 import com.github.admissionCommittee.model.enums.UserAttendeeState;
 import com.github.admissionCommittee.model.enums.UserTypeEnum;
+import com.github.admissionCommittee.service.ServiceFactory;
+import com.github.admissionCommittee.util.validate.UserValidatorUtil;
 import com.github.admissionCommittee.util.validate.ValidatorUtil;
 
 import java.io.BufferedReader;
@@ -48,6 +50,7 @@ public class UserInitializerUtil implements EntityInitializerUtil<User> {
     @Override
     public List<User> initEntities(int entitiesNumber, String inputFile,
                                    String outputFile) {
+        ValidatorUtil validator = new UserValidatorUtil();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader
                     (inputFile));
@@ -68,11 +71,13 @@ public class UserInitializerUtil implements EntityInitializerUtil<User> {
                                         (3, 5)),
                                 Integer.parseInt(splittedLine[10].substring
                                         (0, 2))));
-                ValidatorUtil.getValidator(User.class)
-                        .validateEntity(user);
+                validator.validateEntity(user);
                 userList.add(user);
                 counter++;
             }
+            ServiceFactory.getServiceFactory().getUserService().save(userList);
+            validator.validateInit(userList);
+            System.out.println("USERS INIT DONE");
             return userList;
         } catch (IOException e) {
             e.printStackTrace();
