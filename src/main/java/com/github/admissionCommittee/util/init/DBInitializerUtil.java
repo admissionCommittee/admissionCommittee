@@ -1,11 +1,16 @@
 package com.github.admissionCommittee.util.init;
 
+import com.github.admissionCommittee.model.Faculty;
 import com.github.admissionCommittee.model.SchoolCertificate;
+import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.service.FacultyService;
 import com.github.admissionCommittee.service.SchoolCertificateService;
+import com.github.admissionCommittee.service.SubjectService;
 import com.github.admissionCommittee.service.UserService;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.hibernate.SessionFactory;
 
 import java.util.List;
 
@@ -21,32 +26,34 @@ final class DBInitializerUtil {
                         , "$1"), "no path");
         final UserService userService = new UserService();
         userService.save(userList);
-        System.out.println("DONE");
+        System.out.println("USERS INIT DONE");
 
         //init subjects
-       /* List<Subject> subjectList = new SubjectInitializerUtil().initEntities
+        List<Subject> subjectList = new SubjectInitializerUtil().initEntities
                 (11, "no input", "no output");
         final SubjectService subjectService = new SubjectService();
         System.out.println("SUBJ" + subjectList);
         subjectService.save(subjectList);
-
+        System.out.println("SUBJECTS INIT DONE");
 
         // init faculties //TODO check
-       List<Faculty> facultyList = new FacultyInitializerUtil().initEntities
-                (17, DBInitializerUtil.class.getResource("db/FacultyInitData" +
+        List<Faculty> facultyList = new FacultyInitializerUtil().initEntities
+                (17, DBInitializerUtil.class.getResource
+                        ("/db/FacultyInitData" +
                         ".txt").getPath().replaceFirst("^/(.:/)"
                         , "$1"), "no output");
         FacultyService facultyService = new FacultyService();
-        facultyService.save(facultyList);*/
+        facultyService.save(facultyList);
+        System.out.println("FACULTIES INIT DONE");
 
-        //System.out.println("out"+facultyService.getAll());
-
+        //init school certificates
         List<SchoolCertificate> schoolCertificates = new
                 SchoolCertificateInitializerUtil().initEntities(10,
                 "no input", "no output");
         SchoolCertificateService schoolCertificateService = new
                 SchoolCertificateService();
         schoolCertificateService.save(schoolCertificates);
+        System.out.println("SCHOOL CERTIFICATES INIT DONE");
 
        /* // init exam certificates
         final ExamCertificate examCertificateIvanov = new ExamCertificate(
@@ -212,7 +219,8 @@ final class DBInitializerUtil {
     }
 
     public static void main(String[] args) {
-        initDatabase();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        sessionFactory.close();
     }
 
 }

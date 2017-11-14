@@ -40,12 +40,10 @@ public class FacultyInitializerUtil implements EntityInitializerUtil<Faculty> {
     private Set<Subject> getRandomSubject(int subjectsNumber) {
         SubjectService subjectService = new SubjectService();
         List<Subject> subjectList = subjectService.getAll();
-        System.out.println("subjects q" + subjectList);
         Set<Subject> subjectSet = new HashSet<>();
         for (int i = 0; i < subjectsNumber; i++) {
             Random random = new Random();
             int nextInt = random.nextInt(subjectList.size());
-            System.out.println("nextInt" + nextInt);
             subjectSet.add(subjectList.get(nextInt));
             subjectList.remove(nextInt);
         }
