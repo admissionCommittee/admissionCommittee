@@ -34,10 +34,13 @@ public class SchoolCertificateInitializerUtil implements
                             getRandomSchoolScores(subjectList));
                     validator.validateEntity(schoolCertificate);
                     schoolCertificates.add(schoolCertificate);
+                    //assign school certificate to user
+                    user.setSchoolCertificate(schoolCertificate);
                 });
         ServiceFactory.getServiceFactory().getSchoolCertificateService().save
                 (schoolCertificates);
         validator.validateInit(schoolCertificates);
+        ServiceFactory.getServiceFactory().getUserService().save(userList);
         System.out.println("SCHOOL INIT DONE");
         return schoolCertificates;
     }

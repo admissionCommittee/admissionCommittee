@@ -16,36 +16,39 @@ final class DBInitializerUtil {
 
 
     static void initDatabase() {
-        // init users
+        // init users without faculty, certificates and sheet and validate
         List<User> userList = new UserInitializerUtil().initEntities(
                 10, DBInitializerUtil.class.getResource("/db" +
                         "/UserInitData.txt").getPath().replaceFirst("^/(.:/)"
                         , "$1"), "no path");
 
 
-        //init subjects
+        //init subjects, validate each one and validate init
         List<Subject> subjectList = new SubjectInitializerUtil().initEntities
                 (11, "no input", "no output");
 
-        // init faculties //TODO check
+        // init faculties with obligatory subjects, validate each one,
+        // validate init, randomly set for each user, update users
         List<Faculty> facultyList = new FacultyInitializerUtil().initEntities
                 (17, DBInitializerUtil.class.getResource
                         ("/db/FacultyInitData" +
                                 ".txt").getPath().replaceFirst("^/(.:/)"
                         , "$1"), "no output");
 
-        //init school certificates
+        //init school certificates, validate each one, validate init, set for
+        // each user, update users
         List<SchoolCertificate> schoolCertificates = new
                 SchoolCertificateInitializerUtil().initEntities(10,
                 "no input", "no output");
 
 
-        // init exam certificates
+        // init exam certificates, validate each one, validate init, set for
+        // each user and update users
         List<ExamCertificate> examCertificates = new
                 ExamCertificateInitializerUtil().initEntities(10,
                 "no input", "no output");
 
-
+        System.out.println("DONE");
  /*
         // init sheets
         final Sheet sheetIvanov = new Sheet(

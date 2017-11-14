@@ -457,8 +457,8 @@ public abstract class ValidatorUtil {
                 .getServiceFactory().getService(toValidate.get(0).getClass())
                 .getAll();
         //why id 1
-        System.out.println("CHECK"+entitiesList);
-        System.out.println("CHECK"+toValidate);
+        System.out.println("CHECK > from DB: " + entitiesList);
+        System.out.println("initial: " + toValidate);
 
         if (!(entitiesList.containsAll(toValidate) && toValidate.containsAll
                 (entitiesList))) {
@@ -467,7 +467,7 @@ public abstract class ValidatorUtil {
             System.out.println(toValidate.containsAll(entitiesList));
             System.out.println("ERROR INIT");
             throw new IllegalStateException(ValidatorUtil
-                    .MESSAGE_IF_INITIALIZATION_FAIL+": "+ toValidate);
+                    .MESSAGE_IF_INITIALIZATION_FAIL + ": " + toValidate);
         }
     }
 

@@ -2,6 +2,7 @@ package com.github.admissionCommittee.util.init;
 
 import com.github.admissionCommittee.model.Faculty;
 import com.github.admissionCommittee.model.Subject;
+import com.github.admissionCommittee.model.User;
 import com.github.admissionCommittee.service.ServiceFactory;
 import com.github.admissionCommittee.service.SubjectService;
 import com.github.admissionCommittee.util.validate.FacultyValidatorUtil;
@@ -36,6 +37,7 @@ public class FacultyInitializerUtil implements EntityInitializerUtil<Faculty> {
                     (facultyList);
             validator.validateInit(facultyList);
             System.out.println("FACULTY INIT DONE");
+            assignFacultyToUserRandom(facultyList);
             return facultyList;
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -55,5 +57,17 @@ public class FacultyInitializerUtil implements EntityInitializerUtil<Faculty> {
             subjectList.remove(nextInt);
         }
         return subjectSet;
+    }
+
+    private void assignFacultyToUserRandom(List<Faculty> facultyList) {
+        List<User> userList = ServiceFactory.getServiceFactory()
+                .getUserService()
+                .getAll();
+        userList.forEach(user -> {
+            Random random = new Random();
+            user.setFaculty(facultyList.get(random.nextInt
+                    (facultyList.size())));
+        });
+        ServiceFactory.getServiceFactory().getUserService().save(userList);
     }
 }
