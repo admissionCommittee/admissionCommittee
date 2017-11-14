@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SchoolCertificateInitializerUtil implements
-        EntityInitializerUtil<SchoolCertificate> {
+        InitializerUtil {
     @Override
-    public List<SchoolCertificate> initEntities(int entitiesNumber, String
-            inputFile, String outputFile) {
+    public void init(int entitiesNumber, String outputFile,
+                     String inputFile) {
         SchoolCertificateValidatorUtil validator = new
                 SchoolCertificateValidatorUtil();
         List<SchoolCertificate> schoolCertificates = new ArrayList<>();
@@ -42,8 +42,5 @@ public class SchoolCertificateInitializerUtil implements
         //update users
         ServiceFactory.getServiceFactory().getUserService().save(userList);
         System.out.println("SCHOOL INIT DONE");
-        return schoolCertificates;
     }
-
-
 }

@@ -13,10 +13,10 @@ import java.util.Map;
 
 import static com.github.admissionCommittee.model.enums.UserTypeEnum.ADMIN;
 
-public class SheetInitializerUtil implements EntityInitializerUtil<Sheet> {
+public class SheetInitializerUtil implements InitializerUtil {
     @Override
-    public List<Sheet> initEntities(int entitiesNumber, String outputFile,
-                                    String inputFile) {
+    public void init(int entitiesNumber, String outputFile,
+                     String inputFile) {
         ArrayList<Sheet> sheets = new ArrayList<>();
         List<User> userList = ServiceFactory.getServiceFactory()
                 .getUserService().getAll();
@@ -46,7 +46,6 @@ public class SheetInitializerUtil implements EntityInitializerUtil<Sheet> {
         //update users
         ServiceFactory.getServiceFactory().getUserService().save(userList);
         System.out.println("SHEETS INIT DONE");
-        return sheets;
     }
 
     private int calculateScoreSum(Map<Subject, Integer> scoresMap) {

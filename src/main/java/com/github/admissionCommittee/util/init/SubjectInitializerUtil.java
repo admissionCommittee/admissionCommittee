@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SubjectInitializerUtil implements EntityInitializerUtil<Subject> {
+public class SubjectInitializerUtil implements InitializerUtil {
     @Override
-    public List<Subject> initEntities(int entitiesNumber, String outputFile,
-                                      String inputFile) {
+    public void init(int entitiesNumber, String outputFile,
+                     String inputFile) {
         List<Subject> subjectList = new ArrayList<>();
         SubjectValidatorUtil validator = new SubjectValidatorUtil();
 
@@ -26,6 +26,5 @@ public class SubjectInitializerUtil implements EntityInitializerUtil<Subject> {
                 (subjectList);
         validator.validateInit(subjectList);
         System.out.println("SUBJECTS INIT DONE");
-        return subjectList;
     }
 }

@@ -11,12 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExamCertificateInitializerUtil implements
-        EntityInitializerUtil<ExamCertificate> {
-
+        InitializerUtil {
 
     @Override
-    public List<ExamCertificate> initEntities(int entitiesNumber, String
-            outputFile, String inputFile) {
+    public void init(int entitiesNumber, String outputFile,
+                     String inputFile) {
         ArrayList<ExamCertificate> examCertificates = new ArrayList<>();
         List<User> userList = ServiceFactory.getServiceFactory()
                 .getUserService().getAll();
@@ -25,11 +24,6 @@ public class ExamCertificateInitializerUtil implements
         userList.stream().filter(user -> user.getUserRole() != UserTypeEnum
                 .ADMIN)
                 .forEach(user -> {
-                    System.out.println("1");
-                    System.out.println(user
-                            .getFaculty()
-                            .getSubjects());
-                    System.out.println("2");
                     ExamCertificate examCertificate = new ExamCertificate
                             (user, 17 + user.getBirthDate().getYear(),
                                     ScoresUtil.getRandomScores(new
@@ -48,8 +42,5 @@ public class ExamCertificateInitializerUtil implements
         //update users
         ServiceFactory.getServiceFactory().getUserService().save(userList);
         System.out.println("EXAM INIT DONE");
-        return examCertificates;
     }
-
-
 }

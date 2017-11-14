@@ -18,10 +18,10 @@ import java.util.Set;
 
 import static com.github.admissionCommittee.model.enums.UserTypeEnum.ADMIN;
 
-public class FacultyInitializerUtil implements EntityInitializerUtil<Faculty> {
+public class FacultyInitializerUtil implements InitializerUtil {
     @Override
-    public List<Faculty> initEntities(int entitiesNumber, String inputFile,
-                                      String outputFile) {
+    public void init(int entitiesNumber, String inputFile,
+                     String outputFile){
         try {
             FacultyValidatorUtil validator = new
                     FacultyValidatorUtil();
@@ -40,11 +40,9 @@ public class FacultyInitializerUtil implements EntityInitializerUtil<Faculty> {
             validator.validateInit(facultyList);
             System.out.println("FACULTY INIT DONE");
             assignFacultyToUserRandom(facultyList);
-            return facultyList;
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return null;
     }
 
     private Set<Subject> getRandomSubject(int subjectsNumber) {

@@ -12,44 +12,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
-public class UserInitializerUtil implements EntityInitializerUtil<User> {
-
-  /*  @Override
-    public List<User> initEntities(int entitiesNumber, String inputFile,
-                                   String outputFile) {
-        try {
-            List<User> userList = new ArrayList<>();
-            Files.lines(Paths.get(inputFile))
-                    .map(line -> line.split("\u200B"))
-                    .forEach(substring -> {
-                        System.out.println("SUBSTRING" + substring);
-                        User user = new User(UserAttendeeState.valueOf
-                                (substring[3]), UserTypeEnum.valueOf
-                                (substring[4]), substring[5], substring[6],
-                                substring[7], substring[8], substring[9],
-                                LocalDate.of(
-                                        Integer.parseInt(substring[10]
-                                                .substring(6, 8)),
-                                        Integer.parseInt(substring[10]
-                                                .substring(3, 5)),
-                                        Integer.parseInt(substring[10]
-                                                .substring(0, 2))));
-                        ValidatorUtil.getValidator(User.class)
-                                .validateEntity(user);
-                        userList.add(user);
-                    });
-            return userList;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }*/
-
+public class UserInitializerUtil implements InitializerUtil {
     @Override
-    public List<User> initEntities(int entitiesNumber, String inputFile,
-                                   String outputFile) {
+    public void init(int entitiesNumber, String inputFile,
+                     String outputFile) {
         ValidatorUtil validator = new UserValidatorUtil();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader
@@ -78,10 +45,8 @@ public class UserInitializerUtil implements EntityInitializerUtil<User> {
             ServiceFactory.getServiceFactory().getUserService().save(userList);
             validator.validateInit(userList);
             System.out.println("USERS INIT DONE");
-            return userList;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
     }
 }
