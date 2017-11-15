@@ -214,6 +214,28 @@ button:active {
     float:right;
 }
 
+table {
+    border: 1px solid #69c;
+}
+th {
+    font-weight: normal;
+    color: #039;
+    border-bottom: 1px dashed #69c;
+    padding: 12px 17px;
+}
+td {
+    color: #669;
+    padding: 7px 17px;
+}
+tr:hover td {background: #ccddff;}
+
+caption {
+    caption-side: top;
+    text-align: right;
+    padding: 10px 0;
+    font-size: 14px;
+}
+
 .slide div,
 .slide [type="checkbox"]{
     display:none;

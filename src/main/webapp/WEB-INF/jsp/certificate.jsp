@@ -17,7 +17,7 @@
 
 <div id="certificate-info">
 
-    <form class="register_form" action="${pageContext.request.contextPath}/certificate?save" method="post"
+    <form class="register_form" action="${pageContext.request.contextPath}/certificate?save=1" method="post"
           name="register_form">
         <ul>
             <li>
@@ -34,7 +34,7 @@
             <tr><td><b>Предметы</b></td> <td><b>Оценка</b></td></tr>
 
             <c:forEach items="${listSubjects}" var="subject" >
-                <tr><td> ${subject.name}</td> <td><input type="number" class="score" name="${subject.id}" value="${mapSubjectsScores.get(subject)}" required/> </td></tr>
+                <tr><td> ${subject.name}</td> <td><input type="number" class="score" name="sub_${subject.id}" value="${mapSubjectsScores.get(subject)}" required/> </td></tr>
             </c:forEach>
         </table>
         <p>

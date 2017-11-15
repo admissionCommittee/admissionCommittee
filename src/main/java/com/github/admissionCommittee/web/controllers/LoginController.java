@@ -1,6 +1,7 @@
 package com.github.admissionCommittee.web.controllers;
 
 import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.model.enums.UserTypeEnum;
 import com.github.admissionCommittee.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,10 +69,16 @@ public class LoginController extends HttpServlet {
 
             if (logUser != null) {
                 if (tmpUser.getPassword().equals(logUser.getPassword())) {
-                    //TODO - if admin. check Role
-                    log.info(String.format("User %s is logged and going to user page", logUser.getMail()));
                     session.setAttribute("user_id", logUser.getId());
                     session.setAttribute("login", logUser.getMail());
+
+                    if (logUser.getUserRole() == UserTypeEnum.ADMIN){
+                        log.info(String.format("Administrator %s is logged and going to user page", logUser.getMail()));
+                        response.sendRedirect("/admin");
+                        return;
+                    }
+
+                    log.info(String.format("User %s is logged and going to user page", logUser.getMail()));
                     response.sendRedirect("/user");
                     return;
                 }
@@ -83,8 +90,6 @@ public class LoginController extends HttpServlet {
             session.setAttribute("errLogin", bundle.getString("errLogin"));
             request.setAttribute("user", tmpUser);
         }
-
-
 
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }

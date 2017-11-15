@@ -22,7 +22,7 @@ public class SelectFromList extends TagSupport {
             StringBuilder html = new StringBuilder();
             for (Faculty faculty : list) {
 
-                html.append("<option value=\""+ faculty.getId() + "\">"+ faculty.getName() +"</option>");
+                html.append("<option value=\""+ faculty.getId() + "\">"+ faculty.getName() + "("+ faculty.getPeopleLimit() +")</option>");
             }
             pageContext.getOut().print(html);
         } catch (IOException e) {

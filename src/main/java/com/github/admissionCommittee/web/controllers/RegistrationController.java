@@ -1,6 +1,7 @@
 package com.github.admissionCommittee.web.controllers;
 
 import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.model.enums.UserAttendeeState;
 import com.github.admissionCommittee.model.enums.UserTypeEnum;
 import com.github.admissionCommittee.service.UserService;
 import org.slf4j.Logger;
@@ -56,6 +57,7 @@ public class RegistrationController extends HttpServlet {
             editUser.setFirstName(request.getParameter("regFirstName"));
             editUser.setPatronymic(request.getParameter("regMiddleName"));
             editUser.setUserRole(UserTypeEnum.USER);
+            editUser.setUserAttendeeState(UserAttendeeState.NONPARTICIPANT);
             String birthDate = request.getParameter("regBirthDate");
             if (birthDate != null && !birthDate.isEmpty()) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyy-MM-dd");

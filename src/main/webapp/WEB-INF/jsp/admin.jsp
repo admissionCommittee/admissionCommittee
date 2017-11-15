@@ -5,9 +5,11 @@
 <%@ taglib prefix="ptags" uri="http://web.ru/taglibs" %>
 
 <jsp:useBean id="user" class="com.github.admissionCommittee.model.User" scope="request"/>
-<jsp:useBean id="certificate" class="com.github.admissionCommittee.model.SchoolCertificate" scope="request"/>
 <jsp:useBean id="sheet" class="com.github.admissionCommittee.model.Sheet" scope="request"/>
+<jsp:useBean id="faculty" class="com.github.admissionCommittee.model.Faculty" scope="request"/>
+<jsp:useBean id="listSheets" type="java.util.List<com.github.admissionCommittee.model.Sheet>" scope="request"/>
 <jsp:useBean id="listFaculty" type="java.util.List" scope="request"/>
+<jsp:useBean id="now" type="java.time.LocalDate" scope="request"/>
 
 <fmt:setLocale value="${not empty sessionScope['lang'] ? sessionScope['lang'] : 'Ru'}"/>
 <fmt:setBundle basename="localization"/>
@@ -17,7 +19,7 @@
 <div id="infopanel">
     <div id="left-infopanel">
         <div id="avatarcontainter">
-            <div id="bavatar" style="background-image:url('${pageContext.request.contextPath}/img/obuchenie.jpg')"></div>
+            <div id="bavatar" style="background-image:url('${pageContext.request.contextPath}/img/admin.jpg')"></div>
         </div>
     </div>
 
@@ -44,44 +46,30 @@
     </div>
 </div>
 
-<div id="certificate-info">
 
-    <fmt:message key="profile.certificateinfo"/><br>
-    <p>
-    <table width="100%">
-        <tr>
-            <!--<td></td>-->
-            <td><fmt:message key="certificate.year"/></td>
-            <td><fmt:message key="certificate.averagescore"/></td>
-        </tr>
-
-        <tr>
-            <!--<td></td>-->
-            <td>${certificate.year}</td>
-            <td>${sheet.averageSchoolCertificateScore}</td>
-            <!--<td></td>-->
-        </tr>
-    </table>
-
-    <form action="${pageContext.request.contextPath}/certificate" method="post">
-        <button class="submit" type="submit" ><fmt:message key="key_certificate"/></button>
-    </form>
-
-</div>
-
-<c:if test="${not empty certificate.subjects}">
 <div id="faculty-info">
     <form method="get">
-        <label for="faculty">Для подачи документов выберите факультет:</label>
+        <label for="faculty"><fmt:message key="admin.select"/>:</label>
         <select id="faculty" name="faculty">
                 <ptags:SelectFromList list="${listFaculty}"/>
         </select>
         </p>
         <p>
-            <input type="submit" value="Отправить" />
+            <button class="submit" type="submit"><fmt:message key="key_scheet"/></button>
         </p>
     </form>
-</div>
-</c:if>
 
+    <c:if test="${not empty listSheets}">
+    <table width=100%>
+        <caption><fmt:message key="admin.shetinfo"/><b> ${faculty.name}
+            ( <fmt:message key="admin.shetinfo.limit"/> ${faculty.peopleLimit}
+            <fmt:message key="admin.shetinfo.submit"/> <ptags:FormatLocalDate date="${now}"/> )</b></caption>
+        <tr><th><b><fmt:message key="admin.shetinfo.fio"/></b></th> <th><b><fmt:message key="admin.shetinfo.ege"/></b></th><th><b><fmt:message key="admin.shetinfo.cettificate"/></b></th></tr>
+        <c:forEach items="${listSheets}" var="sheet" >
+            <tr><td> ${sheet.user.lastName} ${sheet.user.firstName} ${sheet.user.patronymic}</td> <td> ${sheet.sumExamCertificateScore}</td><td> ${sheet.averageSchoolCertificateScore}</td></tr>
+        </c:forEach>
+    </table>
+    </c:if>
+
+</div>
 <jsp:include page="template/footer.jsp"/>
