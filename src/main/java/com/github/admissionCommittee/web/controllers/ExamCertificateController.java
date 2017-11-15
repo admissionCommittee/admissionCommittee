@@ -77,7 +77,6 @@ public class ExamCertificateController extends HttpServlet {
             Sheet sheet = new Sheet();
             sheet.setUser(userService.get(user.getId())); // temporal workaround
             sheet.setFaculty(faculty);
-            sheet.setAverageSchoolCertificateScore(0);
             sheet.setSumExamCertificateScore(0);
             new SheetService().save(sheet);
 

@@ -22,7 +22,6 @@ public class SheetService extends GenericService<Sheet> {
     @Override
     public void save(Sheet instance) {
         instance.setSumExamCertificateScore(calculateExamScoreSum(instance));
-        instance.setAverageSchoolCertificateScore(calculateSchoolScoreAverage(instance));
         super.save(instance);
     }
 
@@ -36,17 +35,6 @@ public class SheetService extends GenericService<Sheet> {
             .filter(facultySubjects::contains)
             .mapToInt(examScoreMap::get)
             .sum();
-    }
-
-    private double calculateSchoolScoreAverage(Sheet instance) {
-        final User user = instance.getUser();
-        final SchoolCertificate userSchoolCertificate = user.getSchoolCertificate();
-        final Map<Subject, Integer> schoolScoreMap = userSchoolCertificate.getSubjects();
-        final Integer schoolScoreSum = schoolScoreMap.values().stream()
-            .mapToInt(Integer::intValue)
-            .sum();
-        // return average rounded by 2 decimal places
-        return Math.round(100.0 * schoolScoreSum / schoolScoreMap.size()) / 100.0;
     }
 
     public List<Sheet> getByFaculty(Faculty faculty) {

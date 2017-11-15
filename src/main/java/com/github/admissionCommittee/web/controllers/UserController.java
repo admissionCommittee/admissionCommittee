@@ -1,8 +1,6 @@
 package com.github.admissionCommittee.web.controllers;
 
-import com.github.admissionCommittee.model.Faculty;
 import com.github.admissionCommittee.model.SchoolCertificate;
-import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.model.User;
 import com.github.admissionCommittee.service.FacultyService;
 import com.github.admissionCommittee.service.SchoolCertificateService;
@@ -46,7 +44,6 @@ public class UserController extends HttpServlet {
 
         User user = userService.get((long) session.getAttribute("user_id"));
         SchoolCertificate certificate = user.getSchoolCertificate();
-        final Sheet sheet = user.getSheet();
 
         if (user == null) {
             log.trace(String.format("User with id %s not found. Redirect to error page", session.getAttribute("user_id")));
@@ -55,7 +52,6 @@ public class UserController extends HttpServlet {
 
         request.setAttribute("user", user);
         request.setAttribute("certificate", certificate);
-        request.setAttribute("sheet", sheet);
         request.setAttribute("listFaculty", facultyService.getAll());
         request.getRequestDispatcher("/WEB-INF/jsp/user.jsp").forward(request, response);
     }

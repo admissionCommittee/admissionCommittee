@@ -78,9 +78,9 @@ public class UserService extends GenericService<User> {
                 userMap.put(element.getSumExamCertificateScore(),
                         element);
             } else {
-                if (element.getAverageSchoolCertificateScore() > userMap
-                        .get(element.getSumExamCertificateScore())
-                        .getAverageSchoolCertificateScore()) {
+                if (element.getUser().getSchoolCertificate().getAverageScore() >
+                    userMap.get(element.getSumExamCertificateScore()).getUser()
+                        .getSchoolCertificate().getAverageScore()) {
                     userMap.put(element.getSumExamCertificateScore(),
                             element);
                 }

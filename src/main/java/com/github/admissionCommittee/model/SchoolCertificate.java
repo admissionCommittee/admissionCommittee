@@ -21,7 +21,6 @@ import javax.persistence.Table;
 import java.util.Map;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -38,6 +37,9 @@ public class SchoolCertificate extends AbstractEntity {
     @Column(name = "year")
     private int year;
 
+    @Column(name = "average_school_certificate_score")
+    private double averageScore;
+
     @ElementCollection
     @CollectionTable(name = "subject_school_certificate",
             joinColumns = @JoinColumn(name = "school_certificate_id"))
@@ -45,4 +47,9 @@ public class SchoolCertificate extends AbstractEntity {
     @Column(name = "score", nullable = false)
     private Map<Subject, Integer> subjects;
 
+    public SchoolCertificate(User user, int year, Map<Subject, Integer> subjects) {
+        this.user = user;
+        this.year = year;
+        this.subjects = subjects;
+    }
 }

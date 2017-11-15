@@ -34,13 +34,14 @@ public class SheetInitializerUtil implements InitializerUtil {
                 (user -> {
                     Sheet sheet = new Sheet(user, user.getFaculty(),
                             calculateScoreSum(user.getExamCertificate()
-                                    .getSubjects()),
-                            calculateScoreSum(
-                                    user.getSchoolCertificate()
-                                            .getSubjects()) / user
-                                    .getSchoolCertificate()
-                                    .getSubjects()
-                                    .size());
+                                    .getSubjects())//,
+//                            calculateScoreSum(
+//                                    user.getSchoolCertificate()
+//                                            .getSubjects()) / user
+//                                    .getSchoolCertificate()
+//                                    .getSubjects()
+//                                    .size()
+                    );
                     validator.validate(sheet);
                     sheets.add(sheet);
                     //assign sheet to user

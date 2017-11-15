@@ -18,11 +18,11 @@ public class SheetValidatorUtil extends ValidatorUtil {
         ValidatorUtil.validateNotNull(sheet.getUser(), sheet.getFaculty(),
                 "User assigned to sheet can't be null",
                 "Faculty assigned to sheet can't be null");
-        ValidatorUtil.validateNotNegative(sheet.getSumExamCertificateScore(),
-                (long) sheet.getAverageSchoolCertificateScore(),
-                "Exam's score sum can't be negative",
-                "Average School's certificate score " +
-                        "can't be negative");
+//        ValidatorUtil.validateNotNegative(sheet.getSumExamCertificateScore(),
+//                (long) sheet.getAverageSchoolCertificateScore(),
+//                "Exam's score sum can't be negative",
+//                "Average School's certificate score " +
+//                        "can't be negative");
     }
 
     @Override

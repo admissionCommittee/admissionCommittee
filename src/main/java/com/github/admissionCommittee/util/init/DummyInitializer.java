@@ -410,34 +410,34 @@ final class DummyInitializer {
 
         // init sheets
         final Sheet sheetIvanov = new Sheet(
-            userService.get(userIvanov.getId()), facultyStomatology, 0, 0
+            userService.get(userIvanov.getId()), facultyStomatology, 0
         );
         final Sheet sheetVolkova = new Sheet(
-            userService.get(userVolkova.getId()), facultyPhysical, 0, 0
+            userService.get(userVolkova.getId()), facultyPhysical, 0
         );
         final Sheet sheetAutlev = new Sheet(
-            userService.get(userAutlev.getId()), facultyStomatology, 0, 0
+            userService.get(userAutlev.getId()), facultyStomatology, 0
         );
         final Sheet sheetKanina = new Sheet(
-            userService.get(userKanina.getId()), facultyHistorical, 0, 0
+            userService.get(userKanina.getId()), facultyHistorical, 0
         );
         final Sheet sheetBorisenko = new Sheet(
-            userService.get(userBorisenko.getId()), facultyPhysical, 0, 0
+            userService.get(userBorisenko.getId()), facultyPhysical, 0
         );
         final Sheet sheetSkokova = new Sheet(
-            userService.get(userSkokova.getId()), facultyPhysical, 0, 0
+            userService.get(userSkokova.getId()), facultyPhysical, 0
         );
         final Sheet sheetSaprunov = new Sheet(
-            userService.get(userSaprunov.getId()), facultyHistorical, 0, 0
+            userService.get(userSaprunov.getId()), facultyHistorical, 0
         );
         final Sheet sheetNovikova = new Sheet(
-            userService.get(userNovikova.getId()), facultyStomatology, 0, 0
+            userService.get(userNovikova.getId()), facultyStomatology, 0
         );
         final Sheet sheetMakarenko = new Sheet(
-            userService.get(userMakarenko.getId()), facultyStomatology, 0, 0
+            userService.get(userMakarenko.getId()), facultyStomatology, 0
         );
         final Sheet sheetKoshkin = new Sheet(
-            userService.get(userKoshkin.getId()), facultyPhysical, 0, 0
+            userService.get(userKoshkin.getId()), facultyPhysical, 0
         );
 
         final SheetService sheetService = new SheetService();

@@ -58,7 +58,7 @@
         <tr>
             <!--<td></td>-->
             <td>${certificate.year}</td>
-            <td>${sheet.averageSchoolCertificateScore}</td>
+            <td>${certificate.averageScore}</td>
             <!--<td></td>-->
         </tr>
     </table>
