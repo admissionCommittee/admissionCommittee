@@ -1,6 +1,7 @@
 package com.github.admissionCommittee.web.listeners;
 
 import com.github.admissionCommittee.service.*;
+import com.github.admissionCommittee.util.init.DBInitializerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,12 +24,16 @@ public class InitListener implements ServletContextListener{
         public void contextInitialized(ServletContextEvent sce) {
             log.info("Start Servlet initialization");
 
+            final DBInitializerUtil dbInitializerUtil = new DBInitializerUtil();
+            dbInitializerUtil.init(30, "", "");
+
             // Service layer injection
             sce.getServletContext().setAttribute("userService", new UserService());
             sce.getServletContext().setAttribute("certificateService", new SchoolCertificateService());
             sce.getServletContext().setAttribute("facultyService", new FacultyService());
             sce.getServletContext().setAttribute("sheetService", new SheetService());
             sce.getServletContext().setAttribute("subjectService", new SubjectService());
+            sce.getServletContext().setAttribute("examService", new ExamCertificateService());
 
             log.info("End Servlet initialization");
         }

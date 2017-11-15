@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 //@AllArgsConstructor
-final class DBInitializerUtil implements InitializerUtil {
+public final class DBInitializerUtil implements InitializerUtil {
     private static final Logger log = LoggerFactory.getLogger
             (DBInitializerUtil.class);
 
