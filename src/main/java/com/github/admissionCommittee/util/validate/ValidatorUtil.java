@@ -90,7 +90,7 @@ public abstract class ValidatorUtil {
      *                                  provided
      */
     public static void validateNotNull(
-            Object firstParameter, Object secondParameter,
+            java.lang.Object firstParameter, java.lang.Object secondParameter,
             String messageForFirstParameterIfNull,
             String messageForSecondParameterIfNull) {
         validateNotNull(firstParameter, messageForFirstParameterIfNull);
@@ -111,8 +111,8 @@ public abstract class ValidatorUtil {
      *                                  provided
      */
     public static void validateNotNull(
-            Object firstParameter, Object secondParameter,
-            Object thirdParameter, String messageForFirstParameterIfNull,
+            java.lang.Object firstParameter, java.lang.Object secondParameter,
+            java.lang.Object thirdParameter, String messageForFirstParameterIfNull,
             String messageForSecondParameterIfNull,
             String messageForThirdParameterIfNull) {
         validateNotNull(firstParameter, messageForFirstParameterIfNull);
@@ -139,8 +139,8 @@ public abstract class ValidatorUtil {
      *                                  provided
      */
     public static void validateNotNull(
-            Object firstParameter, Object secondParameter, Object
-            thirdParameter, Object fourthParameter, Object fifthParameter,
+            java.lang.Object firstParameter, java.lang.Object secondParameter, java.lang.Object
+            thirdParameter, java.lang.Object fourthParameter, java.lang.Object fifthParameter,
             String messageForFirstParameterIfNull, String
                     messageForSecondParameterIfNull, String
                     messageForThirdParameterIfNull, String
@@ -160,7 +160,7 @@ public abstract class ValidatorUtil {
      * @param messageIfNull message if parameter is null
      * @throws IllegalArgumentException if parameter not provided
      */
-    public static void validateNotNull(Object parameter, String messageIfNull) {
+    public static void validateNotNull(java.lang.Object parameter, String messageIfNull) {
         if (parameter == null) {
             throw new IllegalArgumentException(messageIfNull);
         }
@@ -182,8 +182,8 @@ public abstract class ValidatorUtil {
      * @throws IllegalArgumentException if parameters not provided or ""
      */
     public static void validateValueAndLengthNotNull(
-            Object firstParameter,
-            Object secondParameter,
+            java.lang.Object firstParameter,
+            java.lang.Object secondParameter,
             String messageForFirstParameterIfNull,
             String messageForSecondParameterIfNull,
             String messageForFirstParameterIfLengthNull,
@@ -207,7 +207,7 @@ public abstract class ValidatorUtil {
      * @throws IllegalArgumentException if parameter not provided or ""
      */
     public static void validateValueAndLengthNotNull(
-            Object parameter, String messageIfNull,
+            java.lang.Object parameter, String messageIfNull,
             String messageIfLengthNull) {
         if (parameter == null) {
             throw new IllegalArgumentException(messageIfNull);
@@ -354,7 +354,7 @@ public abstract class ValidatorUtil {
      * @param messageIfIllegalClass message if class is illegal
      * @throws IllegalArgumentException is class <code>toCheck</code> is illegal
      */
-    public static void validateClass(Object toCheck, Object toCompare, String
+    public static void validateClass(java.lang.Object toCheck, java.lang.Object toCompare, String
             messageIfIllegalClass) {
         if (!toCheck.getClass().equals(toCompare.getClass())) {
             throw new IllegalArgumentException(
@@ -372,8 +372,9 @@ public abstract class ValidatorUtil {
      * @throws IllegalArgumentException at least one of checked classed is
      *                                  illegal <code>toCheck</code> is illegal
      */
-    public static void validateClass(Object toCheckFirst, Object toCheckSecond,
-                                     Object toCompare, String
+    public static void validateClass(java.lang.Object toCheckFirst, java.lang
+            .Object toCheckSecond,
+                                     java.lang.Object toCompare, String
                                              messageIfIllegalClass) {
         validateClass(toCheckFirst, toCompare, messageIfIllegalClass);
         validateClass(toCheckSecond, toCompare, messageIfIllegalClass);
@@ -470,5 +471,5 @@ public abstract class ValidatorUtil {
         }
     }
 
-    public abstract void validateEntity(AbstractEntity entityToValidate);
+    public abstract void validate(AbstractEntity abstractEntityToValidate);
 }

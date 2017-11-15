@@ -29,5 +29,4 @@ dependencies {
             'org.hibernate:hibernate-core:+',
             'org.hibernate.validator:hibernate-validator:+',
             'org.projectlombok:lombok:+'
-
 }

@@ -36,7 +36,7 @@ public class ExamCertificateInitializerUtil implements
                                                     .getFaculty()
                                                     .getSubjects()),
                                             0, 100));
-                    validator.validateEntity(examCertificate);
+                    validator.validate(examCertificate);
                     examCertificates.add(examCertificate);
                     //assign exam certificate to user
                     user.setExamCertificate(examCertificate);

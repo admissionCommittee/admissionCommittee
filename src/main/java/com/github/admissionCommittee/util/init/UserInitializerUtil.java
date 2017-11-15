@@ -42,7 +42,7 @@ public class UserInitializerUtil implements InitializerUtil {
                                         (3, 5)),
                                 Integer.parseInt(splittedLine[10].substring
                                         (0, 2))));
-                validator.validateEntity(user);
+                validator.validate(user);
                 userList.add(user);
                 counter++;
             }

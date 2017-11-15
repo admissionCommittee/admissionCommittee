@@ -12,7 +12,7 @@ public class ExamCertificateValidatorUtil extends ValidatorUtil {
             (ExamCertificateValidatorUtil.class);
 
     @Override
-    public void validateEntity(AbstractEntity entityToValidate) {
+    public void validate(AbstractEntity entityToValidate) {
         //TODO
     }
 

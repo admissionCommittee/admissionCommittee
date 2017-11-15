@@ -38,7 +38,7 @@ public class FacultyInitializerUtil implements InitializerUtil {
                         Faculty faculty = new Faculty(substring[2], Integer
                                 .parseInt(substring[3]), getRandomSubject(
                                 3));
-                        validator.validateEntity(faculty);
+                        validator.validate(faculty);
                         facultyList.add(faculty);
                         counter[0]++;
                     });

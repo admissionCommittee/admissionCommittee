@@ -11,7 +11,7 @@ public class SheetValidatorUtil extends ValidatorUtil {
     private static final Logger log = LoggerFactory.getLogger
             (SheetValidatorUtil.class);
     @Override
-    public void validateEntity(AbstractEntity entityToValidate) {
+    public void validate(AbstractEntity entityToValidate) {
         //TODO
     }
 

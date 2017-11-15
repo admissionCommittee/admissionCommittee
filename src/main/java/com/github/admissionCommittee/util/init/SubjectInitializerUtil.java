@@ -24,7 +24,7 @@ public class SubjectInitializerUtil implements InitializerUtil {
         Arrays.stream(SubjectNameEnum.values())
                 .forEach(value -> {
                     Subject subject = new Subject(value);
-                    validator.validateEntity(subject);
+                    validator.validate(subject);
                     subjectList.add(subject);
                     counter[0]++;
                 });

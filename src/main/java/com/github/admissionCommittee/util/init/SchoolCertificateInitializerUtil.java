@@ -37,7 +37,7 @@ public class SchoolCertificateInitializerUtil implements
                             SchoolCertificate(user, user.getBirthDate()
                             .getYear() + 17,
                             ScoresUtil.getRandomScores(subjectList, 3, 2));
-                    validator.validateEntity(schoolCertificate);
+                    validator.validate(schoolCertificate);
                     schoolCertificates.add(schoolCertificate);
                     //assign school certificate to user
                     user.setSchoolCertificate(schoolCertificate);

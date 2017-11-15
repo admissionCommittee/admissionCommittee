@@ -41,7 +41,7 @@ public class SheetInitializerUtil implements InitializerUtil {
                                     .getExamCertificate()
                                     .getSubjects()
                                     .size());
-                    validator.validateEntity(sheet);
+                    validator.validate(sheet);
                     sheets.add(sheet);
                     //assign sheet to user
                     user.setSheet(sheet);

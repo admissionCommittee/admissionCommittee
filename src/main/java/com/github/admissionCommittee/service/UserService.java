@@ -5,6 +5,7 @@ import com.github.admissionCommittee.dao.UserDao;
 import com.github.admissionCommittee.model.Faculty;
 import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.util.validate.UserValidatorUtil;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -22,11 +23,23 @@ import static com.github.admissionCommittee.model.enums.UserAttendeeState
         .STUDENT;
 
 public class UserService extends GenericService<User> {
-
-    public SheetService sheetService = new SheetService();
+    private UserValidatorUtil validator = new UserValidatorUtil();
+    private SheetService sheetService = new SheetService();
 
     public UserService() {
         super(User.class, DaoFactory.getDaoFactory().getUserDao());
+    }
+
+    @Override
+    public void save(User instance) {
+        validator.validate(instance);
+        super.save(instance);
+    }
+
+    @Override
+    public void save(List<User> instance) {
+        instance.forEach(validator::validate);
+        super.save(instance);
     }
 
     //for DB search by mail implementation
