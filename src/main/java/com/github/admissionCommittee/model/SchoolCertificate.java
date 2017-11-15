@@ -25,7 +25,7 @@ import java.util.Map;
 @Table(name = "school_certificate_id")
 @EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
 @AttributeOverride(name = "id", column = @Column(name = "school_certificate_id", nullable = false))
-@ToString(exclude = {"user"})
+@ToString(callSuper = true,exclude = {"user"})
 public class SchoolCertificate extends AbstractEntity {
 
     @OneToOne

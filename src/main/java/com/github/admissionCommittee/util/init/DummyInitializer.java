@@ -25,11 +25,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
+@Deprecated
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 final class DummyInitializer {
 
     static void initDatabase() {
-
         // init users
         final User userIvanov = new User( UserAttendeeState.NONPARTICIPANT,
             UserTypeEnum.USER, "Иванов", "Владимир", "Михайлович",
@@ -465,7 +465,7 @@ final class DummyInitializer {
 
 //    public static void main(String[] args) {
 //        final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-//        System.out.println(true);
+//
 //        sessionFactory.close();
 //    }
 

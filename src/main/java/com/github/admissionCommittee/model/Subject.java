@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -20,6 +21,7 @@ import javax.persistence.Table;
 @Table(name = "subject")
 @EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
 @AttributeOverride(name = "id", column = @Column(name = "subject_id", nullable = false))
+@ToString(callSuper = true)
 public class Subject extends AbstractEntity {
 
     @Enumerated(EnumType.STRING)

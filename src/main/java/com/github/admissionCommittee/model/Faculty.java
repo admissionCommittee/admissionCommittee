@@ -8,14 +8,12 @@ import lombok.NonNull;
 import lombok.ToString;
 
 import javax.persistence.AttributeOverride;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +25,7 @@ import java.util.Set;
 @Table(name = "faculty")
 @EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
 @AttributeOverride(name = "id", column = @Column(name = "faculty_id", nullable = false))
-@ToString(exclude = {"users"})
+@ToString(callSuper = true,exclude = {"users"})
 public class Faculty extends AbstractEntity {
 
     @Column(name = "name", nullable = false)
