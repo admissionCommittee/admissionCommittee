@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  *         Class implements password's validating.
  */
 public class PasswordValidatorUtil extends ValidatorUtil {
-    public boolean isValid;
+    public boolean isValid = false;
     private static final Logger log = LoggerFactory.getLogger
             (UserValidatorUtil.class);
     private static String SOURCESYMBOLSALL =
@@ -37,8 +37,8 @@ public class PasswordValidatorUtil extends ValidatorUtil {
                 | isEqualsToLogin(password, login)
                 | !checkSymbolsPermitted(password, SOURCESYMBOLSALL)
                 | !checkEqualSequence(password, 100)
-                | !checkAdjacentKeyboardSequence(password,
-                SOURCESYMBOLSALL)
+                //| !checkAdjacentKeyboardSequence(password,
+               // SOURCESYMBOLSALL)
                 ) {
             log.debug(String.format("Password is %s not valid", password));
         } else {

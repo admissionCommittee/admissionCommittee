@@ -22,23 +22,23 @@ public class UserValidatorUtil extends ValidatorUtil {
         if (ValidatorUtil.validateStringEmpty(toValidate
                 .getUserAttendeeState()
                 .toString(), ValidatorUtil.MESSAGE_IF_USER_ATTENDEE_STATE_EMPTY)
-                | ValidatorUtil.validateStringEmpty(toValidate.getUserRole()
+                || ValidatorUtil.validateStringEmpty(toValidate.getUserRole()
                 .toString(), ValidatorUtil.MESSAGE_IF_USER_ROLE_EMPTY)
-                | ValidatorUtil.validateStringEmpty(toValidate.getFirstName(),
+                || ValidatorUtil.validateStringEmpty(toValidate.getFirstName(),
                 ValidatorUtil.MESSAGE_IF_NAME_EMPTY)
-                | ValidatorUtil.validateStringEmpty(toValidate.getPatronymic(),
+                || ValidatorUtil.validateStringEmpty(toValidate.getPatronymic(),
                 ValidatorUtil.MESSAGE_IF_PATRONYMIC_EMPTY)
-                | ValidatorUtil.validateStringEmpty(toValidate.getLastName(),
+                || ValidatorUtil.validateStringEmpty(toValidate.getLastName(),
                 ValidatorUtil.MESSAGE_IF_LAST_NAME_EMPTY)
-                | ValidatorUtil.validateStringEmpty(toValidate.getMail(),
+                || ValidatorUtil.validateStringEmpty(toValidate.getMail(),
                 ValidatorUtil.MESSAGE_IF_EMAIL_EMPTY)
-                | ValidatorUtil.validateStringEmpty(toValidate.getPassword(),
+                || ValidatorUtil.validateStringEmpty(toValidate.getPassword(),
                 ValidatorUtil.MESSAGE_IF_PASSWORD_EMPTY)
-                | !validateEmail(toValidate.getMail())
-                | !validateFullName(toValidate.getFirstName() + toValidate
+                || !validateEmail(toValidate.getMail())
+                || !validateFullName(toValidate.getFirstName() + toValidate
                 .getLastName() + toValidate.getPatronymic())
-                | !validatePassword(toValidate)
-                |!validateBirthDay(toValidate.getBirthDate())) {
+                || !validatePassword(toValidate)
+                || !validateBirthDay(toValidate.getBirthDate())) {
             throw new IllegalStateException("User" + toValidate + "validation" +
                     " fails.");
         }
