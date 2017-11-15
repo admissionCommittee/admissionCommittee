@@ -15,7 +15,7 @@ import java.io.IOException;
  *
  */
 
-@WebFilter({"/user", "/admin","/certificate", "/profile"})
+@WebFilter({"/user", "/admin","/certificate", "/profile", "/examinations"})
 public class AuthorizationFilter implements Filter {
     private static final Logger log = LoggerFactory.getLogger(AuthorizationFilter.class);
 
@@ -38,7 +38,7 @@ public class AuthorizationFilter implements Filter {
 
         HttpSession session = httpRequest.getSession(true);
         if (session.getAttribute("user_id") == null) {
-            log.info(String.format("Session %s not authorized, redirect to /", session.getId()));
+            log.info(String.format("Session %s is not authorized, redirect to /", session.getId()));
             httpResponse.sendRedirect("/");
             return;
         }
