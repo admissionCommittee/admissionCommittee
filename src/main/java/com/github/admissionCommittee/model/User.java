@@ -26,14 +26,17 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Table(name = "user")
 @EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
-@AttributeOverride(name = "id", column = @Column(name = "user_id", nullable = false))
+@AttributeOverride(name = "id", column = @Column(name = "user_id", nullable =
+        false))
 @ToString(callSuper = true)
 public class User extends AbstractEntity {
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy =
+            "user")
     private ExamCertificate examCertificate;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy =
+            "user")
     private SchoolCertificate schoolCertificate;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
@@ -70,13 +73,8 @@ public class User extends AbstractEntity {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    @Deprecated
-    @Column(name = "is_enlisted")
-    private boolean enlisted;
-
-    //TODO service check
-
-    public User(UserAttendeeState userAttendeeState, UserTypeEnum userRole, String lastName,
+    public User(UserAttendeeState userAttendeeState, UserTypeEnum userRole,
+                String lastName,
                 String firstName,
                 String patronymic,
                 String mail, String password, LocalDate birthDate) {
@@ -89,5 +87,4 @@ public class User extends AbstractEntity {
         this.password = password;
         this.birthDate = birthDate;
     }
-
 }

@@ -2,18 +2,22 @@ package com.github.admissionCommittee.util.init;
 
 import lombok.AllArgsConstructor;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @AllArgsConstructor
 final class DBInitializerUtil implements InitializerUtil {
+    private static final Logger log = LoggerFactory.getLogger
+            (DBInitializerUtil.class);
 
     @Override
     public void init(int usersNumber, String outputFile, String inputFile) {
+
+        log.info(String.format("Loading users from: %s", DBInitializerUtil.class
+                .getResource("/db/UserInitData.txt").getPath().replaceFirst(
+                        "^/(.:/)", "$1")));
+
         // init users without faculty, certificates and sheet and validate
-
-        System.out.println(DBInitializerUtil.class.getResource(
-                "/db/UserInitData.txt").getPath().replaceFirst(
-                "^/(.:/)", "$1"));
-
         new UserInitializerUtil().init(
                 usersNumber, DBInitializerUtil.class.getResource(
                         "/db/UserInitData.txt").getPath().replaceFirst(
@@ -45,6 +49,8 @@ final class DBInitializerUtil implements InitializerUtil {
         new SheetInitializerUtil().init(usersNumber,
                 "no input", "no otput");
 
+        log.info(String.format("DB have been initialized successfully, total " +
+                "%s users", usersNumber));
     }
 
     public static void main(String[] args) {

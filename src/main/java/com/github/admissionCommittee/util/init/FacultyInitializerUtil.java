@@ -6,6 +6,8 @@ import com.github.admissionCommittee.model.User;
 import com.github.admissionCommittee.service.ServiceFactory;
 import com.github.admissionCommittee.service.SubjectService;
 import com.github.admissionCommittee.util.validate.FacultyValidatorUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,13 +21,17 @@ import java.util.Set;
 import static com.github.admissionCommittee.model.enums.UserTypeEnum.ADMIN;
 
 public class FacultyInitializerUtil implements InitializerUtil {
+    private static final Logger log = LoggerFactory.getLogger
+            (FacultyInitializerUtil.class);
+
     @Override
     public void init(int entitiesNumber, String inputFile,
-                     String outputFile){
+                     String outputFile) {
         try {
             FacultyValidatorUtil validator = new
                     FacultyValidatorUtil();
             List<Faculty> facultyList = new ArrayList<>();
+            final int[] counter = {0};
             Files.lines(Paths.get(inputFile))
                     .map(line -> line.split("\u200B"))
                     .forEach(substring -> {
@@ -34,11 +40,13 @@ public class FacultyInitializerUtil implements InitializerUtil {
                                 3));
                         validator.validateEntity(faculty);
                         facultyList.add(faculty);
+                        counter[0]++;
                     });
             ServiceFactory.getServiceFactory().getFacultyService().save
                     (facultyList);
             validator.validateInit(facultyList);
-            System.out.println("FACULTY INIT DONE");
+            log.info(String.format("Faculties have been initialized" +
+                    "successfully, total %d faculties", counter[0]));
             assignFacultyToUserRandom(facultyList);
         } catch (IOException ex) {
             ex.printStackTrace();

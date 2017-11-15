@@ -2,10 +2,14 @@ package com.github.admissionCommittee.util.validate;
 
 import com.github.admissionCommittee.model.AbstractEntity;
 import com.github.admissionCommittee.service.ServiceFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class SheetValidatorUtil extends ValidatorUtil {
+    private static final Logger log = LoggerFactory.getLogger
+            (SheetValidatorUtil.class);
     @Override
     public void validateEntity(AbstractEntity entityToValidate) {
         //TODO
@@ -17,7 +21,7 @@ public class SheetValidatorUtil extends ValidatorUtil {
                 .getServiceFactory().getService(toValidate.get(0).getClass())
                 .getAll();
         //why id 1
-        System.out.println("CHECK > from DB: " + entitiesList);
-        System.out.println("initial: " + toValidate);
+        log.info(String.format("Check: from DB %s", entitiesList));
+        log.info(String.format("Check: initial: %s", toValidate));
     }
 }

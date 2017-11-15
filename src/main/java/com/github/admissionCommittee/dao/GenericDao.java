@@ -4,6 +4,8 @@ import com.github.admissionCommittee.model.AbstractEntity;
 import com.github.admissionCommittee.util.init.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -12,6 +14,8 @@ public abstract class GenericDao<T extends AbstractEntity> {
     private Class<T> type;
     private Session session;
     private Transaction transaction;
+    private static final Logger log = LoggerFactory.getLogger(GenericDao
+            .class);
 
     public GenericDao(Class<T> type) {
         this.type = type;
@@ -29,13 +33,13 @@ public abstract class GenericDao<T extends AbstractEntity> {
 
     public void save(List<T> instance) {
         openSessionWithTransaction();
-        instance.stream().forEach(t -> {
+        instance.forEach(t -> {
             if (t.isNew()) {
                 session.save(t);
-                System.out.println("Saved: "+t);
+                log.info(String.format("Saved %s", t));
             } else {
                 session.update(t);
-                System.out.println("Updated: "+t);
+                log.info(String.format("Updated %s", t));
             }
         });
         closeSessionWithTransaction();
@@ -48,12 +52,11 @@ public abstract class GenericDao<T extends AbstractEntity> {
         return instance;
     }
 
-
     @SuppressWarnings("unchecked")
     public List<T> getAll() {
         openSessionWithTransaction();
-        List<T> instances = (List<T>) session.createQuery("from " + type
-                .getName()).list();
+        List<T> instances = (List<T>) session.createQuery("from "
+                + type.getName()).list();
         closeSessionWithTransaction();
         return instances;
     }
@@ -63,6 +66,7 @@ public abstract class GenericDao<T extends AbstractEntity> {
         T instance = session.get(type, id);
         if (instance != null) {
             session.delete(instance);
+            log.info(String.format("Deleted %s", instance));
         }
         closeSessionWithTransaction();
     }

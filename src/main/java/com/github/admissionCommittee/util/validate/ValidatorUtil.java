@@ -8,6 +8,8 @@ import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
 import com.github.admissionCommittee.service.ServiceFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,6 +20,8 @@ import java.util.regex.Pattern;
  * Validation utility.
  */
 public abstract class ValidatorUtil {
+    private static final Logger log = LoggerFactory.getLogger
+            (ValidatorUtil.class);
     public static final String MESSAGE_FOR_FIRST_PARAMETER_IF_NULL
             = "first parameter can't be null";
     public static final String MESSAGE_FOR_SECOND_PARAMETER_IF_NULL
@@ -451,21 +455,16 @@ public abstract class ValidatorUtil {
         return null;
     }
 
-
     public void validateInit(List<? extends AbstractEntity> toValidate) {
         List<? extends AbstractEntity> entitiesList = ServiceFactory
                 .getServiceFactory().getService(toValidate.get(0).getClass())
                 .getAll();
         //why id 1
-        System.out.println("CHECK > from DB: " + entitiesList);
-        System.out.println("initial: " + toValidate);
+        log.info(String.format("Check: from DB %s", entitiesList));
+        log.info(String.format("Check: initial: %s", toValidate));
 
         if (!(entitiesList.containsAll(toValidate) && toValidate.containsAll
                 (entitiesList))) {
-
-            System.out.println(entitiesList.containsAll(toValidate));
-            System.out.println(toValidate.containsAll(entitiesList));
-            System.out.println("ERROR INIT");
             throw new IllegalStateException(ValidatorUtil
                     .MESSAGE_IF_INITIALIZATION_FAIL + ": " + toValidate);
         }

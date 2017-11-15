@@ -6,6 +6,8 @@ import com.github.admissionCommittee.model.enums.UserTypeEnum;
 import com.github.admissionCommittee.service.ServiceFactory;
 import com.github.admissionCommittee.util.validate.UserValidatorUtil;
 import com.github.admissionCommittee.util.validate.ValidatorUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,6 +16,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class UserInitializerUtil implements InitializerUtil {
+    private static final Logger log = LoggerFactory.getLogger
+            (UserInitializerUtil.class);
+
     @Override
     public void init(int entitiesNumber, String inputFile,
                      String outputFile) {
@@ -24,10 +29,9 @@ public class UserInitializerUtil implements InitializerUtil {
             ArrayList<User> userList = new ArrayList<>();
             String line = "";
             int counter = 0;
-            while ((line = bufferedReader.readLine()) != null && counter <=
+            while ((line = bufferedReader.readLine()) != null && counter <
                     entitiesNumber) {
                 String[] splittedLine = line.split("\u200B");
-
                 User user = new User(UserAttendeeState.valueOf
                         (splittedLine[3]), UserTypeEnum.valueOf
                         (splittedLine[4]), splittedLine[5], splittedLine[6],
@@ -44,7 +48,8 @@ public class UserInitializerUtil implements InitializerUtil {
             }
             ServiceFactory.getServiceFactory().getUserService().save(userList);
             validator.validateInit(userList);
-            System.out.println("USERS INIT DONE");
+            log.info(String.format("Users have been initialized successfully," +
+                    " total %d users", counter));
         } catch (IOException e) {
             e.printStackTrace();
         }

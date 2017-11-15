@@ -2,12 +2,17 @@ package com.github.admissionCommittee.util.validate;
 
 import com.github.admissionCommittee.model.AbstractEntity;
 import com.github.admissionCommittee.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UserValidatorUtil extends ValidatorUtil {
+    private static final Logger log = LoggerFactory.getLogger
+            (UserValidatorUtil.class);
+
     @Override
     public void validateEntity(AbstractEntity entityToValidate) {
         User toValidate = (User) entityToValidate;
-        System.out.println(toValidate);
+        log.info(String.format("Validating entity %s", toValidate));
         if (ValidatorUtil.validateStringEmpty(toValidate
                 .getUserAttendeeState()
                 .toString(), ValidatorUtil.MESSAGE_IF_USER_ATTENDEE_STATE_EMPTY)
@@ -28,14 +33,4 @@ public class UserValidatorUtil extends ValidatorUtil {
         }
         //TODO other validation
     }
-
-    /*@Override
-    public void validateInit(List toValidate) {
-        List<User> userList = new UserService().getAll();
-        if (!(userList.containsAll(toValidate) && toValidate.containsAll
-                (userList))) {
-            throw new IllegalStateException(ValidatorUtil
-                    .MESSAGE_IF_USERS_TABLE_INIT_FAIL);
-        }
-    }*/
 }

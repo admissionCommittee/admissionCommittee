@@ -6,12 +6,16 @@ import com.github.admissionCommittee.model.enums.UserTypeEnum;
 import com.github.admissionCommittee.service.ServiceFactory;
 import com.github.admissionCommittee.util.ScoresUtil;
 import com.github.admissionCommittee.util.validate.ValidatorUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ExamCertificateInitializerUtil implements
         InitializerUtil {
+    private static final Logger log = LoggerFactory.getLogger
+            (ExamCertificateInitializerUtil.class);
 
     @Override
     public void init(int entitiesNumber, String outputFile,
@@ -21,6 +25,7 @@ public class ExamCertificateInitializerUtil implements
                 .getUserService().getAll();
         ValidatorUtil validator = ValidatorUtil.getValidator(ExamCertificate
                 .class);
+        final int[] counter = {0};
         userList.stream().filter(user -> user.getUserRole() != UserTypeEnum
                 .ADMIN)
                 .forEach(user -> {
@@ -35,12 +40,14 @@ public class ExamCertificateInitializerUtil implements
                     examCertificates.add(examCertificate);
                     //assign exam certificate to user
                     user.setExamCertificate(examCertificate);
+                    counter[0]++;
                 });
         ServiceFactory.getServiceFactory().getExamCertificateService().save
                 (examCertificates);
         validator.validateInit(examCertificates);
         //update users
         ServiceFactory.getServiceFactory().getUserService().save(userList);
-        System.out.println("EXAM INIT DONE");
+        log.info(String.format("Exam certificates have been initialized" +
+                "successfully, total %d exam certificates", counter[0]));
     }
 }

@@ -34,12 +34,6 @@ public class UserService extends GenericService<User> {
         return ((UserDao) getDao()).getByMail(mail);
     }
 
-    @Deprecated
-    public void updateIsEnlisted(Map<Faculty, List<User>> facultyAttendeeList) {
-        facultyAttendeeList.values().forEach((list -> list.forEach((user -> user
-                .setEnlisted(true)))));
-    }
-
     //get only attendees that satisfy the attendee demands
     public Map<Faculty, List<User>> getEnlistedAttendees() {
         Map<Faculty, List<User>> approvedMap = new HashMap<>();
