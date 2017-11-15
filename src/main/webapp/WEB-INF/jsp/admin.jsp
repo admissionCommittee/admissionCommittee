@@ -66,7 +66,7 @@
             <fmt:message key="admin.shetinfo.submit"/> <ptags:FormatLocalDate date="${now}"/> )</b></caption>
         <tr><th><b><fmt:message key="admin.shetinfo.fio"/></b></th> <th><b><fmt:message key="admin.shetinfo.ege"/></b></th><th><b><fmt:message key="admin.shetinfo.cettificate"/></b></th></tr>
         <c:forEach items="${listSheets}" var="sheet" >
-            <tr><td> ${sheet.user.lastName} ${sheet.user.firstName} ${sheet.user.patronymic}</td> <td> ${sheet.sumExamCertificateScore}</td><td> ${sheet.averageSchoolCertificateScore}</td></tr>
+            <tr><td> ${sheet.user.lastName} ${sheet.user.firstName} ${sheet.user.patronymic}</td> <td> ${sheet.sumExamCertificateScore}</td><td> ${sheet.user.schoolCertificate.averageScore}</td></tr>
         </c:forEach>
     </table>
     </c:if>
