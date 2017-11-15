@@ -33,12 +33,12 @@ public class SheetInitializerUtil implements InitializerUtil {
         userList.stream().filter(user -> user.getUserRole() != ADMIN).forEach
                 (user -> {
                     Sheet sheet = new Sheet(user, user.getFaculty(),
-                            calculateScoreSum(user.getSchoolCertificate()
+                            calculateScoreSum(user.getExamCertificate()
                                     .getSubjects()),
                             calculateScoreSum(
-                                    user.getExamCertificate()
+                                    user.getSchoolCertificate()
                                             .getSubjects()) / user
-                                    .getExamCertificate()
+                                    .getSchoolCertificate()
                                     .getSubjects()
                                     .size());
                     validator.validate(sheet);

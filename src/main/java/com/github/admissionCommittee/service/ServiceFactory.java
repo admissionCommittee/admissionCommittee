@@ -8,8 +8,6 @@ import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
 
-;
-
 public class ServiceFactory {
     private ServiceFactory() {
     }

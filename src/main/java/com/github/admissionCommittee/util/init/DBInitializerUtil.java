@@ -62,10 +62,21 @@ final class DBInitializerUtil implements InitializerUtil {
     public static void main(String[] args) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-        new DBInitializerUtil().init(30, "specified separalty",
+        new DBInitializerUtil().init(10, "specified separalty",
                 "specified separatly");
-        Map<Faculty, List<User>> enlistedAttendees = ServiceFactory.getServiceFactory()
-                .getUserService().getEnlistedAttendees();
+        Faculty faculty = ServiceFactory.getServiceFactory()
+                .getFacultyService().get(1);
+        //check
+        System.out.println("Faculty: "+faculty);
+        System.out.println("Get all students by faculty: "+ServiceFactory.getServiceFactory()
+                .getSheetService()
+                .getByFaculty
+                (faculty));
+
+        List<User> byFacultyEnlisted = ServiceFactory.getServiceFactory()
+                .getUserService().getByFacultyEnlisted(ServiceFactory.getServiceFactory()
+                        .getFacultyService().get(1));
+        System.out.println("Get all students by faculty enlisted: "+byFacultyEnlisted);
         sessionFactory.close();
     }
 }
