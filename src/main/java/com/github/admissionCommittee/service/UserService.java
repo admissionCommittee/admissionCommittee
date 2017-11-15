@@ -64,6 +64,10 @@ public class UserService extends GenericService<User> {
         return approvedMap;
     }
 
+    public List<User> getByFacultyEnlisted(Faculty faculty){
+        return getEnlistedAttendees().get(faculty);
+    }
+
     public List<User> getApprovedSheets(List<Sheet> sheetList,
                                         Integer attendeesLimit) {
         //getApprovedSheets - that belonging to successful attendees

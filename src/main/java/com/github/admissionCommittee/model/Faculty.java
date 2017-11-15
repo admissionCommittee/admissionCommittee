@@ -27,7 +27,7 @@ import java.util.Set;
 @Table(name = "faculty")
 @EqualsAndHashCode(doNotUseGetters = true,exclude = {"users"})
 @AttributeOverride(name = "id", column = @Column(name = "faculty_id", nullable = false))
-@ToString(callSuper = true,exclude = {"users"})
+@ToString(exclude = {"users"})
 public class Faculty extends AbstractEntity {
 
     @Column(name = "name", nullable = false)
