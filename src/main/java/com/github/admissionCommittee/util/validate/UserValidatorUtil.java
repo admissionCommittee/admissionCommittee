@@ -35,8 +35,8 @@ public class UserValidatorUtil extends ValidatorUtil {
                 || ValidatorUtil.validateStringEmpty(toValidate.getPassword(),
                 ValidatorUtil.MESSAGE_IF_PASSWORD_EMPTY)
                 || !validateEmail(toValidate.getMail())
-                || !validateFullName(toValidate.getFirstName() + toValidate
-                .getLastName() + toValidate.getPatronymic())
+                || !ValidatorUtil.validateFullName(toValidate.getFirstName() + toValidate
+                .getLastName() + toValidate.getPatronymic(),"Full name")
                 || !validatePassword(toValidate)
                 || !validateBirthDay(toValidate.getBirthDate())) {
             throw new IllegalStateException("User" + toValidate + "validation" +
@@ -50,16 +50,6 @@ public class UserValidatorUtil extends ValidatorUtil {
             log.debug(String.format("Email %s is not valid.", email), email);
         }
         return valid;
-    }
-
-    private boolean validateFullName(String fullName) {
-        boolean matches = Pattern.compile("^[\\p{L} .'-]+$").matcher
-                (fullName).matches();
-        if (!matches) {
-            log.debug(String.format("Full name %s is not valid.", fullName),
-                    fullName);
-        }
-        return matches;
     }
 
     private boolean validatePassword(User user) {

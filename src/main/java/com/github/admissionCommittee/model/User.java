@@ -4,7 +4,9 @@ import com.github.admissionCommittee.model.enums.UserAttendeeState;
 import com.github.admissionCommittee.model.enums.UserTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.AttributeOverride;
@@ -21,11 +23,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
 
-@Data
 @Entity
 @NoArgsConstructor
 @Table(name = "user")
-@EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
+@Getter
+@Setter
+@EqualsAndHashCode(doNotUseGetters = true)
 @AttributeOverride(name = "id", column = @Column(name = "user_id", nullable =
         false))
 @ToString(callSuper = true)

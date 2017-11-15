@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "sheet")
-@EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
+@EqualsAndHashCode(doNotUseGetters = true,exclude = {"user","faculty"})
 @AttributeOverride(name = "id", column = @Column(name = "sheet_id", nullable = false))
 @ToString(callSuper = true,exclude = "user")
 public class Sheet extends AbstractEntity {

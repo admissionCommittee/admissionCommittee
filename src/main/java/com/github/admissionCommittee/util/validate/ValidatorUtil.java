@@ -11,10 +11,14 @@ import com.github.admissionCommittee.service.ServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 /**
  * Validation utility.
@@ -77,7 +81,9 @@ public abstract class ValidatorUtil {
     public static final String MESSAGE_IF_USER_ROLE_EMPTY =
             "user role is empty";
     public static final String MESSAGE_IF_INITIALIZATION_FAIL =
-            "users table initialization fail";
+            "Initialization fail.";
+    public static final String MESSAGE_IF_SCHOOLCERT_YEAR_INVALID =
+            "School certificate year is invalid.";
 
     /**
      * Validates parameters not null.
@@ -164,6 +170,16 @@ public abstract class ValidatorUtil {
         if (parameter == null) {
             throw new IllegalArgumentException(messageIfNull);
         }
+    }
+
+    public static boolean validateFullName(String toValidate, String messageIfInvalid) {
+
+        boolean matches = Pattern.compile("^[\\p{L} .'-]+$").matcher
+                (messageIfInvalid).matches();
+        if (!matches) {
+            log.debug(String.format(messageIfInvalid + ": %s.", toValidate));
+        }
+        return matches;
     }
 
     /**
@@ -307,6 +323,13 @@ public abstract class ValidatorUtil {
         }
         if (value > upperBorder) {
             throw new IllegalArgumentException(messageIfViolatesUpperBorder);
+        }
+        return true;
+    }
+
+    public static boolean validateCertificateYear(int year, String messageIfYearIsInvalid) {
+        if (year < LocalDate.now().getYear() - 117 || year > LocalDate.now().getYear()) {
+            throw new IllegalStateException(messageIfYearIsInvalid+ ": "+year);
         }
         return true;
     }
@@ -463,6 +486,14 @@ public abstract class ValidatorUtil {
         //why id 1
         log.info(String.format("Check: from DB %s", entitiesList));
         log.info(String.format("Check: initial: %s", toValidate));
+
+        IntStream.rangeClosed(0, entitiesList.size()-1).forEach(i -> {
+            if (entitiesList.get(i) != toValidate.get(i)) {
+                log.info(String.format("NOT EQUAL INOUT ENTITY: %s",i));
+                System.out.println(entitiesList.get(i));
+                System.out.println(toValidate.get(i));
+            }
+        });
 
         if (!(entitiesList.containsAll(toValidate) && toValidate.containsAll
                 (entitiesList))) {
