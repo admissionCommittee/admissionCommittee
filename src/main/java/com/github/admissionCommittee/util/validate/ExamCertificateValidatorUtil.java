@@ -1,6 +1,7 @@
 package com.github.admissionCommittee.util.validate;
 
 import com.github.admissionCommittee.model.AbstractEntity;
+import com.github.admissionCommittee.model.ExamCertificate;
 import com.github.admissionCommittee.service.ServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,13 @@ public class ExamCertificateValidatorUtil extends ValidatorUtil {
 
     @Override
     public void validate(AbstractEntity entityToValidate) {
-        //TODO
+        ExamCertificate examCertificate = ((ExamCertificate) entityToValidate);
+        ValidatorUtil.validateCertificateYear(examCertificate.getYear(), "Exam's "
+                + "certificate year is invalid");
+        ValidatorUtil.validateNotNull(examCertificate.getUser(), examCertificate.getSubjects(),
+                "User assigned to exam certificate can't ve null",
+                "Subject's collection assigned to exam certificate can't"
+                        + " be null");
     }
 
     @Override

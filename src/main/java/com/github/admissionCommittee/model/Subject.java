@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "subject")
-@EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
+@EqualsAndHashCode(doNotUseGetters = true)
 @AttributeOverride(name = "id", column = @Column(name = "subject_id", nullable = false))
 @ToString(callSuper = true)
 public class Subject extends AbstractEntity {

@@ -10,8 +10,8 @@ public class HibernateUtil {
         try {
             Configuration configuration = new Configuration().configure();
             sessionFactory = configuration.buildSessionFactory();
-            new DBInitializerUtil().init(30, "specified separalty",
-                    "specified separatly");
+//            new DBInitializerUtil().init(30, "specified separalty",
+  //                  "specified separatly");
         } catch (Throwable t) {
             throw new ExceptionInInitializerError(t);
         }

@@ -1,6 +1,7 @@
 package com.github.admissionCommittee.util.validate;
 
 import com.github.admissionCommittee.model.AbstractEntity;
+import com.github.admissionCommittee.model.SchoolCertificate;
 import com.github.admissionCommittee.service.ServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,13 @@ public class SchoolCertificateValidatorUtil extends ValidatorUtil {
 
     @Override
     public void validate(AbstractEntity entityToValidate) {
-        //TODO
+        SchoolCertificate schoolCertificate = (SchoolCertificate) entityToValidate;
+        ValidatorUtil.validateNotNull(schoolCertificate.getUser(), schoolCertificate.getSubjects(),
+                "User assigned to schoolCertificate can't be null",
+                "Subject's map assigned to schoolCertificate can't " +
+                        "be null");
+        ValidatorUtil.validateNotNegative(schoolCertificate.getYear(),
+                ValidatorUtil.MESSAGE_IF_SCHOOLCERT_YEAR_INVALID);
     }
 
     @Override

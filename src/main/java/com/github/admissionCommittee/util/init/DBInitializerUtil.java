@@ -1,11 +1,17 @@
 package com.github.admissionCommittee.util.init;
 
+import com.github.admissionCommittee.model.Faculty;
+import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.service.ServiceFactory;
 import lombok.AllArgsConstructor;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@AllArgsConstructor
+import java.util.List;
+import java.util.Map;
+
+//@AllArgsConstructor
 final class DBInitializerUtil implements InitializerUtil {
     private static final Logger log = LoggerFactory.getLogger
             (DBInitializerUtil.class);
@@ -55,6 +61,11 @@ final class DBInitializerUtil implements InitializerUtil {
 
     public static void main(String[] args) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+
+        new DBInitializerUtil().init(30, "specified separalty",
+                "specified separatly");
+        Map<Faculty, List<User>> enlistedAttendees = ServiceFactory.getServiceFactory()
+                .getUserService().getEnlistedAttendees();
         sessionFactory.close();
     }
 }

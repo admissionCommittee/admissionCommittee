@@ -1,10 +1,11 @@
 package com.github.admissionCommittee.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.AttributeOverride;
@@ -18,12 +19,13 @@ import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Table(name = "faculty")
-@EqualsAndHashCode(callSuper = true, doNotUseGetters = true)
+@EqualsAndHashCode(doNotUseGetters = true,exclude = {"users"})
 @AttributeOverride(name = "id", column = @Column(name = "faculty_id", nullable = false))
 @ToString(callSuper = true,exclude = {"users"})
 public class Faculty extends AbstractEntity {
