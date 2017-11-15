@@ -38,7 +38,23 @@ public class SheetService extends GenericService<Sheet> {
     }
 
     public List<Sheet> getByFaculty(Faculty faculty) {
-        return ((SheetDao) getDao()).getByFaculty(faculty);
+        final List<Sheet> byFaculty = ((SheetDao) getDao()).getByFaculty(faculty);
+        byFaculty.sort((sheet1, sheet2) -> {
+            // descending order by exams
+            final int compare = Integer.compare(sheet2.getSumExamCertificateScore(),
+                sheet1.getSumExamCertificateScore());
+            if (compare == 0) {
+                // descending order by school certificate
+                return Double.compare(sheet2.getUser().getSchoolCertificate().getAverageScore(),
+                    sheet1.getUser().getSchoolCertificate().getAverageScore());
+            }
+            return compare;
+        });
+        final int delta = byFaculty.size() - faculty.getPeopleLimit();
+        if (delta > 0) {
+            return byFaculty.subList(0, faculty.getPeopleLimit());
+        }
+        return byFaculty;
     }
 
 }

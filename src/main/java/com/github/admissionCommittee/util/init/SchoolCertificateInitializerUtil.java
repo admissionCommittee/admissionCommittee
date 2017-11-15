@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SchoolCertificateInitializerUtil implements
         InitializerUtil {
@@ -38,6 +39,10 @@ public class SchoolCertificateInitializerUtil implements
                             .getYear() + 17,
                             ScoresUtil.getRandomScores(subjectList, 3, 2));
                     validator.validate(schoolCertificate);
+                    final Map<Subject, Integer> subjects = schoolCertificate.getSubjects();
+                    schoolCertificate.setAverageScore(Math.round(100.0 * subjects.values()
+                        .stream().mapToInt(Integer::intValue).sum() / subjects.size()) /
+                        100.0);
                     schoolCertificates.add(schoolCertificate);
                     //assign school certificate to user
                     user.setSchoolCertificate(schoolCertificate);
