@@ -71,14 +71,14 @@
 
 <c:if test="${not empty certificate.subjects}">
 <div id="faculty-info">
-    <form method="get">
+    <form class="login_form" action="${pageContext.request.contextPath}/examinations" method="post">
         <label for="faculty">Для подачи документов выберите факультет:</label>
         <select id="faculty" name="faculty">
                 <ptags:SelectFromList list="${listFaculty}"/>
         </select>
         </p>
         <p>
-            <input type="submit" value="Отправить" />
+            <button class="submit" type="submit"><fmt:message key="button_apply"/></button>
         </p>
     </form>
 </div>

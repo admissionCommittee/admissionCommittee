@@ -1,12 +1,7 @@
 package com.github.admissionCommittee.web.controllers;
 
-import com.github.admissionCommittee.model.SchoolCertificate;
-import com.github.admissionCommittee.model.Subject;
-import com.github.admissionCommittee.model.User;
-import com.github.admissionCommittee.service.FacultyService;
-import com.github.admissionCommittee.service.SchoolCertificateService;
-import com.github.admissionCommittee.service.SubjectService;
-import com.github.admissionCommittee.service.UserService;
+import com.github.admissionCommittee.model.*;
+import com.github.admissionCommittee.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,38 +15,37 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
-@WebServlet({"/certificate"})
-public class CertificateController extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(CertificateController.class);
+@WebServlet({"/examinations"})
+public class ExamCertificateController extends HttpServlet {
+    private static final Logger log = LoggerFactory.getLogger(ExamCertificateController.class);
     private UserService userService;
-    private SchoolCertificateService certificateService;
+    private ExamCertificateService examService;
     private FacultyService facultyService;
     private SubjectService subjectService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         userService = (UserService) config.getServletContext().getAttribute("userService");
-        certificateService = (SchoolCertificateService) config.getServletContext().getAttribute("certificateService");
+        examService = (ExamCertificateService) config.getServletContext().getAttribute("examService");
         facultyService = (FacultyService) config.getServletContext().getAttribute("facultyService");
         subjectService = (SubjectService) config.getServletContext().getAttribute("subjectService");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
         doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
 
         HttpSession session = request.getSession();
         User user = userService.get((long) session.getAttribute("user_id"));
-
+        Faculty faculty = facultyService.get(Long.parseLong(request.getParameter("faculty")));
+        log.info(String.format("Enter examination sheet of User %s ", user.getMail()));
 
         if (request.getParameter("save") != null) {
-            log.info(String.format("Update certificate by User %s ", user.getMail()));
+            log.info(String.format("Update examination sheet of User %s ", user.getMail()));
 
             Map<Subject, Integer> subjectsMap = new HashMap<>();
 
@@ -60,47 +54,52 @@ public class CertificateController extends HttpServlet {
                 if (param.startsWith("sub_")) {
                     int value = Integer.parseInt(request.getParameter(param));
                     int subject_id = Integer.parseInt(param.substring(4));
-                    log.trace("Certificate subjects:" + subject_id + " " + value);
+                    log.info("Exam subjects:" + subject_id + " " + value);
                     subjectsMap.put(subjectService.get(subject_id), value);
                 }
             }
 
-            //todo
-            SchoolCertificate certificate;
+            ExamCertificate certificate;
             //user.getSchoolCertificate() == null ? certificate = new SchoolCertificate() : certificate = user.getSchoolCertificate();
-            if (user.getSchoolCertificate() != null){
-                certificate = user.getSchoolCertificate();
+            if (user.getExamCertificate() != null){
+                certificate = user.getExamCertificate();
             }else {
-                certificate = new SchoolCertificate();
+
+                certificate = new ExamCertificate();
             }
 
-            //SchoolCertificate newCertificate = new SchoolCertificate(user,Integer.parseInt(request.getParameter("year")),subjectsMap);
             certificate.setYear(Integer.parseInt(request.getParameter("year")));
             certificate.setSubjects(subjectsMap);
             certificate.setUser(user);
+            examService.save(certificate);
 
-            certificateService.save(certificate);
-            //user.setSchoolCertificate(newCertificate);
+            //todo Так быть в сервисах не должно
+            Sheet sheet = new Sheet();
+            sheet.setUser(user);
+            sheet.setFaculty(faculty);
+            sheet.setAverageSchoolCertificateScore(0);
+            sheet.setSumExamCertificateScore(0);
+            new SheetService().save(sheet);
+
             response.sendRedirect("/user");
             return;
         }
 
-        SchoolCertificate certificate = user.getSchoolCertificate();
+        ExamCertificate certificate = user.getExamCertificate();
         if(certificate != null){
             Map<Subject, Integer> mapSubjectsScores = certificate.getSubjects();
             request.setAttribute("mapSubjectsScores", mapSubjectsScores);
-            request.setAttribute("certificate", user.getSchoolCertificate());
+            request.setAttribute("certificate", certificate);
         }else
         {
             request.setAttribute("mapSubjectsScores", new HashMap<>());
         }
 
-        //todo add service injection
-        List<Subject> list = new SubjectService().getAll();
+        List<Subject> list = new ArrayList<>(faculty.getSubjects());
         list.sort(Comparator.comparing(p -> p.getName().toString()));
         request.setAttribute("listSubjects", list);
-        //Collections.sort(list);
 
-        request.getRequestDispatcher("/WEB-INF/jsp/certificate.jsp").forward(request, response);
+        request.setAttribute("faculty", faculty);
+        request.getRequestDispatcher("/WEB-INF/jsp/exam.jsp").forward(request, response);
     }
 }

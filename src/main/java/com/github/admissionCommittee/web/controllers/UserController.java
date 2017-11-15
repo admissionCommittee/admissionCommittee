@@ -1,5 +1,6 @@
 package com.github.admissionCommittee.web.controllers;
 
+import com.github.admissionCommittee.model.Faculty;
 import com.github.admissionCommittee.model.SchoolCertificate;
 import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.model.User;
