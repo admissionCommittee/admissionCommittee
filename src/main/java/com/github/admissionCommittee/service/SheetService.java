@@ -8,7 +8,7 @@ import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,10 +20,12 @@ public class SheetService extends GenericService<Sheet> {
     }
 
     @Override
-    public List<String> save(Sheet instance) {
+    public Set<String> save(Sheet instance) {
         instance.setSumExamCertificateScore(calculateExamScoreSum(instance));
+
         super.save(instance);
-        return new ArrayList<String>();
+        //TODO can be added some validation
+        return new LinkedHashSet<>();
     }
 
     private int calculateExamScoreSum(Sheet instance) {

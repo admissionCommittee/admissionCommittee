@@ -81,7 +81,7 @@ public class CertificateController extends HttpServlet {
             certificate.setUser(user);
 
             // Validation
-            List<String> errors = certificateService.save(certificate);
+            Set<String> errors = certificateService.save(certificate);
             if (errors.isEmpty()) {
                 response.sendRedirect("/user");
                 return;

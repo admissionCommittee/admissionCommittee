@@ -7,19 +7,20 @@ import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.model.User;
 import com.github.admissionCommittee.util.validate.UserValidatorUtil;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import static com.github.admissionCommittee.model.enums.UserAttendeeState
-        .NONPARTICIPANT;
-import static com.github.admissionCommittee.model.enums.UserAttendeeState
         .EXCLUDED;
+import static com.github.admissionCommittee.model.enums.UserAttendeeState
+        .NONPARTICIPANT;
 import static com.github.admissionCommittee.model.enums.UserAttendeeState
         .STUDENT;
 
@@ -33,19 +34,23 @@ public class UserService extends GenericService<User> {
     }
 
     @Override
-    public List<String> save(User instance) {
-        List<String> errorsLog = validator.validate(instance);
-        super.save(instance);
+    public Set<String> save(User instance) {
+        Set<String> errorsLog = validator.validate(instance);
+        if (errorsLog.size() == 0) {
+            super.save(instance);
+        }
         return errorsLog;
     }
 
     @Override
-    public List<String> save(List<User> instance) {
-        List<String> errorLog = new ArrayList<>();
+    public Set<String> save(List<User> instance) {
+        Set<String> errorLog = new LinkedHashSet<>();
         instance.forEach(u -> {
             errorLog.addAll(validator.validate(u));
         });
-        super.save(instance);
+        if (errorLog.size() == 0) {
+            super.save(instance);
+        }
         return errorLog;
     }
 

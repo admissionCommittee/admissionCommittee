@@ -1,11 +1,12 @@
 package com.github.admissionCommittee.service;
 
-import com.github.admissionCommittee.model.AbstractEntity;
 import com.github.admissionCommittee.dao.GenericDao;
+import com.github.admissionCommittee.model.AbstractEntity;
 import com.github.admissionCommittee.util.validate.ValidatorUtil;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public abstract class GenericService<T extends AbstractEntity> {
 
@@ -17,18 +18,27 @@ public abstract class GenericService<T extends AbstractEntity> {
         this.dao = dao;
     }
 
-    public List<String> save(T instance) {
+    public Set<String> save(T instance) {
         ValidatorUtil.validateNotNull(instance, ValidatorUtil
                 .MESSAGE_FOR_SOURCE_IF_NULL);
-        getDao().save(instance);
-        return new ArrayList<>();
+        Set<String> errorsLog = ValidatorUtil.getValidator(modelType).validate
+                (instance);
+        if (errorsLog.size() == 0) {
+            getDao().save(instance);
+        }
+        return errorsLog;
     }
 
-    public List<String> save(List<T> instance) {
+    public Set<String> save(List<T> instance) {
         ValidatorUtil.validateNotNull(instance, ValidatorUtil
                 .MESSAGE_FOR_SOURCE_IF_NULL);
-        getDao().save(instance);
-        return new ArrayList<>();
+        Set<String> errorsLog = new LinkedHashSet<>();
+        instance.forEach(element -> errorsLog.addAll(ValidatorUtil.getValidator
+                (modelType).validate(element)));
+        if (errorsLog.size() == 0) {
+            getDao().save(instance);
+        }
+        return errorsLog;
     }
 
     public T get(long id) {

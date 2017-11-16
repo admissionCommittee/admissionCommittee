@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
@@ -508,6 +509,6 @@ public abstract class ValidatorUtil {
         }
     }
 
-    public abstract List<String> validate(AbstractEntity
+    public abstract Set<String> validate(AbstractEntity
                                                   abstractEntityToValidate);
 }

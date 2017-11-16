@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.Set;
 
 @WebServlet({"/registration", "/profile"})
 public class RegistrationController extends HttpServlet {
@@ -67,7 +67,7 @@ public class RegistrationController extends HttpServlet {
             }
 
             // Validation
-            List<String> errors = service.save(editUser);
+            Set<String> errors = service.save(editUser);
 
             if (errors.isEmpty()) {
                 editUser = service.getByMail(editUser.getMail());

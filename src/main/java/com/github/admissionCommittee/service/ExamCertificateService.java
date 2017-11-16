@@ -4,7 +4,7 @@ import com.github.admissionCommittee.dao.DaoFactory;
 import com.github.admissionCommittee.model.ExamCertificate;
 import com.github.admissionCommittee.util.validate.ExamCertificateValidatorUtil;
 
-import java.util.List;
+import java.util.Set;
 
 public class ExamCertificateService extends GenericService<ExamCertificate> {
 
@@ -14,10 +14,13 @@ public class ExamCertificateService extends GenericService<ExamCertificate> {
     }
 
     @Override
-    public List<String> save(ExamCertificate instance) {
-        super.save(instance);
-        List<String> errorsLog = new ExamCertificateValidatorUtil().validate
+    public Set<String> save(ExamCertificate instance) {
+
+        Set<String> errorsLog = new ExamCertificateValidatorUtil().validate
                 (instance);
+        if (errorsLog.size() == 0) {
+            super.save(instance);
+        }
         return errorsLog;
     }
 }

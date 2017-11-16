@@ -5,9 +5,10 @@ import com.github.admissionCommittee.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * @author Konstantin Mavropulo.
@@ -72,11 +73,11 @@ public class PasswordValidatorUtil extends ValidatorUtil {
     }
 
     @Override
-    public List<String> validate(AbstractEntity abstractEntityToValidate) {
+    public Set<String> validate(AbstractEntity abstractEntityToValidate) {
         User user = (User) abstractEntityToValidate;
         String password = user.getPassword();
         String login = user.getMail();
-        List<String> errorsLog = new ArrayList<String>();
+        Set<String> errorsLog = new LinkedHashSet<>();
         if (/*!checkDigitsNumber(password, 3,
                 3, errorsLog)
                 | !checkLettersNumber(password, 3,
@@ -98,7 +99,7 @@ public class PasswordValidatorUtil extends ValidatorUtil {
         return errorsLog;
     }
 
-    public boolean validateInit(String password, List<String> errorsLog) {
+    public boolean validateInit(String password, Set<String> errorsLog) {
 
         if (!checkDigitsNumber(password, 3,
                 3, errorsLog)
@@ -151,7 +152,7 @@ public class PasswordValidatorUtil extends ValidatorUtil {
         System.out.println(sum);
     }*/
     public boolean checkDigitsNumber(String passwordToCheck, int
-            digitsMinNumber, int digitsMaxNumber, List<String> errorLog) {
+            digitsMinNumber, int digitsMaxNumber, Set<String> errorLog) {
         int sum = passwordToCheck.chars()
                 .filter(Character::isDigit)
                 .map(e -> 1)
@@ -169,7 +170,7 @@ public class PasswordValidatorUtil extends ValidatorUtil {
     }
 
     public boolean checkLettersNumber(String passwordToCheck, int
-            lettersMinNumber, int lettersMaxNumber, List<String> errorLog) {
+            lettersMinNumber, int lettersMaxNumber, Set<String> errorLog) {
         int sum = passwordToCheck.chars()
                 .filter(Character::isLetter)
                 .map(e -> 1)
@@ -188,7 +189,7 @@ public class PasswordValidatorUtil extends ValidatorUtil {
 
     public boolean checkSpecialSymbolsNumber(String passwordToCheck, int
             specialSymbolsNumberMin, int specialSymbolsNumberMax,
-                                             List<String> errorLog) {
+                                             Set<String> errorLog) {
         int sum = passwordToCheck.chars()
                 .filter(c -> SPECIAL_SYMBOLS_SET.contains(Character
                         .toString(
@@ -211,7 +212,7 @@ public class PasswordValidatorUtil extends ValidatorUtil {
 
     public boolean checkCapitalLettersNumber(String passwordToCheck, int
             capitalLettersNumberMin, int capitalLettersNumberMax,
-                                             List<String> errorLog) {
+                                             Set<String> errorLog) {
         int sum = passwordToCheck.chars()
                 .filter(Character::isUpperCase)
                 .map(c -> 1)
@@ -231,12 +232,11 @@ public class PasswordValidatorUtil extends ValidatorUtil {
     }
 
     public boolean checkLength(String passwordToCheck, int
-            lengthMinNumber, int lengthMaxNumber, List<String> errorLog) {
+            lengthMinNumber, int lengthMaxNumber, Set<String> errorLog) {
         boolean isLengthValid = passwordToCheck.length() >= lengthMinNumber &&
                 passwordToCheck.length() <= lengthMaxNumber;
         if (!isLengthValid) {
-            String error = "Password's length can't be " + passwordToCheck
-                    .length() + ", the length must be between " +
+            String error = "Password's length length must be between " +
                     lengthMinNumber + " and " + lengthMaxNumber + "!";
             log.debug(error);
             errorLog.add(error);
@@ -258,7 +258,7 @@ public class PasswordValidatorUtil extends ValidatorUtil {
     }
 
     public boolean checkSymbolsPermitted(String passwordToCheck, String
-            permittedSymbols, List<String> errorLog) {
+            permittedSymbols, Set<String> errorLog) {
         for (int i = 0; i < passwordToCheck.length(); i++) {
             if (!permittedSymbols.contains(passwordToCheck.charAt(i) +
                     "")) {
@@ -277,7 +277,7 @@ public class PasswordValidatorUtil extends ValidatorUtil {
     //maxEquals from 0 to length of password
     //not checked for 0 and 1 psw length
     public boolean checkEqualSequence(String passwordToCheck, int
-            maxEqualSequence, List<String> errorLog) {
+            maxEqualSequence, Set<String> errorLog) {
         int equalsCount = 0;
         int iMaxLimit = 0;
         if (maxEqualSequence == 0) {
@@ -307,7 +307,7 @@ public class PasswordValidatorUtil extends ValidatorUtil {
 
     /*
     public boolean checkLengthBits(String passwordToCheck, long
-            maxLengthBits, List<String> errorLog) {
+            maxLengthBits, Set<String> errorLog) {
         try {
             long bytesLength = passwordToCheck.getBytes("UTF-8").length;
 
@@ -321,7 +321,7 @@ public class PasswordValidatorUtil extends ValidatorUtil {
 
     public boolean checkAdjacentKeyboardSequence(
             String passwordToCheck, String keyboardSymbolsOrderedByOrigin,
-            List<String> errorLog) {
+            Set<String> errorLog) {
         for (int i = 0; i < passwordToCheck.length() - 1; i++) {
             String letterToCheck = passwordToCheck.substring(i + 1, i + 2)
                     .toLowerCase();

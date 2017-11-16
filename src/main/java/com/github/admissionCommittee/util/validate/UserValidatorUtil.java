@@ -2,14 +2,13 @@ package com.github.admissionCommittee.util.validate;
 
 import com.github.admissionCommittee.model.AbstractEntity;
 import com.github.admissionCommittee.model.User;
-import com.github.admissionCommittee.util.validate.org.apache.commons
-        .validator.routines.EmailValidator;
+import com.github.admissionCommittee.util.validate.org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 public class UserValidatorUtil extends ValidatorUtil {
@@ -18,10 +17,10 @@ public class UserValidatorUtil extends ValidatorUtil {
 
 
     @Override
-    public List<String> validate(AbstractEntity entityToValidate) {
+    public Set<String> validate(AbstractEntity entityToValidate) {
         User toValidate = (User) entityToValidate;
         log.info(String.format("Validating entity %s", toValidate));
-        List<String> errorsList = new ArrayList<>();
+        Set<String> errorsList = new LinkedHashSet<>();
         if (ValidatorUtil.validateStringEmpty(toValidate
                 .getUserAttendeeState().toString(), ValidatorUtil
                 .MESSAGE_IF_USER_ATTENDEE_STATE_EMPTY)) {
@@ -66,8 +65,8 @@ public class UserValidatorUtil extends ValidatorUtil {
         }
 
         if (!validateBirthDay(toValidate.getBirthDate())) {
-            errorsList.add("Birthday's year for registration attendee should " +
-                    "is valid when belween 1895 and 2012!");
+            errorsList.add("Birthday's year for registration shouold " +
+                    "be belween 1895 and 2012!");
         }
         errorsList.addAll(validatePassword(toValidate));
         return errorsList;
@@ -81,8 +80,8 @@ public class UserValidatorUtil extends ValidatorUtil {
         return valid;
     }
 
-    private List<String> validatePassword(User user) {
-        List<String> errorLog = PasswordValidatorUtil.getBuilder().build()
+    private Set<String> validatePassword(User user) {
+        Set<String> errorLog = PasswordValidatorUtil.getBuilder().build()
                 .validate(user);
         return errorLog;
     }
