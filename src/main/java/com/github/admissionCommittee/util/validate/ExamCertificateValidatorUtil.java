@@ -6,16 +6,17 @@ import com.github.admissionCommittee.service.ServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ExamCertificateValidatorUtil extends ValidatorUtil {
     private static final Logger log = LoggerFactory.getLogger
             (ExamCertificateValidatorUtil.class);
 
     @Override
-    public List<String> validate(AbstractEntity entityToValidate) {
-        List<String> errorLog = new ArrayList<>();
+    public Set<String> validate(AbstractEntity entityToValidate) {
+        Set<String> errorLog = new LinkedHashSet<>();
         ExamCertificate examCertificate = ((ExamCertificate) entityToValidate);
         if (!ValidatorUtil.validateCertificateYear(examCertificate.getYear(),
                 "")) {
@@ -30,7 +31,7 @@ public class ExamCertificateValidatorUtil extends ValidatorUtil {
 
         examCertificate.getSubjects().values().forEach(v -> {
             if (v < 0 | v > 100) {
-                errorLog.add("Subject's score valid interval is between 0 and" +
+                errorLog.add("Subject's score must be between 0 and" +
                         " " +
                         "100 " + "including borders!");
             }

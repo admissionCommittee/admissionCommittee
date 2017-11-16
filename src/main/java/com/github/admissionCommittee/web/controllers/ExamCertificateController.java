@@ -74,7 +74,7 @@ public class ExamCertificateController extends HttpServlet {
             certificate.setSubjects(subjectsMap);
             certificate.setUser(user);
             // Validation
-            List<String> errors = examService.save(certificate);
+            Set<String> errors = examService.save(certificate);
 
             if (errors.isEmpty()) {
                 //todo Так быть в сервисах не должно

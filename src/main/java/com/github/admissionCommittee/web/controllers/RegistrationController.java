@@ -17,9 +17,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @WebServlet({"/registration", "/profile"})
 public class RegistrationController extends HttpServlet {
@@ -72,7 +71,7 @@ public class RegistrationController extends HttpServlet {
 
             // Validation
             // если пытаемся сохранить нового пользователя с email r
-            List<String> errors = new ArrayList<>();
+            Set<String> errors = new HashSet<>();
             if (editUser.getId() == null && service.getByMail(editUser.getMail()) != null) {
                 errors.add("Current mail already exists");
             } else {

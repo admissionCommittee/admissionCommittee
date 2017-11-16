@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 //@AllArgsConstructor
 public final class DBInitializerUtil implements InitializerUtil {
@@ -80,13 +80,13 @@ public final class DBInitializerUtil implements InitializerUtil {
                         (2018, 11, 1));
 
 
-        List<String> errors1 = ServiceFactory.getServiceFactory().getUserService
+        Set<String> errors1 = ServiceFactory.getServiceFactory().getUserService
                 ().save(user);
 
 
         Map<Subject, Integer> subjectIntegerHashMap = new HashMap<>();
         subjectIntegerHashMap.put(subject,-5);
-        List<String> errors2 = ServiceFactory.getServiceFactory()
+        Set<String> errors2 = ServiceFactory.getServiceFactory()
                 .getSchoolCertificateService().save(
                 new SchoolCertificate(user, 2017, subjectIntegerHashMap)
         );
@@ -94,12 +94,15 @@ public final class DBInitializerUtil implements InitializerUtil {
 
         ExamCertificate examCertificate = new ExamCertificate(user,1700,subjectIntegerHashMap);
 
-        List<String> errors3 = ServiceFactory.getServiceFactory()
+        Set<String> errors3 = ServiceFactory.getServiceFactory()
                 .getExamCertificateService().save
                 (examCertificate);
         System.out.println("errors1"+errors1);
+        System.out.println("errors1"+errors1.size());
         System.out.println("errors2"+errors2);
+        System.out.println("errors2"+errors2.size());
         System.out.println("errors2"+errors3);
+        System.out.println("errors2"+errors3.size());
         /*Faculty faculty = ServiceFactory.getServiceFactory()
                 .getFacultyService().get(1);
         //check

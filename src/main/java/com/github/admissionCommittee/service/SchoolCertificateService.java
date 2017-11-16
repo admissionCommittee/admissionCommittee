@@ -3,10 +3,11 @@ package com.github.admissionCommittee.service;
 import com.github.admissionCommittee.dao.DaoFactory;
 import com.github.admissionCommittee.model.SchoolCertificate;
 import com.github.admissionCommittee.model.Subject;
-import com.github.admissionCommittee.util.validate.SchoolCertificateValidatorUtil;
+import com.github.admissionCommittee.util.validate
+        .SchoolCertificateValidatorUtil;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class SchoolCertificateService extends
         GenericService<SchoolCertificate> {
@@ -17,11 +18,13 @@ public class SchoolCertificateService extends
     }
 
     @Override
-    public List<String> save(SchoolCertificate instance) {
+    public Set<String> save(SchoolCertificate instance) {
         instance.setAverageScore(calculateAverageScore(instance));
-        super.save(instance);
-        List<String> errorsLog = new SchoolCertificateValidatorUtil().validate
+        Set<String> errorsLog = new SchoolCertificateValidatorUtil().validate
                 (instance);
+        if (errorsLog.size() == 0) {
+            super.save(instance);
+        }
         return errorsLog;
     }
 
