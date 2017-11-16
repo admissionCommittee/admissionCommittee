@@ -85,7 +85,6 @@ public class LoginController extends HttpServlet {
             }
 
             log.debug(String.format("The enter with login: %s has failed", tmpUser.getMail()));
-            //ToDo - localization is not working
             ResourceBundle bundle = ResourceBundle.getBundle("localization");
             session.setAttribute("errLogin", bundle.getString("errLogin"));
             request.setAttribute("user", tmpUser);
@@ -98,8 +97,6 @@ public class LoginController extends HttpServlet {
     /**
      * If user change localization then we save it in the session
      *
-     * @param request
-     * @param session
      */
     private void setLocale(HttpServletRequest request, HttpSession session) {
         if (request.getParameter("lang") != null) {

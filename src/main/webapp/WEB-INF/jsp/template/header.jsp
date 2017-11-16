@@ -14,7 +14,7 @@
 <div id="header">
     <div id="left_header"></div>
     <div id="center_header"></div>
-    <div id="logout_header"><a href="/logout"><fmt:message key="logout"/> </a></div>
+    <div id="logout_header"><a href="${pageContext.request.contextPath}/logout"><fmt:message key="logout"/> </a></div>
 </div>
 
 <div class="none"></div>

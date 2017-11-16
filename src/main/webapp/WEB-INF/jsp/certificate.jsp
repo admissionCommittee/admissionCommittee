@@ -25,20 +25,25 @@
             </li>
             <li>
                 <div class="diverror">${sessionScope['errCertificate']}</div>
-                Год окончания <input type="number" name="year" value="${certificate.year}"
+                <fmt:message key="certificate.year"/> <input type="number" name="year" value="${certificate.year}"
                        class="score" placeholder="ХХХХ" required/>
             </li>
         </ul>
 
         <table width=80% align=center>
-            <tr><td><b>Предметы</b></td> <td><b>Оценка</b></td></tr>
-
+            <tr>
+                <td><b><fmt:message key="certificate.subjects"/></b></td>
+                <td><b><fmt:message key="certificate.mark"/></b></td>
+            </tr>
             <c:forEach items="${listSubjects}" var="subject" >
-                <tr><td> ${subject.name}</td> <td><input type="number" class="score" name="sub_${subject.id}" value="${mapSubjectsScores.get(subject)}" required/> </td></tr>
+                <tr>
+                    <td> ${subject.name}</td>
+                    <td><input type="number" class="score" name="sub_${subject.id}" value="${mapSubjectsScores.get(subject)}" required/> </td>
+                </tr>
             </c:forEach>
         </table>
         <p>
-            <button class="submit" type="submit">Сохранить</button>
+            <button class="submit" type="submit"><fmt:message key="key_save"/></button>
             <br>
     </form>
 </div>

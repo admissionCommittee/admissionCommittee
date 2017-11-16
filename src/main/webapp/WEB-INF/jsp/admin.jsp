@@ -69,6 +69,7 @@
             <tr><td> ${sheet.user.lastName} ${sheet.user.firstName} ${sheet.user.patronymic}</td> <td> ${sheet.sumExamCertificateScore}</td><td> ${sheet.user.schoolCertificate.averageScore}</td></tr>
         </c:forEach>
     </table>
+    <p><a href=""><img src="${pageContext.request.contextPath}/img/print.png" width="30px"></a>
     </c:if>
 
 </div>

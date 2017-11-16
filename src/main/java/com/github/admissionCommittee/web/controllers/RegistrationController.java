@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @WebServlet({"/registration", "/profile"})
 public class RegistrationController extends HttpServlet {
@@ -65,24 +66,24 @@ public class RegistrationController extends HttpServlet {
                 editUser.setBirthDate(date);
             }
 
-            //todo validation
-            //err = userService.validate(editUser);
-            service.save(editUser);
-            editUser = service.getByMail(editUser.getMail());
+            // Validation
+            List<String> errors = service.save(editUser);
 
-
-            //todo проверить статус пользователя после сохранения и если успешно сохранен - перебросить на страницу пользователя
-            if (true) {
+            if (errors.isEmpty()) {
+                editUser = service.getByMail(editUser.getMail());
                 log.info(String.format("User %s is registered and going to user page", editUser.getMail()));
                 session.setAttribute("user_id", editUser.getId());
                 session.setAttribute("login", editUser.getMail());
                 response.sendRedirect("/user");
                 return;
             }
+
+            err = errors.toString().replace("[","").replace("]","<br>");
+            //errors.stream().forEach(e -> err=err + e);
         }
 
         // if validation contains errors pass to JSP
-        request.getSession().setAttribute("errProfile", err);
+        request.getSession().setAttribute("errEditProfile", err);
         request.setAttribute("user", editUser);
         request.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(request, response);
     }

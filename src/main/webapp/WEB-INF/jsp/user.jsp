@@ -45,42 +45,42 @@
 </div>
 
 <div id="certificate-info">
-
-    <fmt:message key="profile.certificateinfo"/><br>
+    <c:if test="${not empty user.schoolCertificate}">
+    <fmt:message key="profile.certificateinfo"/>
     <p>
-    <table width="100%">
+    <table width="100%" style = "text-align: center;">
         <tr>
-            <!--<td></td>-->
             <td><fmt:message key="certificate.year"/></td>
             <td><fmt:message key="certificate.averagescore"/></td>
         </tr>
-
         <tr>
-            <!--<td></td>-->
             <td>${certificate.year}</td>
             <td>${certificate.averageScore}</td>
-            <!--<td></td>-->
         </tr>
     </table>
-
+    </c:if>
+    <p>
     <form action="${pageContext.request.contextPath}/certificate" method="post">
         <button class="submit" type="submit" ><fmt:message key="key_certificate"/></button>
     </form>
-
 </div>
 
 <c:if test="${not empty certificate.subjects}">
 <div id="faculty-info">
+    <c:if test="${empty user.examCertificate}">
     <form class="login_form" action="${pageContext.request.contextPath}/examinations" method="post">
-        <label for="faculty">Для подачи документов выберите факультет:</label>
+        <label for="faculty"><fmt:message key="user.selectfacylty"/></label>
         <select id="faculty" name="faculty">
                 <ptags:SelectFromList list="${listFaculty}"/>
         </select>
-        </p>
         <p>
             <button class="submit" type="submit"><fmt:message key="button_apply"/></button>
         </p>
     </form>
+    </c:if>
+    <c:if test="${not empty user.examCertificate}">
+        <font color="maroon"><fmt:message key="exam.alreadyapply"/></font>
+    </c:if>
 </div>
 </c:if>
 

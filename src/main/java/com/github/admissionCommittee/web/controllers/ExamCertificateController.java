@@ -40,10 +40,12 @@ public class ExamCertificateController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
 
         HttpSession session = request.getSession();
+        session.removeAttribute("errCertificate");
         User user = userService.get((long) session.getAttribute("user_id"));
         Faculty faculty = facultyService.get(Long.parseLong(request.getParameter("faculty")));
         log.info(String.format("Enter examination sheet of User %s ", user.getMail()));
 
+        String err = "";
         if (request.getParameter("save") != null) {
             log.info(String.format("Update examination sheet of User %s ", user.getMail()));
 
@@ -71,17 +73,22 @@ public class ExamCertificateController extends HttpServlet {
             certificate.setYear(Integer.parseInt(request.getParameter("year")));
             certificate.setSubjects(subjectsMap);
             certificate.setUser(user);
-            examService.save(certificate);
+            // Validation
+            List<String> errors = examService.save(certificate);
 
-            //todo Так быть в сервисах не должно
-            Sheet sheet = new Sheet();
-            sheet.setUser(userService.get(user.getId())); // temporal workaround
-            sheet.setFaculty(faculty);
-            sheet.setSumExamCertificateScore(0);
-            new SheetService().save(sheet);
+            if (errors.isEmpty()) {
+                //todo Так быть в сервисах не должно
+                Sheet sheet = new Sheet();
+                sheet.setUser(userService.get(user.getId())); // temporal workaround
+                sheet.setFaculty(faculty);
+                sheet.setSumExamCertificateScore(0);
+                new SheetService().save(sheet);
 
-            response.sendRedirect("/user");
-            return;
+                response.sendRedirect("/user");
+                return;
+            }
+
+            err = errors.toString().replace("[","").replace("]","<br>");
         }
 
         ExamCertificate certificate = user.getExamCertificate();
@@ -99,6 +106,7 @@ public class ExamCertificateController extends HttpServlet {
         request.setAttribute("listSubjects", list);
 
         request.setAttribute("faculty", faculty);
+        request.getSession().setAttribute("errCertificate", err);
         request.getRequestDispatcher("/WEB-INF/jsp/exam.jsp").forward(request, response);
     }
 }

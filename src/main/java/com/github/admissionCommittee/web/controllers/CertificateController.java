@@ -47,9 +47,10 @@ public class CertificateController extends HttpServlet {
         response.setCharacterEncoding("utf-8");
 
         HttpSession session = request.getSession();
+        session.removeAttribute("errCertificate");
         User user = userService.get((long) session.getAttribute("user_id"));
 
-
+        String err = "";
         if (request.getParameter("save") != null) {
             log.info(String.format("Update certificate by User %s ", user.getMail()));
 
@@ -79,10 +80,14 @@ public class CertificateController extends HttpServlet {
             certificate.setSubjects(subjectsMap);
             certificate.setUser(user);
 
-            certificateService.save(certificate);
-            //user.setSchoolCertificate(newCertificate);
-            response.sendRedirect("/user");
-            return;
+            // Validation
+            List<String> errors = certificateService.save(certificate);
+            if (errors.isEmpty()) {
+                response.sendRedirect("/user");
+                return;
+            }
+
+            err = errors.toString().replace("[","").replace("]","<br>");
         }
 
         SchoolCertificate certificate = user.getSchoolCertificate();
@@ -101,6 +106,7 @@ public class CertificateController extends HttpServlet {
         request.setAttribute("listSubjects", list);
         //Collections.sort(list);
 
+        request.getSession().setAttribute("errCertificate", err);
         request.getRequestDispatcher("/WEB-INF/jsp/certificate.jsp").forward(request, response);
     }
 }
