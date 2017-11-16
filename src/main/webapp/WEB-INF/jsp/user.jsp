@@ -39,8 +39,8 @@
         </div>
 
         <div class="div-none-small"><!-- blank --></div>
-
-        <div><a href="profile"><fmt:message key="profile.edit"/></a> </div>
+        <fmt:message key="profile.edit" var="editprofile"/>
+        <div><ptags:Button caption="${editprofile}" url="/profile"/></div>
     </div>
 </div>
 

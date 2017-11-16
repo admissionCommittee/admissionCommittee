@@ -88,7 +88,7 @@ public class ExamCertificateController extends HttpServlet {
                 return;
             }
 
-            err = errors.toString().replace("[","").replace("]","<br>");
+            err = errors.toString().replace("[", "").replace("]", "<br>").replace(",", "<br>");
         }
 
         ExamCertificate certificate = user.getExamCertificate();

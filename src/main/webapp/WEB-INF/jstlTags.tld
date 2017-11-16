@@ -33,4 +33,19 @@
         </attribute>
     </tag>
 
+    <tag>
+        <name>Button</name>
+        <tag-class>com.github.admissionCommittee.web.jstlTags.Button</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>caption</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>url</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 </taglib>

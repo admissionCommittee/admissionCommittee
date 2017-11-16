@@ -25,14 +25,12 @@ public class CertificateController extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(CertificateController.class);
     private UserService userService;
     private SchoolCertificateService certificateService;
-    private FacultyService facultyService;
     private SubjectService subjectService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         userService = (UserService) config.getServletContext().getAttribute("userService");
         certificateService = (SchoolCertificateService) config.getServletContext().getAttribute("certificateService");
-        facultyService = (FacultyService) config.getServletContext().getAttribute("facultyService");
         subjectService = (SubjectService) config.getServletContext().getAttribute("subjectService");
     }
 
@@ -87,7 +85,7 @@ public class CertificateController extends HttpServlet {
                 return;
             }
 
-            err = errors.toString().replace("[","").replace("]","<br>");
+            err = errors.toString().replace("[", "").replace("]", "<br>").replace(",", "<br>");
         }
 
         SchoolCertificate certificate = user.getSchoolCertificate();

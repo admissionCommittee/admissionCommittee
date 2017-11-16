@@ -25,8 +25,8 @@
             </li>
             <li>
                 <div class="diverror">${sessionScope['errCertificate']}</div>
-                <fmt:message key="certificate.year"/> <input type="number" name="year" value="${certificate.year}"
-                       class="score" placeholder="ХХХХ" required/>
+                <fmt:message key="certificate.year"/> <input type="number" name="year" value="${certificate.year > 0 ? certificate.year : '' }"
+                       class="score" placeholder="xxxx" required/>
             </li>
         </ul>
 

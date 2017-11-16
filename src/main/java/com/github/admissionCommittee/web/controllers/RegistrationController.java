@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @WebServlet({"/registration", "/profile"})
@@ -57,8 +59,10 @@ public class RegistrationController extends HttpServlet {
             editUser.setLastName(request.getParameter("regLastName"));
             editUser.setFirstName(request.getParameter("regFirstName"));
             editUser.setPatronymic(request.getParameter("regMiddleName"));
-            editUser.setUserRole(UserTypeEnum.USER);
-            editUser.setUserAttendeeState(UserAttendeeState.NONPARTICIPANT);
+            if (editUser.getUserRole() == null) {
+                editUser.setUserRole(UserTypeEnum.USER);
+                editUser.setUserAttendeeState(UserAttendeeState.NONPARTICIPANT);
+            }
             String birthDate = request.getParameter("regBirthDate");
             if (birthDate != null && !birthDate.isEmpty()) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyy-MM-dd");
@@ -67,18 +71,30 @@ public class RegistrationController extends HttpServlet {
             }
 
             // Validation
-            List<String> errors = service.save(editUser);
+            // если пытаемся сохранить нового пользователя с email r
+            List<String> errors = new ArrayList<>();
+            if (editUser.getId() == null && service.getByMail(editUser.getMail()) != null) {
+                errors.add("Current mail already exists");
+            } else {
+                errors = service.save(editUser);
+            }
 
             if (errors.isEmpty()) {
                 editUser = service.getByMail(editUser.getMail());
                 log.info(String.format("User %s is registered and going to user page", editUser.getMail()));
                 session.setAttribute("user_id", editUser.getId());
                 session.setAttribute("login", editUser.getMail());
-                response.sendRedirect("/user");
+
+                if (editUser.getUserRole() == UserTypeEnum.ADMIN) {
+                    response.sendRedirect("/admin");
+                }else{
+                    response.sendRedirect("/user");
+                }
+
                 return;
             }
 
-            err = errors.toString().replace("[","").replace("]","<br>");
+            err = errors.toString().replace("[", "").replace("]", "<br>").replace(",", "<br>");
             //errors.stream().forEach(e -> err=err + e);
         }
 
