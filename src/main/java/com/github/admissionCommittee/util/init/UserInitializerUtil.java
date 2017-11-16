@@ -14,14 +14,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class UserInitializerUtil implements InitializerUtil {
     private static final Logger log = LoggerFactory.getLogger
             (UserInitializerUtil.class);
 
     @Override
-    public void init(int entitiesNumber, String inputFile,
-                     String outputFile) {
+    public Set<String> init(int entitiesNumber, String inputFile,
+                            String outputFile) {
+        Set<String> errorsLog = new LinkedHashSet<>();
         ValidatorUtil validator = new UserValidatorUtil();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader
@@ -32,7 +35,7 @@ public class UserInitializerUtil implements InitializerUtil {
             while ((line = bufferedReader.readLine()) != null && counter <
                     entitiesNumber) {
                 String[] splittedLine = line.split("\u200B");
-                System.out.println("3" +splittedLine[8]);
+                System.out.println("3" + splittedLine[8]);
                 System.out.println(splittedLine[9]);
                 System.out.println(splittedLine[10]);
 
@@ -46,16 +49,17 @@ public class UserInitializerUtil implements InitializerUtil {
                                         (3, 5)),
                                 Integer.parseInt(splittedLine[10].substring
                                         (0, 2))));
-                validator.validate(user);
+                errorsLog.addAll(validator.validate(user));
                 userList.add(user);
                 counter++;
             }
             ServiceFactory.getServiceFactory().getUserService().save(userList);
-            validator.validateInit(userList);
+            errorsLog.addAll(validator.validateInit(userList));
             log.info(String.format("Users have been initialized successfully," +
                     " total %d users", counter));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return errorsLog;
     }
 }

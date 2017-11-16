@@ -10,8 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static com.github.admissionCommittee.model.enums.UserTypeEnum.ADMIN;
 
@@ -20,8 +22,9 @@ public class SheetInitializerUtil implements InitializerUtil {
             (SheetInitializerUtil.class);
 
     @Override
-    public void init(int entitiesNumber, String outputFile,
-                     String inputFile) {
+    public Set<String> init(int entitiesNumber, String outputFile,
+                            String inputFile) {
+        Set<String> errorsLog = new LinkedHashSet<>();
         ArrayList<Sheet> sheets = new ArrayList<>();
         List<User> userList = ServiceFactory.getServiceFactory()
                 .getUserService().getAll();
@@ -42,7 +45,7 @@ public class SheetInitializerUtil implements InitializerUtil {
 //                                    .getSubjects()
 //                                    .size()
                     );
-                    validator.validate(sheet);
+                    errorsLog.addAll(validator.validate(sheet));
                     sheets.add(sheet);
                     //assign sheet to user
                     user.setSheet(sheet);
@@ -50,11 +53,12 @@ public class SheetInitializerUtil implements InitializerUtil {
                 });
         ServiceFactory.getServiceFactory().getSheetService().save
                 (sheets);
-        validator.validateInit(sheets);
+        errorsLog.addAll(validator.validateInit(sheets));
         //update users
         ServiceFactory.getServiceFactory().getUserService().save(userList);
         log.info(String.format("Sheets have been initialized successfully," +
                 " total %d sheets", counter[0]));
+        return errorsLog;
     }
 
     private int calculateScoreSum(Map<Subject, Integer> scoresMap) {

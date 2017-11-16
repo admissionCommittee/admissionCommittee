@@ -15,15 +15,16 @@ public class SubjectValidatorUtil extends ValidatorUtil {
 
     @Override
     public Set<String> validate(AbstractEntity entityToValidate) {
+        Set<String> errorsLog = new LinkedHashSet<>();
         String name = ((Subject) entityToValidate).getName().toString();
         boolean matches = Pattern.compile("^[\\p{L} .-]+$").matcher
                 (name).matches();
         if (!matches) {
             log.debug(String.format("Subject's name %s is not valid.", name),
                     name);
-            throw new IllegalStateException(String.format("Subject's name %s is not valid.", name));
+            errorsLog.add(String.format("Subject's name %s is not valid: ",
+                    name) + entityToValidate);
         }
-        //TODO can be added some validation
-        return new LinkedHashSet();
+        return errorsLog;
     }
 }

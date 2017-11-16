@@ -14,8 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class SchoolCertificateInitializerUtil implements
         InitializerUtil {
@@ -23,9 +25,10 @@ public class SchoolCertificateInitializerUtil implements
             (SchoolCertificateInitializerUtil.class);
 
     @Override
-    public void init(int entitiesNumber, String outputFile,
-                     String inputFile) {
-        SchoolCertificateValidatorUtil validator = new
+    public Set<String> init(int entitiesNumber, String outputFile,
+                            String inputFile) {
+        Set<String> errorsLog = new LinkedHashSet<>();
+                SchoolCertificateValidatorUtil validator = new
                 SchoolCertificateValidatorUtil();
         List<SchoolCertificate> schoolCertificates = new ArrayList<>();
         List<User> userList = new UserService().getAll();
@@ -38,11 +41,14 @@ public class SchoolCertificateInitializerUtil implements
                             SchoolCertificate(user, user.getBirthDate()
                             .getYear() + 17,
                             ScoresUtil.getRandomScores(subjectList, 3, 2));
-                    validator.validate(schoolCertificate);
-                    final Map<Subject, Integer> subjects = schoolCertificate.getSubjects();
-                    schoolCertificate.setAverageScore(Math.round(100.0 * subjects.values()
-                        .stream().mapToInt(Integer::intValue).sum() / subjects.size()) /
-                        100.0);
+                    errorsLog.addAll(validator.validate(schoolCertificate));
+                    final Map<Subject, Integer> subjects = schoolCertificate
+                            .getSubjects();
+                    schoolCertificate.setAverageScore(Math.round(100.0 *
+                            subjects.values()
+                            .stream().mapToInt(Integer::intValue).sum() /
+                            subjects.size()) /
+                            100.0);
                     schoolCertificates.add(schoolCertificate);
                     //assign school certificate to user
                     user.setSchoolCertificate(schoolCertificate);
@@ -50,10 +56,11 @@ public class SchoolCertificateInitializerUtil implements
                 });
         ServiceFactory.getServiceFactory().getSchoolCertificateService().save
                 (schoolCertificates);
-        validator.validateInit(schoolCertificates);
+        errorsLog.addAll(validator.validateInit(schoolCertificates));
         //update users
         ServiceFactory.getServiceFactory().getUserService().save(userList);
         log.info(String.format("School certificates have been initialized " +
                 "successfully total %d school certificates", counter[0]));
+        return errorsLog;
     }
 }

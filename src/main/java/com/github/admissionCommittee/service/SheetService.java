@@ -7,6 +7,7 @@ import com.github.admissionCommittee.model.Faculty;
 import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.util.validate.SheetValidatorUtil;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -22,9 +23,10 @@ public class SheetService extends GenericService<Sheet> {
     @Override
     public Set<String> save(Sheet instance) {
         instance.setSumExamCertificateScore(calculateExamScoreSum(instance));
-
-        super.save(instance);
-        //TODO can be added some validation
+        Set<String> errorsLog = new SheetValidatorUtil().validate(instance);
+        if (errorsLog.size() == 0) {
+            super.save(instance);
+        }
         return new LinkedHashSet<>();
     }
 
@@ -32,24 +34,29 @@ public class SheetService extends GenericService<Sheet> {
         final User user = instance.getUser();
         final Faculty faculty = instance.getFaculty();
         final ExamCertificate userExamCertificate = user.getExamCertificate();
-        final Map<Subject, Integer> examScoreMap = userExamCertificate.getSubjects();
+        final Map<Subject, Integer> examScoreMap = userExamCertificate
+                .getSubjects();
         final Set<Subject> facultySubjects = faculty.getSubjects();
         return examScoreMap.keySet().stream()
-            .filter(facultySubjects::contains)
-            .mapToInt(examScoreMap::get)
-            .sum();
+                .filter(facultySubjects::contains)
+                .mapToInt(examScoreMap::get)
+                .sum();
     }
 
     public List<Sheet> getByFaculty(Faculty faculty) {
-        final List<Sheet> byFaculty = ((SheetDao) getDao()).getByFaculty(faculty);
+        final List<Sheet> byFaculty = ((SheetDao) getDao()).getByFaculty
+                (faculty);
         byFaculty.sort((sheet1, sheet2) -> {
             // descending order by exams
-            final int compare = Integer.compare(sheet2.getSumExamCertificateScore(),
-                sheet1.getSumExamCertificateScore());
+            final int compare = Integer.compare
+                    (sheet2.getSumExamCertificateScore(),
+                    sheet1.getSumExamCertificateScore());
             if (compare == 0) {
                 // descending order by school certificate
-                return Double.compare(sheet2.getUser().getSchoolCertificate().getAverageScore(),
-                    sheet1.getUser().getSchoolCertificate().getAverageScore());
+                return Double.compare(sheet2.getUser().getSchoolCertificate()
+                                .getAverageScore(),
+                        sheet1.getUser().getSchoolCertificate()
+                                .getAverageScore());
             }
             return compare;
         });

@@ -10,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ExamCertificateInitializerUtil implements
         InitializerUtil {
@@ -18,8 +20,9 @@ public class ExamCertificateInitializerUtil implements
             (ExamCertificateInitializerUtil.class);
 
     @Override
-    public void init(int entitiesNumber, String outputFile,
-                     String inputFile) {
+    public Set<String> init(int entitiesNumber, String outputFile,
+                            String inputFile) {
+        Set<String> errorsLog = new LinkedHashSet<>();
         ArrayList<ExamCertificate> examCertificates = new ArrayList<>();
         List<User> userList = ServiceFactory.getServiceFactory()
                 .getUserService().getAll();
@@ -36,7 +39,7 @@ public class ExamCertificateInitializerUtil implements
                                                     .getFaculty()
                                                     .getSubjects()),
                                             0, 100));
-                    validator.validate(examCertificate);
+                    errorsLog.addAll(validator.validate(examCertificate));
                     examCertificates.add(examCertificate);
                     //assign exam certificate to user
                     user.setExamCertificate(examCertificate);
@@ -44,10 +47,11 @@ public class ExamCertificateInitializerUtil implements
                 });
         ServiceFactory.getServiceFactory().getExamCertificateService().save
                 (examCertificates);
-        validator.validateInit(examCertificates);
+        errorsLog.addAll(validator.validateInit(examCertificates));
         //update users
         ServiceFactory.getServiceFactory().getUserService().save(userList);
         log.info(String.format("Exam certificates have been initialized" +
                 "successfully, total %d exam certificates", counter[0]));
+        return errorsLog;
     }
 }

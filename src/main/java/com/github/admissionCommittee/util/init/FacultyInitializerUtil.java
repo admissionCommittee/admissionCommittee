@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -25,8 +26,9 @@ public class FacultyInitializerUtil implements InitializerUtil {
             (FacultyInitializerUtil.class);
 
     @Override
-    public void init(int entitiesNumber, String inputFile,
-                     String outputFile) {
+    public Set<String> init(int entitiesNumber, String inputFile,
+                            String outputFile) {
+        Set<String> errorsLog = new LinkedHashSet<>();
         try {
             FacultyValidatorUtil validator = new
                     FacultyValidatorUtil();
@@ -38,19 +40,20 @@ public class FacultyInitializerUtil implements InitializerUtil {
                         Faculty faculty = new Faculty(substring[2], Integer
                                 .parseInt(substring[3]), getRandomSubject(
                                 3));
-                        validator.validate(faculty);
+                        errorsLog.addAll(validator.validate(faculty));
                         facultyList.add(faculty);
                         counter[0]++;
                     });
             ServiceFactory.getServiceFactory().getFacultyService().save
                     (facultyList);
-            validator.validateInit(facultyList);
+            errorsLog.addAll(validator.validateInit(facultyList));
             log.info(String.format("Faculties have been initialized" +
                     "successfully, total %d faculties", counter[0]));
             assignFacultyToUserRandom(facultyList);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        return errorsLog;
     }
 
     private Set<Subject> getRandomSubject(int subjectsNumber) {

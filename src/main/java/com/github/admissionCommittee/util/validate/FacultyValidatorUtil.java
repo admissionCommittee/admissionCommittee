@@ -9,16 +9,26 @@ import java.util.Set;
 public class FacultyValidatorUtil extends ValidatorUtil {
     @Override
     public Set<String> validate(AbstractEntity entityToValidate) {
+        Set<String> errorsLog = new LinkedHashSet<>();
         Faculty faculty = ((Faculty) entityToValidate);
-        ValidatorUtil.validateFullName(faculty.getName(), "Faculty Name is " +
-                "not valid");
-        ValidatorUtil.validateNotNegative(faculty.getPeopleLimit(),
-                "Attendees " +
-                "override");
-        ValidatorUtil.validateNotNull(faculty.getSubjects(), faculty.getUsers(),
+        if (!ValidatorUtil.validateFullName(faculty.getName(), "Faculty Name " +
+                "is not valid")) {
+            errorsLog.add("Faculty name is not valid: " + faculty.getName() +
+                    "!");
+        }
+        if (!ValidatorUtil.validateNotNegative(faculty.getPeopleLimit(),
+                "Attendees override")) {
+            errorsLog.add("Faculty's people limit can't be negative: " +
+                    "" + faculty.getPeopleLimit());
+        }
+
+        if (!ValidatorUtil.validateNotNull(faculty.getSubjects(), faculty
+                        .getUsers(),
                 "Subjects collection can't ve null",
-                "Users collection can't be null");
-        //TODO can be added some validation
+                "Users collection can't be null")) {
+            errorsLog.add("Faculty's subject's and user's can't be null:"
+                    + faculty.getSubjects() + ", " + faculty.getUsers() + "!");
+        }
         return new LinkedHashSet<>();
     }
 }

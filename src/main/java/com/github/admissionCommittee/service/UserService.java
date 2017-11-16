@@ -10,10 +10,8 @@ import com.github.admissionCommittee.util.validate.UserValidatorUtil;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -31,27 +29,6 @@ public class UserService extends GenericService<User> {
 
     public UserService() {
         super(User.class, DaoFactory.getDaoFactory().getUserDao());
-    }
-
-    @Override
-    public Set<String> save(User instance) {
-        Set<String> errorsLog = validator.validate(instance);
-        if (errorsLog.size() == 0) {
-            super.save(instance);
-        }
-        return errorsLog;
-    }
-
-    @Override
-    public Set<String> save(List<User> instance) {
-        Set<String> errorLog = new LinkedHashSet<>();
-        instance.forEach(u -> {
-            errorLog.addAll(validator.validate(u));
-        });
-        if (errorLog.size() == 0) {
-            super.save(instance);
-        }
-        return errorLog;
     }
 
     //for DB search by mail implementation

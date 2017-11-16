@@ -11,8 +11,13 @@ import com.github.admissionCommittee.service.ServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -94,71 +99,16 @@ public abstract class ValidatorUtil {
      * @throws IllegalArgumentException if at least one of parameters is not
      *                                  provided
      */
-    public static void validateNotNull(
+    public static boolean validateNotNull(
             java.lang.Object firstParameter, java.lang.Object secondParameter,
             String messageForFirstParameterIfNull,
             String messageForSecondParameterIfNull) {
-        validateNotNull(firstParameter, messageForFirstParameterIfNull);
-        validateNotNull(secondParameter, messageForSecondParameterIfNull);
-    }
-
-    /**
-     * Validates parameters not null.
-     *
-     * @param firstParameter                  first parameter to check
-     * @param secondParameter                 second parameter to check
-     * @param thirdParameter                  second parameter to check
-     * @param messageForFirstParameterIfNull  message if first parameter is null
-     * @param messageForSecondParameterIfNull message if second parameter is
-     *                                        null
-     * @param messageForThirdParameterIfNull  message if third parameter is null
-     * @throws IllegalArgumentException if at least one of parameters is not
-     *                                  provided
-     */
-    public static void validateNotNull(
-            java.lang.Object firstParameter, java.lang.Object secondParameter,
-            java.lang.Object thirdParameter, String
-                    messageForFirstParameterIfNull,
-            String messageForSecondParameterIfNull,
-            String messageForThirdParameterIfNull) {
-        validateNotNull(firstParameter, messageForFirstParameterIfNull);
-        validateNotNull(secondParameter, messageForSecondParameterIfNull);
-        validateNotNull(thirdParameter, messageForThirdParameterIfNull);
-    }
-
-    /**
-     * Validates parameters not null.
-     *
-     * @param firstParameter                  first parameter to check
-     * @param secondParameter                 second parameter to check
-     * @param thirdParameter                  third parameter to check
-     * @param fourthParameter                 fourth parameter to check
-     * @param fifthParameter                  fifth parameter to check
-     * @param messageForFirstParameterIfNull  message if first parameter is null
-     * @param messageForSecondParameterIfNull message if second parameter is
-     *                                        null
-     * @param messageForThirdParameterIfNull  message if third parameter is null
-     * @param messageForFourthParameterIfNull message if fourth parameter is
-     * @param messageForFifthParameterIfNull  message if fifth parameter is
-     *                                        null
-     * @throws IllegalArgumentException if at least one of parameters is not
-     *                                  provided
-     */
-    public static void validateNotNull(
-            java.lang.Object firstParameter, java.lang.Object
-            secondParameter, java.lang.Object
-            thirdParameter, java.lang.Object fourthParameter, java.lang
-            .Object fifthParameter,
-            String messageForFirstParameterIfNull, String
-                    messageForSecondParameterIfNull, String
-                    messageForThirdParameterIfNull, String
-                    messageForFourthParameterIfNull, String
-                    messageForFifthParameterIfNull) {
-        validateNotNull(firstParameter, messageForFirstParameterIfNull);
-        validateNotNull(secondParameter, messageForSecondParameterIfNull);
-        validateNotNull(thirdParameter, messageForThirdParameterIfNull);
-        validateNotNull(fourthParameter, messageForFourthParameterIfNull);
-        validateNotNull(fifthParameter, messageForFifthParameterIfNull);
+        if (validateNotNull(firstParameter, messageForFirstParameterIfNull)
+                && validateNotNull(secondParameter,
+                messageForSecondParameterIfNull)) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -168,11 +118,12 @@ public abstract class ValidatorUtil {
      * @param messageIfNull message if parameter is null
      * @throws IllegalArgumentException if parameter not provided
      */
-    public static void validateNotNull(java.lang.Object parameter, String
+    public static boolean validateNotNull(java.lang.Object parameter, String
             messageIfNull) {
         if (parameter == null) {
-            throw new IllegalArgumentException(messageIfNull);
+            return false;
         }
+        return true;
     }
 
     public static boolean validateFullName(String toValidate, String
@@ -245,11 +196,12 @@ public abstract class ValidatorUtil {
      *                          negative
      * @throws IllegalArgumentException if parameter is negative
      */
-    public static void validateNotNegative(long parameter, String
+    public static boolean validateNotNegative(long parameter, String
             messageIfNegative) {
         if (parameter < 0) {
-            throw new IllegalArgumentException(messageIfNegative);
+            return false;
         }
+        return true;
     }
 
     /**
@@ -385,7 +337,7 @@ public abstract class ValidatorUtil {
      */
     public static void validateClass(java.lang.Object toCheck, java.lang
             .Object toCompare, String
-            messageIfIllegalClass) {
+                                             messageIfIllegalClass) {
         if (!toCheck.getClass().equals(toCompare.getClass())) {
             throw new IllegalArgumentException(
                     messageIfIllegalClass + toCompare.getClass().getName());
@@ -486,7 +438,8 @@ public abstract class ValidatorUtil {
         return null;
     }
 
-    public void validateInit(List<? extends AbstractEntity> toValidate) {
+    public Set<String> validateInit(List<? extends AbstractEntity> toValidate) {
+        Set<String> errorsLog = new LinkedHashSet<>();
         List<? extends AbstractEntity> entitiesList = ServiceFactory
                 .getServiceFactory().getService(toValidate.get(0).getClass())
                 .getAll();
@@ -495,10 +448,9 @@ public abstract class ValidatorUtil {
         log.info(String.format("Check: initial: %s", toValidate));
 
         IntStream.rangeClosed(0, entitiesList.size() - 1).forEach(i -> {
-            if (entitiesList.get(i) != toValidate.get(i)) {
+            if (!entitiesList.get(i).equals(toValidate.get(i))) {
                 log.info(String.format("NOT EQUAL INOUT ENTITY: %s", i));
-                System.out.println(entitiesList.get(i));
-                System.out.println(toValidate.get(i));
+                errorsLog.add("Init in/out error: " + entitiesList.get(i));
             }
         });
 
@@ -507,8 +459,24 @@ public abstract class ValidatorUtil {
             throw new IllegalStateException(ValidatorUtil
                     .MESSAGE_IF_INITIALIZATION_FAIL + ": " + toValidate);
         }
+        return errorsLog;
+    }
+
+    public static void printErrorsToFileSystem(Set<String> toPrint, String
+            pathToFile) {
+        PrintWriter printWriter = null;
+        try {
+            printWriter = new PrintWriter(new File(pathToFile));
+            printWriter.println(LocalDateTime.now() + ": Error's log ->");
+            toPrint.forEach(printWriter::println);
+            printWriter.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            printWriter.close();
+        }
     }
 
     public abstract Set<String> validate(AbstractEntity
-                                                  abstractEntityToValidate);
+                                                 abstractEntityToValidate);
 }
