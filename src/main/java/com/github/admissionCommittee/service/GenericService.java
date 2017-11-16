@@ -4,6 +4,7 @@ import com.github.admissionCommittee.model.AbstractEntity;
 import com.github.admissionCommittee.dao.GenericDao;
 import com.github.admissionCommittee.util.validate.ValidatorUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GenericService<T extends AbstractEntity> {
@@ -16,20 +17,23 @@ public abstract class GenericService<T extends AbstractEntity> {
         this.dao = dao;
     }
 
-    public void save(T instance) {
+    public List<String> save(T instance) {
         ValidatorUtil.validateNotNull(instance, ValidatorUtil
                 .MESSAGE_FOR_SOURCE_IF_NULL);
         getDao().save(instance);
+        return new ArrayList<>();
     }
 
-    public void save(List<T> instance) {
+    public List<String> save(List<T> instance) {
         ValidatorUtil.validateNotNull(instance, ValidatorUtil
                 .MESSAGE_FOR_SOURCE_IF_NULL);
         getDao().save(instance);
+        return new ArrayList<>();
     }
 
     public T get(long id) {
-        ValidatorUtil.validateNotNegative(id, ValidatorUtil.MESSAGE_IF_NEGATIVE);
+        ValidatorUtil.validateNotNegative(id, ValidatorUtil
+                .MESSAGE_IF_NEGATIVE);
         return dao.get(id);
     }
 
@@ -40,7 +44,8 @@ public abstract class GenericService<T extends AbstractEntity> {
     }
 
     public void delete(long id) {
-        ValidatorUtil.validateNotNegative(id, ValidatorUtil.MESSAGE_IF_NEGATIVE);
+        ValidatorUtil.validateNotNegative(id, ValidatorUtil
+                .MESSAGE_IF_NEGATIVE);
         dao.delete(id);
     }
 
@@ -49,7 +54,8 @@ public abstract class GenericService<T extends AbstractEntity> {
     }
 
     public void setDao(GenericDao<T> dao) {
-        ValidatorUtil.validateNotNull(dao, ValidatorUtil.MESSAGE_FOR_SOURCE_IF_NULL);
+        ValidatorUtil.validateNotNull(dao, ValidatorUtil
+                .MESSAGE_FOR_SOURCE_IF_NULL);
         this.dao = dao;
     }
 

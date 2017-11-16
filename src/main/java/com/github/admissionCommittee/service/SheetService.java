@@ -1,14 +1,14 @@
 package com.github.admissionCommittee.service;
 
 import com.github.admissionCommittee.dao.DaoFactory;
+import com.github.admissionCommittee.dao.SheetDao;
 import com.github.admissionCommittee.model.ExamCertificate;
 import com.github.admissionCommittee.model.Faculty;
-import com.github.admissionCommittee.model.SchoolCertificate;
 import com.github.admissionCommittee.model.Sheet;
-import com.github.admissionCommittee.dao.SheetDao;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,9 +20,10 @@ public class SheetService extends GenericService<Sheet> {
     }
 
     @Override
-    public void save(Sheet instance) {
+    public List<String> save(Sheet instance) {
         instance.setSumExamCertificateScore(calculateExamScoreSum(instance));
         super.save(instance);
+        return new ArrayList<String>();
     }
 
     private int calculateExamScoreSum(Sheet instance) {

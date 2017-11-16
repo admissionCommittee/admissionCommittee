@@ -6,6 +6,7 @@ import com.github.admissionCommittee.service.ServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SchoolCertificateValidatorUtil extends ValidatorUtil {
@@ -13,14 +14,27 @@ public class SchoolCertificateValidatorUtil extends ValidatorUtil {
             (SchoolCertificateValidatorUtil.class);
 
     @Override
-    public void validate(AbstractEntity entityToValidate) {
-        SchoolCertificate schoolCertificate = (SchoolCertificate) entityToValidate;
-        ValidatorUtil.validateNotNull(schoolCertificate.getUser(), schoolCertificate.getSubjects(),
-                "User assigned to schoolCertificate can't be null",
-                "Subject's map assigned to schoolCertificate can't " +
-                        "be null");
-        ValidatorUtil.validateNotNegative(schoolCertificate.getYear(),
-                ValidatorUtil.MESSAGE_IF_SCHOOLCERT_YEAR_INVALID);
+    public List<String> validate(AbstractEntity entityToValidate) {
+        List<String> errorLog = new ArrayList<>();
+        SchoolCertificate schoolCertificate = (SchoolCertificate)
+                entityToValidate;
+        ValidatorUtil.validateNotNull(schoolCertificate.getUser(),
+                schoolCertificate.getSubjects(),
+                "User assigned to schoolCertificate "
+                        + "can't be null",
+                "Subject's map assigned to school" +
+                        "Certificate can't be null");
+        if (!ValidatorUtil.validateCertificateYear(schoolCertificate.getYear(),
+                "")) {
+            errorLog.add("School's certificate year is invalid!");
+        }
+        schoolCertificate.getSubjects().values().forEach(v -> {
+            if (v < 0 | v > 5) {
+                errorLog.add("Subject's score valid interval is between 0 and" +
+                        " 5 including borders!");
+            }
+        });
+        return errorLog;
     }
 
     @Override

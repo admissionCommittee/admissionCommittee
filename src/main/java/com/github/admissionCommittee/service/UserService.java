@@ -7,6 +7,7 @@ import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.model.User;
 import com.github.admissionCommittee.util.validate.UserValidatorUtil;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,20 +27,26 @@ public class UserService extends GenericService<User> {
     private UserValidatorUtil validator = new UserValidatorUtil();
     private SheetService sheetService = new SheetService();
 
+
     public UserService() {
         super(User.class, DaoFactory.getDaoFactory().getUserDao());
     }
 
     @Override
-    public void save(User instance) {
-        validator.validate(instance);
+    public List<String> save(User instance) {
+        List<String> errorsLog = validator.validate(instance);
         super.save(instance);
+        return errorsLog;
     }
 
     @Override
-    public void save(List<User> instance) {
-        instance.forEach(validator::validate);
+    public List<String> save(List<User> instance) {
+        List<String> errorLog = new ArrayList<>();
+        instance.forEach(u -> {
+            errorLog.addAll(validator.validate(u));
+        });
         super.save(instance);
+        return errorLog;
     }
 
     //for DB search by mail implementation
@@ -64,7 +71,7 @@ public class UserService extends GenericService<User> {
         return approvedMap;
     }
 
-    public List<User> getByFacultyEnlisted(Faculty faculty){
+    public List<User> getByFacultyEnlisted(Faculty faculty) {
         return getEnlistedAttendees().get(faculty);
     }
 
@@ -79,8 +86,9 @@ public class UserService extends GenericService<User> {
                         element);
             } else {
                 if (element.getUser().getSchoolCertificate().getAverageScore() >
-                    userMap.get(element.getSumExamCertificateScore()).getUser()
-                        .getSchoolCertificate().getAverageScore()) {
+                        userMap.get(element.getSumExamCertificateScore())
+                                .getUser()
+                                .getSchoolCertificate().getAverageScore()) {
                     userMap.put(element.getSumExamCertificateScore(),
                             element);
                 }

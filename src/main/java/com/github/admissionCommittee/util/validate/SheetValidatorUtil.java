@@ -6,6 +6,7 @@ import com.github.admissionCommittee.service.ServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SheetValidatorUtil extends ValidatorUtil {
@@ -13,7 +14,7 @@ public class SheetValidatorUtil extends ValidatorUtil {
             (SheetValidatorUtil.class);
 
     @Override
-    public void validate(AbstractEntity entityToValidate) {
+    public List<String> validate(AbstractEntity entityToValidate) {
         Sheet sheet = (Sheet) entityToValidate;
         ValidatorUtil.validateNotNull(sheet.getUser(), sheet.getFaculty(),
                 "User assigned to sheet can't be null",
@@ -23,6 +24,8 @@ public class SheetValidatorUtil extends ValidatorUtil {
 //                "Exam's score sum can't be negative",
 //                "Average School's certificate score " +
 //                        "can't be negative");
+        //TODO
+        return new ArrayList<>();
     }
 
     @Override

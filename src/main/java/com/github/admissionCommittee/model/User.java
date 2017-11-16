@@ -2,7 +2,6 @@ package com.github.admissionCommittee.model;
 
 import com.github.admissionCommittee.model.enums.UserAttendeeState;
 import com.github.admissionCommittee.model.enums.UserTypeEnum;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +19,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import java.time.LocalDate;
 
 @Entity
@@ -66,7 +64,6 @@ public class User extends AbstractEntity {
     @Column(name = "patronymic")
     private String patronymic;
 
-    @Email
     @Column(name = "mail", nullable = false, unique = true)
     private String mail;
 

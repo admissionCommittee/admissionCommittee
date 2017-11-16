@@ -5,6 +5,8 @@ import com.github.admissionCommittee.model.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class SubjectValidatorUtil extends ValidatorUtil {
@@ -12,7 +14,7 @@ public class SubjectValidatorUtil extends ValidatorUtil {
             (SubjectValidatorUtil.class);
 
     @Override
-    public void validate(AbstractEntity entityToValidate) {
+    public List<String> validate(AbstractEntity entityToValidate) {
         String name = ((Subject) entityToValidate).getName().toString();
         boolean matches = Pattern.compile("^[\\p{L} .-]+$").matcher
                 (name).matches();
@@ -21,5 +23,7 @@ public class SubjectValidatorUtil extends ValidatorUtil {
                     name);
             throw new IllegalStateException(String.format("Subject's name %s is not valid.", name));
         }
+        //TODO
+        return new ArrayList<>();
     }
 }

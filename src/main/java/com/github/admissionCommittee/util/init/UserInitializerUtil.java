@@ -32,6 +32,10 @@ public class UserInitializerUtil implements InitializerUtil {
             while ((line = bufferedReader.readLine()) != null && counter <
                     entitiesNumber) {
                 String[] splittedLine = line.split("\u200B");
+                System.out.println("3" +splittedLine[8]);
+                System.out.println(splittedLine[9]);
+                System.out.println(splittedLine[10]);
+
                 User user = new User(UserAttendeeState.valueOf
                         (splittedLine[3]), UserTypeEnum.valueOf
                         (splittedLine[4]), splittedLine[7], splittedLine[5],

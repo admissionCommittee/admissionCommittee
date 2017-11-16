@@ -12,8 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -118,7 +116,8 @@ public abstract class ValidatorUtil {
      */
     public static void validateNotNull(
             java.lang.Object firstParameter, java.lang.Object secondParameter,
-            java.lang.Object thirdParameter, String messageForFirstParameterIfNull,
+            java.lang.Object thirdParameter, String
+                    messageForFirstParameterIfNull,
             String messageForSecondParameterIfNull,
             String messageForThirdParameterIfNull) {
         validateNotNull(firstParameter, messageForFirstParameterIfNull);
@@ -145,8 +144,10 @@ public abstract class ValidatorUtil {
      *                                  provided
      */
     public static void validateNotNull(
-            java.lang.Object firstParameter, java.lang.Object secondParameter, java.lang.Object
-            thirdParameter, java.lang.Object fourthParameter, java.lang.Object fifthParameter,
+            java.lang.Object firstParameter, java.lang.Object
+            secondParameter, java.lang.Object
+            thirdParameter, java.lang.Object fourthParameter, java.lang
+            .Object fifthParameter,
             String messageForFirstParameterIfNull, String
                     messageForSecondParameterIfNull, String
                     messageForThirdParameterIfNull, String
@@ -166,13 +167,15 @@ public abstract class ValidatorUtil {
      * @param messageIfNull message if parameter is null
      * @throws IllegalArgumentException if parameter not provided
      */
-    public static void validateNotNull(java.lang.Object parameter, String messageIfNull) {
+    public static void validateNotNull(java.lang.Object parameter, String
+            messageIfNull) {
         if (parameter == null) {
             throw new IllegalArgumentException(messageIfNull);
         }
     }
 
-    public static boolean validateFullName(String toValidate, String messageIfInvalid) {
+    public static boolean validateFullName(String toValidate, String
+            messageIfInvalid) {
 
         boolean matches = Pattern.compile("^[\\p{L} .'-]+$").matcher
                 (messageIfInvalid).matches();
@@ -327,9 +330,11 @@ public abstract class ValidatorUtil {
         return true;
     }
 
-    public static boolean validateCertificateYear(int year, String messageIfYearIsInvalid) {
-        if (year < LocalDate.now().getYear() - 117 || year > LocalDate.now().getYear()) {
-            throw new IllegalStateException(messageIfYearIsInvalid+ ": "+year);
+    public static boolean validateCertificateYear(int year, String
+            messageIfYearIsInvalid) {
+        if (year < LocalDate.now().getYear() - 117 || year > LocalDate.now()
+                .getYear()) {
+            return false;
         }
         return true;
     }
@@ -377,7 +382,8 @@ public abstract class ValidatorUtil {
      * @param messageIfIllegalClass message if class is illegal
      * @throws IllegalArgumentException is class <code>toCheck</code> is illegal
      */
-    public static void validateClass(java.lang.Object toCheck, java.lang.Object toCompare, String
+    public static void validateClass(java.lang.Object toCheck, java.lang
+            .Object toCompare, String
             messageIfIllegalClass) {
         if (!toCheck.getClass().equals(toCompare.getClass())) {
             throw new IllegalArgumentException(
@@ -487,9 +493,9 @@ public abstract class ValidatorUtil {
         log.info(String.format("Check: from DB %s", entitiesList));
         log.info(String.format("Check: initial: %s", toValidate));
 
-        IntStream.rangeClosed(0, entitiesList.size()-1).forEach(i -> {
+        IntStream.rangeClosed(0, entitiesList.size() - 1).forEach(i -> {
             if (entitiesList.get(i) != toValidate.get(i)) {
-                log.info(String.format("NOT EQUAL INOUT ENTITY: %s",i));
+                log.info(String.format("NOT EQUAL INOUT ENTITY: %s", i));
                 System.out.println(entitiesList.get(i));
                 System.out.println(toValidate.get(i));
             }
@@ -502,5 +508,6 @@ public abstract class ValidatorUtil {
         }
     }
 
-    public abstract void validate(AbstractEntity abstractEntityToValidate);
+    public abstract List<String> validate(AbstractEntity
+                                                  abstractEntityToValidate);
 }
