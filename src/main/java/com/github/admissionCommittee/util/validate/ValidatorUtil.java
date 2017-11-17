@@ -441,7 +441,7 @@ public abstract class ValidatorUtil {
     public Set<String> validateInit(List<? extends AbstractEntity> toValidate) {
         Set<String> errorsLog = new LinkedHashSet<>();
         List<? extends AbstractEntity> entitiesList = ServiceFactory
-                .getServiceFactory().getService(toValidate.get(0).getClass())
+                .getService(toValidate.get(0).getClass())
                 .getAll();
         //why id 1
         log.info(String.format("Check: from DB %s", entitiesList));

@@ -31,7 +31,7 @@ public class SubjectInitializerUtil implements InitializerUtil {
                     subjectList.add(subject);
                     counter[0]++;
                 });
-        ServiceFactory.getServiceFactory().getSubjectService().save
+        ServiceFactory.getSubjectService().save
                 (subjectList);
         errorsLog.addAll(validator.validateInit(subjectList));
         log.info(String.format("Subjects have been initialized successfully," +

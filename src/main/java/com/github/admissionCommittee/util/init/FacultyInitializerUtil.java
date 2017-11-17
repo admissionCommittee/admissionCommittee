@@ -44,7 +44,7 @@ public class FacultyInitializerUtil implements InitializerUtil {
                         facultyList.add(faculty);
                         counter[0]++;
                     });
-            ServiceFactory.getServiceFactory().getFacultyService().save
+            ServiceFactory.getFacultyService().save
                     (facultyList);
             errorsLog.addAll(validator.validateInit(facultyList));
             log.info(String.format("Faculties have been initialized" +
@@ -57,8 +57,7 @@ public class FacultyInitializerUtil implements InitializerUtil {
     }
 
     private Set<Subject> getRandomSubject(int subjectsNumber) {
-        SubjectService subjectService = ServiceFactory.getServiceFactory()
-                .getSubjectService();
+        SubjectService subjectService = ServiceFactory.getSubjectService();
         List<Subject> subjectList = subjectService.getAll();
         Set<Subject> subjectSet = new HashSet<>();
         for (int i = 0; i < subjectsNumber; i++) {
@@ -71,8 +70,7 @@ public class FacultyInitializerUtil implements InitializerUtil {
     }
 
     private void assignFacultyToUserRandom(List<Faculty> facultyList) {
-        List<User> userList = ServiceFactory.getServiceFactory()
-                .getUserService()
+        List<User> userList = ServiceFactory.getUserService()
                 .getAll();
         userList.stream().filter(user -> user.getUserRole() != ADMIN)
                 .forEach(user -> {
@@ -80,6 +78,6 @@ public class FacultyInitializerUtil implements InitializerUtil {
                     user.setFaculty(facultyList.get(random.nextInt
                             (facultyList.size())));
                 });
-        ServiceFactory.getServiceFactory().getUserService().save(userList);
+        ServiceFactory.getUserService().save(userList);
     }
 }

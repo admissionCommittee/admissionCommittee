@@ -53,7 +53,7 @@ public class UserInitializerUtil implements InitializerUtil {
                 userList.add(user);
                 counter++;
             }
-            ServiceFactory.getServiceFactory().getUserService().save(userList);
+            ServiceFactory.getUserService().save(userList);
             errorsLog.addAll(validator.validateInit(userList));
             log.info(String.format("Users have been initialized successfully," +
                     " total %d users", counter));

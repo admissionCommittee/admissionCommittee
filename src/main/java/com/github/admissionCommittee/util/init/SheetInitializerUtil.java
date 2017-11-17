@@ -26,10 +26,8 @@ public class SheetInitializerUtil implements InitializerUtil {
                             String inputFile) {
         Set<String> errorsLog = new LinkedHashSet<>();
         ArrayList<Sheet> sheets = new ArrayList<>();
-        List<User> userList = ServiceFactory.getServiceFactory()
-                .getUserService().getAll();
-        SheetService sheetService = ServiceFactory.getServiceFactory()
-                .getSheetService();
+        List<User> userList = ServiceFactory.getUserService().getAll();
+        SheetService sheetService = ServiceFactory.getSheetService();
         ValidatorUtil validator = ValidatorUtil.getValidator(Sheet
                 .class);
         final int[] counter = {0};
@@ -51,11 +49,11 @@ public class SheetInitializerUtil implements InitializerUtil {
                     user.setSheet(sheet);
                     counter[0]++;
                 });
-        ServiceFactory.getServiceFactory().getSheetService().save
+        ServiceFactory.getSheetService().save
                 (sheets);
         errorsLog.addAll(validator.validateInit(sheets));
         //update users
-        ServiceFactory.getServiceFactory().getUserService().save(userList);
+        ServiceFactory.getUserService().save(userList);
         log.info(String.format("Sheets have been initialized successfully," +
                 " total %d sheets", counter[0]));
         return errorsLog;

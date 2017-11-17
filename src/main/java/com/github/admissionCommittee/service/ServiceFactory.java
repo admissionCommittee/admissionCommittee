@@ -8,114 +8,53 @@ import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
 
-public class ServiceFactory {
+public class ServiceFactory{
     private ServiceFactory() {
     }
 
-    private static ExamCertificateService examCertificateService;
-    private static FacultyService facultyService;
-    private static SchoolCertificateService schoolCertificateService;
-    private static SheetService sheetService;
-    private static SubjectService subjectService;
-    private static UserService userService;
-    private static volatile ServiceFactory serviceFactory;
-
-    public static ServiceFactory getServiceFactory() {
-        if (serviceFactory == null) {
-            synchronized (ServiceFactory.class) {
-                if (serviceFactory == null) {
-                    serviceFactory = new ServiceFactory();
-                }
-            }
-        }
-        return serviceFactory;
+    public static ExamCertificateService getExamCertificateService() {
+        return new ExamCertificateService();
     }
 
-    public ExamCertificateService getExamCertificateService() {
-        if (examCertificateService == null) {
-            synchronized (ServiceFactory.class) {
-                if (examCertificateService == null) {
-                    examCertificateService = new ExamCertificateService();
-                }
-            }
-        }
-        return examCertificateService;
+    public static SchoolCertificateService getSchoolCertificateService() {
+        return new SchoolCertificateService();
     }
 
-    public SchoolCertificateService getSchoolCertificateService() {
-        if (schoolCertificateService == null) {
-            synchronized (ServiceFactory.class) {
-                if (schoolCertificateService == null) {
-                    schoolCertificateService = new SchoolCertificateService();
-                }
-            }
-        }
-        return schoolCertificateService;
+    public static SheetService getSheetService() {
+        return new SheetService();
     }
 
-    public SheetService getSheetService() {
-        if (sheetService == null) {
-            synchronized (ServiceFactory.class) {
-                if (sheetService == null) {
-                    sheetService = new SheetService();
-                }
-            }
-        }
-        return sheetService;
+    public static SubjectService getSubjectService() {
+        return new SubjectService();
     }
 
-    public SubjectService getSubjectService() {
-        if (subjectService == null) {
-            synchronized (ServiceFactory.class) {
-                if (subjectService == null) {
-                    subjectService = new SubjectService();
-                }
-            }
-        }
-        return subjectService;
+    public static UserService getUserService() {
+        return new UserService();
     }
 
-    public UserService getUserService() {
-        if (userService == null) {
-            synchronized (ServiceFactory.class) {
-                if (userService == null) {
-                    userService = new UserService();
-                }
-            }
-        }
-        return userService;
+    public static FacultyService getFacultyService() {
+        return new FacultyService();
     }
 
-    public FacultyService getFacultyService() {
-        if (facultyService == null) {
-            synchronized (ServiceFactory.class) {
-                if (facultyService == null) {
-                    facultyService = new FacultyService();
-                }
-            }
-        }
-        return facultyService;
-    }
-
-    public GenericService getService(Class<? extends AbstractEntity>
-                                                    modelType) {
+    public static GenericService getService(Class<? extends AbstractEntity>
+                                             modelType) {
         if (modelType == User.class) {
-            return userService;
+            return new UserService();
         }
         if (modelType == Subject.class) {
-            return subjectService;
+            return new SubjectService();
         }
         if (modelType == Faculty.class) {
-            return facultyService;
+            return new FacultyService();
         }
         if (modelType == SchoolCertificate.class) {
-            return schoolCertificateService;
+            return new SchoolCertificateService();
         }
         if (modelType == ExamCertificate.class) {
-            return examCertificateService;
+            return new ExamCertificateService();
         }
         if (modelType == Sheet.class) {
-            return sheetService;
+            return new SheetService();
         }
         return null;
     }

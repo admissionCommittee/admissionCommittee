@@ -24,8 +24,7 @@ public class ExamCertificateInitializerUtil implements
                             String inputFile) {
         Set<String> errorsLog = new LinkedHashSet<>();
         ArrayList<ExamCertificate> examCertificates = new ArrayList<>();
-        List<User> userList = ServiceFactory.getServiceFactory()
-                .getUserService().getAll();
+        List<User> userList = ServiceFactory.getUserService().getAll();
         ValidatorUtil validator = ValidatorUtil.getValidator(ExamCertificate
                 .class);
         final int[] counter = {0};
@@ -45,11 +44,11 @@ public class ExamCertificateInitializerUtil implements
                     user.setExamCertificate(examCertificate);
                     counter[0]++;
                 });
-        ServiceFactory.getServiceFactory().getExamCertificateService().save
+        ServiceFactory.getExamCertificateService().save
                 (examCertificates);
         errorsLog.addAll(validator.validateInit(examCertificates));
         //update users
-        ServiceFactory.getServiceFactory().getUserService().save(userList);
+        ServiceFactory.getUserService().save(userList);
         log.info(String.format("Exam certificates have been initialized" +
                 "successfully, total %d exam certificates", counter[0]));
         return errorsLog;

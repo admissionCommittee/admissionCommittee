@@ -54,11 +54,11 @@ public class SchoolCertificateInitializerUtil implements
                     user.setSchoolCertificate(schoolCertificate);
                     counter[0]++;
                 });
-        ServiceFactory.getServiceFactory().getSchoolCertificateService().save
+        ServiceFactory.getSchoolCertificateService().save
                 (schoolCertificates);
         errorsLog.addAll(validator.validateInit(schoolCertificates));
         //update users
-        ServiceFactory.getServiceFactory().getUserService().save(userList);
+        ServiceFactory.getUserService().save(userList);
         log.info(String.format("School certificates have been initialized " +
                 "successfully total %d school certificates", counter[0]));
         return errorsLog;
