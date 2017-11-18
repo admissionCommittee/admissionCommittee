@@ -97,10 +97,16 @@ public class SheetService extends GenericService<Sheet> {
             return byFaculty.subList(0, faculty.getPeopleLimit());
         }
         //check page
-        if ((pageNumber - 1) * 100 < byFaculty.size()) {
+        if ((pageNumber - 1) * 100 > byFaculty.size()) {
             return null;
         } else {
-            return byFaculty.subList((pageNumber - 1) * 100, pageNumber * 100);
+            if (pageNumber * 100 > byFaculty.size()) {
+                return byFaculty.subList((pageNumber - 1) * 100, byFaculty
+                        .size());
+            } else {
+                return byFaculty.subList((pageNumber - 1) * 100, pageNumber *
+                        100);
+            }
         }
     }*/
 
