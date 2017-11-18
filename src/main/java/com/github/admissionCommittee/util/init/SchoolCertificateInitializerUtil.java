@@ -34,7 +34,27 @@ public class SchoolCertificateInitializerUtil implements
         List<User> userList = new UserService().getAll();
         List<Subject> subjectList = new SubjectService().getAll();
         final int[] counter = {0};
-        userList.stream().filter(user -> user.getUserRole() != UserTypeEnum
+        for (User user : userList) {
+            if (user.getUserRole() != UserTypeEnum.ADMIN) {
+                SchoolCertificate schoolCertificate = new
+                        SchoolCertificate(user, user.getBirthDate()
+                        .getYear() + 17,
+                        ScoresUtil.getRandomScores(subjectList, 3, 2));
+                errorsLog.addAll(validator.validate(schoolCertificate));
+                final Map<Subject, Integer> subjects = schoolCertificate
+                        .getSubjects();
+                schoolCertificate.setAverageScore(Math.round(100.0 *
+                        subjects.values()
+                                .stream().mapToInt(Integer::intValue).sum() /
+                        subjects.size()) /
+                        100.0);
+                schoolCertificates.add(schoolCertificate);
+                //assign school certificate to user
+                user.setSchoolCertificate(schoolCertificate);
+                counter[0]++;
+            }
+        }
+        /*userList.stream().filter(user -> user.getUserRole() != UserTypeEnum
                 .ADMIN)
                 .forEach(user -> {
                     SchoolCertificate schoolCertificate = new
@@ -53,7 +73,7 @@ public class SchoolCertificateInitializerUtil implements
                     //assign school certificate to user
                     user.setSchoolCertificate(schoolCertificate);
                     counter[0]++;
-                });
+                });*/
         ServiceFactory.getSchoolCertificateService().save
                 (schoolCertificates);
         errorsLog.addAll(validator.validateInit(schoolCertificates));

@@ -28,7 +28,23 @@ public class ExamCertificateInitializerUtil implements
         ValidatorUtil validator = ValidatorUtil.getValidator(ExamCertificate
                 .class);
         final int[] counter = {0};
-        userList.stream().filter(user -> user.getUserRole() != UserTypeEnum
+        for (User user : userList) {
+            if (user.getUserRole() != UserTypeEnum.ADMIN) {
+                ExamCertificate examCertificate = new ExamCertificate
+                        (user, 17 + user.getBirthDate().getYear(),
+                                ScoresUtil.getRandomScores(new
+                                                ArrayList<>(user
+                                                .getFaculty()
+                                                .getSubjects()),
+                                        0, 100));
+                errorsLog.addAll(validator.validate(examCertificate));
+                examCertificates.add(examCertificate);
+                //assign exam certificate to user
+                user.setExamCertificate(examCertificate);
+                counter[0]++;
+            }
+        }
+        /*userList.stream().filter(user -> user.getUserRole() != UserTypeEnum
                 .ADMIN)
                 .forEach(user -> {
                     ExamCertificate examCertificate = new ExamCertificate
@@ -43,7 +59,7 @@ public class ExamCertificateInitializerUtil implements
                     //assign exam certificate to user
                     user.setExamCertificate(examCertificate);
                     counter[0]++;
-                });
+                });*/
         ServiceFactory.getExamCertificateService().save
                 (examCertificates);
         errorsLog.addAll(validator.validateInit(examCertificates));

@@ -68,7 +68,6 @@ public class PasswordValidatorUtil extends ValidatorUtil {
                 .setMaxBytesLength(10)
                 .setMaxSequencePermitted(1)
                 .build();
-        System.out.println(password.password);
         return password;
     }
 

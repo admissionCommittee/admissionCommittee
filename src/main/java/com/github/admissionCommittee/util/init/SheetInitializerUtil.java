@@ -3,6 +3,7 @@ package com.github.admissionCommittee.util.init;
 import com.github.admissionCommittee.model.Sheet;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.model.enums.UserTypeEnum;
 import com.github.admissionCommittee.service.ServiceFactory;
 import com.github.admissionCommittee.service.SheetService;
 import com.github.admissionCommittee.util.validate.ValidatorUtil;
@@ -14,8 +15,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static com.github.admissionCommittee.model.enums.UserTypeEnum.ADMIN;
 
 public class SheetInitializerUtil implements InitializerUtil {
     private static final Logger log = LoggerFactory.getLogger
@@ -31,7 +30,26 @@ public class SheetInitializerUtil implements InitializerUtil {
         ValidatorUtil validator = ValidatorUtil.getValidator(Sheet
                 .class);
         final int[] counter = {0};
-        userList.stream().filter(user -> user.getUserRole() != ADMIN).forEach
+        for (User user : userList) {
+            if (user.getUserRole() != UserTypeEnum.ADMIN) {
+                Sheet sheet = new Sheet(user, user.getFaculty(),
+                        calculateScoreSum(user.getExamCertificate()
+                                .getSubjects())//,
+//                            calculateScoreSum(
+//                                    user.getSchoolCertificate()
+//                                            .getSubjects()) / user
+//                                    .getSchoolCertificate()
+//                                    .getSubjects()
+//                                    .size()
+                );
+                errorsLog.addAll(validator.validate(sheet));
+                sheets.add(sheet);
+                //assign sheet to user
+                user.setSheet(sheet);
+                counter[0]++;
+            }
+        }
+                /*userList.stream().filter(user -> user.getUserRole() != ADMIN).forEach
                 (user -> {
                     Sheet sheet = new Sheet(user, user.getFaculty(),
                             calculateScoreSum(user.getExamCertificate()
@@ -48,7 +66,7 @@ public class SheetInitializerUtil implements InitializerUtil {
                     //assign sheet to user
                     user.setSheet(sheet);
                     counter[0]++;
-                });
+                });*/
         ServiceFactory.getSheetService().save
                 (sheets);
         errorsLog.addAll(validator.validateInit(sheets));
