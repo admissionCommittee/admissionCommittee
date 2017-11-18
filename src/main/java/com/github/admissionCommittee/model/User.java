@@ -27,8 +27,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @EqualsAndHashCode(doNotUseGetters = true)
-@AttributeOverride(name = "id", column = @Column(name = "user_id", nullable =
-        false))
+@AttributeOverride(name = "id", column = @Column(name = "user_id", nullable
+        = false))
 @ToString(callSuper = true)
 public class User extends AbstractEntity {
 

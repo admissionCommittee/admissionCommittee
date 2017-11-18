@@ -18,6 +18,13 @@ public abstract class GenericService<T extends AbstractEntity> {
         this.dao = dao;
     }
 
+    /**
+     * Save instance to DB, validation included, if no valid - errorLog
+     * adding, no saving.
+     *
+     * @param instance instance to save
+     * @return collection of validation errors
+     */
     public Set<String> save(T instance) {
         ValidatorUtil.validateNotNull(instance, ValidatorUtil
                 .MESSAGE_FOR_SOURCE_IF_NULL);
@@ -29,14 +36,20 @@ public abstract class GenericService<T extends AbstractEntity> {
         return errorsLog;
     }
 
-    public Set<String> save(List<T> instance) {
-        ValidatorUtil.validateNotNull(instance, ValidatorUtil
+    /**
+     * Save list of instances to DB - for initialization only.
+     *
+     * @param instances list of instances to save
+     * @return collection of validation errors
+     */
+    public Set<String> save(List<T> instances) {
+        ValidatorUtil.validateNotNull(instances, ValidatorUtil
                 .MESSAGE_FOR_SOURCE_IF_NULL);
         Set<String> errorsLog = new LinkedHashSet<>();
-        instance.forEach(element -> errorsLog.addAll(ValidatorUtil.getValidator
+        instances.forEach(element -> errorsLog.addAll(ValidatorUtil.getValidator
                 (modelType).validate(element)));
         if (errorsLog.size() == 0) {
-            getDao().save(instance);
+            getDao().save(instances);
         }
         return errorsLog;
     }

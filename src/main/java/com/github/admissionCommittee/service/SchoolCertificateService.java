@@ -17,6 +17,13 @@ public class SchoolCertificateService extends
                 .getSchoolCertificateDao());
     }
 
+    /**
+     * Save instance to DB, validation included, if no valid - errorLog
+     * adding, no saving; calculating average score.
+     *
+     * @param instance instance to save
+     * @return collection of validation errors
+     */
     @Override
     public Set<String> save(SchoolCertificate instance) {
         instance.setAverageScore(calculateAverageScore(instance));

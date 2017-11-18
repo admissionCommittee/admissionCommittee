@@ -20,6 +20,13 @@ public class SheetService extends GenericService<Sheet> {
         super(Sheet.class, DaoFactory.getDaoFactory().getSheetDao());
     }
 
+    /**
+     * Save instance to DB, validation included, if no valid - errorLog
+     * adding, no saving; calculating sum score.
+     *
+     * @param instance instance to save
+     * @return collection of validation errors
+     */
     @Override
     public Set<String> save(Sheet instance) {
         instance.setSumExamCertificateScore(calculateExamScoreSum(instance));
