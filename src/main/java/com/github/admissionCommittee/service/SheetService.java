@@ -9,10 +9,7 @@ import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
 import com.github.admissionCommittee.util.validate.SheetValidatorUtil;
 
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SheetService extends GenericService<Sheet> {
 
@@ -36,7 +33,8 @@ public class SheetService extends GenericService<Sheet> {
         }
         return new LinkedHashSet<>();
     }
-    public Sheet getByUser(User user){
+
+    public Sheet getByUser(User user) {
         return DaoFactory.getDaoFactory().getSheetDao().getByUser(user);
     }
 
@@ -78,39 +76,31 @@ public class SheetService extends GenericService<Sheet> {
         return byFaculty;
     }
 
-    /*public List<Sheet> getByFaculty(Faculty faculty, int pageNumber) {
-        final List<Sheet> byFaculty = ((SheetDao) getDao()).getByFaculty
-                (faculty);
-        byFaculty.sort((sheet1, sheet2) -> {
-            // descending order by exams
-            final int compare = Integer.compare
-                    (sheet2.getSumExamCertificateScore(),
-                            sheet1.getSumExamCertificateScore());
-            if (compare == 0) {
-                // descending order by school certificate
-                return Double.compare(sheet2.getUser().getSchoolCertificate()
-                                .getAverageScore(),
-                        sheet1.getUser().getSchoolCertificate()
-                                .getAverageScore());
-            }
-            return compare;
-        });
-        final int delta = byFaculty.size() - faculty.getPeopleLimit();
-        if (delta > 0) {
-            return byFaculty.subList(0, faculty.getPeopleLimit());
-        }
+
+    public List<Object> getByFaculty(Faculty faculty, int pageNumber) {
+        List<Sheet> byFaculty = getByFaculty(faculty);
+        int linesPerPage = 30;
+
+        int pagesNumber = (int) Math.ceil(byFaculty.size() / linesPerPage);
+
+        List<Sheet> linesForPage = null;
+        List<Object> resultList = new ArrayList<>();
+        resultList.add(pageNumber);
+
         //check page
-        if ((pageNumber - 1) * 100 > byFaculty.size()) {
+        if (pageNumber > pagesNumber) {
             return null;
         } else {
-            if (pageNumber * 100 > byFaculty.size()) {
-                return byFaculty.subList((pageNumber - 1) * 100, byFaculty
+            if (pageNumber == pagesNumber) {
+                linesForPage = byFaculty.subList((pageNumber - 1) * 30, byFaculty
                         .size());
+                resultList.add(linesForPage);
             } else {
-                return byFaculty.subList((pageNumber - 1) * 100, pageNumber *
-                        100);
+                linesForPage = byFaculty.subList((pageNumber - 1) * 30, pageNumber *
+                        30);
+                resultList.add(linesForPage);
             }
+            return resultList;
         }
-    }*/
-
+    }
 }

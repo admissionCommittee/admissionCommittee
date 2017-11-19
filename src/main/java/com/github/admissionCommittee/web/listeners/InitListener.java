@@ -25,7 +25,7 @@ public class InitListener implements ServletContextListener{
             log.info("Start Servlet initialization");
 
             final DBInitializerUtil dbInitializerUtil = new DBInitializerUtil();
-            dbInitializerUtil.init(30, "", "");
+            dbInitializerUtil.init(1000, "", "");
 
             // Service layer injection
             sce.getServletContext().setAttribute("userService", new UserService());
