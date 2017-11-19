@@ -33,7 +33,7 @@ public class UserService extends GenericService<User> {
 
     //for DB search by mail implementation
     public User getByMail(String mail) {
-        return ((UserDao) getDao()).getByMail(mail);
+        return DaoFactory.getDaoFactory().getUserDao().getByMail(mail);
     }
 
     //get only attendees that satisfy the attendee demands

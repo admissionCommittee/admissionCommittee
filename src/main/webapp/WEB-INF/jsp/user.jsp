@@ -67,7 +67,7 @@
 
 <c:if test="${not empty certificate.subjects}">
 <div id="faculty-info">
-    <c:if test="${empty user.examCertificate}">
+
     <form class="login_form" action="${pageContext.request.contextPath}/examinations" method="post">
         <label for="faculty"><fmt:message key="user.selectfacylty"/></label>
         <select id="faculty" name="faculty">
@@ -77,7 +77,7 @@
             <button class="submit" type="submit"><fmt:message key="button_apply"/></button>
         </p>
     </form>
-    </c:if>
+
     <c:if test="${not empty user.examCertificate}">
         <font color="maroon"><fmt:message key="exam.alreadyapply"/></font>
     </c:if>

@@ -22,6 +22,7 @@ public class ExamCertificateController extends HttpServlet {
     private ExamCertificateService examService;
     private FacultyService facultyService;
     private SubjectService subjectService;
+    private SheetService sheetService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -29,6 +30,7 @@ public class ExamCertificateController extends HttpServlet {
         examService = (ExamCertificateService) config.getServletContext().getAttribute("examService");
         facultyService = (FacultyService) config.getServletContext().getAttribute("facultyService");
         subjectService = (SubjectService) config.getServletContext().getAttribute("subjectService");
+        sheetService = (SheetService) config.getServletContext().getAttribute("sheetService");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -80,16 +82,33 @@ public class ExamCertificateController extends HttpServlet {
             // Validation
             Set<String> errors = examService.save(certificate);
 
+            //check certificate errors
             if (errors.isEmpty()) {
+                user.setExamCertificate(certificate);
+                userService.save(user);
+                Sheet sheet = null;
+                if (user.getSheet() != null) {
+                    sheet = ServiceFactory.getSheetService().getByUser(user);
+                } else {
+                    sheet = new Sheet();
+                }
+
                 //todo Так быть в сервисах не должно
-                Sheet sheet = new Sheet();
+
                 sheet.setUser(userService.get(user.getId())); // temporal workaround
                 sheet.setFaculty(faculty);
                 sheet.setSumExamCertificateScore(0);
-                new SheetService().save(sheet);
 
-                response.sendRedirect("/user");
-                return;
+                //sum scores calculating during save
+                Set<String> errorsSheet = sheetService.save(sheet);
+
+                //check sheet errors
+                if (errorsSheet.isEmpty()) {
+                    user.setSheet(sheet);
+                    userService.save(user);
+                    response.sendRedirect("/user");
+                    return;
+                }
             }
 
             err = errors.toString().replace("[", "").replace("]", "<br>").replace(",", "<br>");
@@ -101,7 +120,7 @@ public class ExamCertificateController extends HttpServlet {
             request.setAttribute("mapSubjectsScores", mapSubjectsScores);
             request.setAttribute("certificate", certificate);
         } else {
-                                    request.setAttribute("mapSubjectsScores", subjectsMap);
+            request.setAttribute("mapSubjectsScores", subjectsMap);
             certificate = new ExamCertificate();
             certificate.setYear(examCertificateYear);
             request.setAttribute("certificate", certificate);

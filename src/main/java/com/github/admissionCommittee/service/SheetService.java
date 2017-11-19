@@ -36,6 +36,9 @@ public class SheetService extends GenericService<Sheet> {
         }
         return new LinkedHashSet<>();
     }
+    public Sheet getByUser(User user){
+        return DaoFactory.getDaoFactory().getSheetDao().getByUser(user);
+    }
 
     private int calculateExamScoreSum(Sheet instance) {
         final User user = instance.getUser();
@@ -52,7 +55,7 @@ public class SheetService extends GenericService<Sheet> {
 
     //Ranged by 2 parameters
     public List<Sheet> getByFaculty(Faculty faculty) {
-        final List<Sheet> byFaculty = ((SheetDao) getDao()).getByFaculty
+        final List<Sheet> byFaculty = DaoFactory.getDaoFactory().getSheetDao().getByFaculty
                 (faculty);
         byFaculty.sort((sheet1, sheet2) -> {
             // descending order by exams
