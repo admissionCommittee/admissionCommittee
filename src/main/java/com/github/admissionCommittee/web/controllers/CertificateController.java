@@ -41,6 +41,10 @@ public class CertificateController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Map<Subject, Integer> subjectsMap = new HashMap<>();
+        SchoolCertificate certificate = null;
+        int schoolCertificateYear = 0;
+
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -52,10 +56,10 @@ public class CertificateController extends HttpServlet {
         if (request.getParameter("save") != null) {
             log.info(String.format("Update certificate by User %s ", user.getMail()));
 
-            Map<Subject, Integer> subjectsMap = new HashMap<>();
+            subjectsMap = new HashMap<>();
 
             ArrayList<String> list = Collections.list(request.getParameterNames());
-            for (String param: list) {
+            for (String param : list) {
                 if (param.startsWith("sub_")) {
                     int value = Integer.parseInt(request.getParameter(param));
                     int subject_id = Integer.parseInt(param.substring(4));
@@ -65,16 +69,17 @@ public class CertificateController extends HttpServlet {
             }
 
             //todo
-            SchoolCertificate certificate;
+
             //user.getSchoolCertificate() == null ? certificate = new SchoolCertificate() : certificate = user.getSchoolCertificate();
-            if (user.getSchoolCertificate() != null){
+            if (user.getSchoolCertificate() != null) {
                 certificate = user.getSchoolCertificate();
-            }else {
+            } else {
                 certificate = new SchoolCertificate();
             }
 
             //SchoolCertificate newCertificate = new SchoolCertificate(user,Integer.parseInt(request.getParameter("year")),subjectsMap);
-            certificate.setYear(Integer.parseInt(request.getParameter("year")));
+            schoolCertificateYear = Integer.parseInt(request.getParameter("year"));
+            certificate.setYear(schoolCertificateYear);
             certificate.setSubjects(subjectsMap);
             certificate.setUser(user);
 
@@ -86,16 +91,21 @@ public class CertificateController extends HttpServlet {
             }
 
             err = errors.toString().replace("[", "").replace("]", "<br>").replace(",", "<br>");
+
         }
 
-        SchoolCertificate certificate = user.getSchoolCertificate();
-        if(certificate != null){
+        //reassign certificate if errors exist is it needed of can be passed to previous else
+        certificate = user.getSchoolCertificate();
+        if (certificate != null) {
             Map<Subject, Integer> mapSubjectsScores = certificate.getSubjects();
             request.setAttribute("mapSubjectsScores", mapSubjectsScores);
             request.setAttribute("certificate", user.getSchoolCertificate());
-        }else
-        {
-            request.setAttribute("mapSubjectsScores", new HashMap<>());
+        } else {
+            //adjusted to be user friendly
+            request.setAttribute("mapSubjectsScores", subjectsMap);
+            certificate = new SchoolCertificate();
+            certificate.setYear(schoolCertificateYear);
+            request.setAttribute("certificate", certificate);
         }
 
         //todo add service injection
