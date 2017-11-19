@@ -128,11 +128,10 @@ public abstract class ValidatorUtil {
 
     public static boolean validateFullName(String toValidate, String
             messageIfInvalid) {
-
-        boolean matches = Pattern.compile("^[\\p{L} .'-]+$").matcher
+        boolean matches = Pattern.compile("\\D+").matcher
                 (messageIfInvalid).matches();
         if (!matches) {
-            log.debug(String.format(messageIfInvalid + ": %s.", toValidate));
+            log.debug(String.format(messageIfInvalid + ": %s", toValidate));
         }
         return matches;
     }

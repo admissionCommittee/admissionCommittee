@@ -3,6 +3,7 @@ package com.github.admissionCommittee.util.init;
 import com.github.admissionCommittee.model.Faculty;
 import com.github.admissionCommittee.model.Subject;
 import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.model.enums.SubjectNameEnum;
 import com.github.admissionCommittee.service.ServiceFactory;
 import com.github.admissionCommittee.service.SubjectService;
 import com.github.admissionCommittee.util.validate.FacultyValidatorUtil;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import static com.github.admissionCommittee.model.enums.SubjectNameEnum.INFORMATICS;
+import static com.github.admissionCommittee.model.enums.SubjectNameEnum.RUSSIAN;
 import static com.github.admissionCommittee.model.enums.UserTypeEnum.ADMIN;
 
 public class FacultyInitializerUtil implements InitializerUtil {
@@ -39,7 +42,7 @@ public class FacultyInitializerUtil implements InitializerUtil {
                     .forEach(substring -> {
                         Faculty faculty = new Faculty(substring[2], Integer
                                 .parseInt(substring[3]), getRandomSubject(
-                                3));
+                                1));
                         errorsLog.addAll(validator.validate(faculty));
                         facultyList.add(faculty);
                         counter[0]++;
@@ -56,16 +59,23 @@ public class FacultyInitializerUtil implements InitializerUtil {
         return errorsLog;
     }
 
-    private Set<Subject> getRandomSubject(int subjectsNumber) {
+    private Set<Subject> getRandomSubject(int randomSubjectsNumber) {
         SubjectService subjectService = ServiceFactory.getSubjectService();
         List<Subject> subjectList = subjectService.getAll();
         Set<Subject> subjectSet = new HashSet<>();
-        for (int i = 0; i < subjectsNumber; i++) {
-            Random random = new Random();
-            int nextInt = random.nextInt(subjectList.size());
-            subjectSet.add(subjectList.get(nextInt));
-            subjectList.remove(nextInt);
+        Random random = new Random();
+        int nextInt = 0;
+        Subject randomSubject = null;
+        for (int i = 0; i < randomSubjectsNumber; i++) {
+            do {
+                nextInt = random.nextInt(subjectList.size());
+                randomSubject = subjectList.get(nextInt);
+            } while (randomSubject.getName() == INFORMATICS | randomSubject.getName() == RUSSIAN);
+            subjectSet.add(randomSubject);
+            subjectList.remove(randomSubject);
         }
+        subjectSet.add(ServiceFactory.getSubjectService().get(1));
+        subjectSet.add(ServiceFactory.getSubjectService().get(10));
         return subjectSet;
     }
 

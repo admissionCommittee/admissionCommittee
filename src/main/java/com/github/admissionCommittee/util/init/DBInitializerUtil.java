@@ -73,7 +73,7 @@ public final class DBInitializerUtil implements InitializerUtil {
     public static void main(String[] args) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-        new DBInitializerUtil().init(16403,
+        new DBInitializerUtil().init(10,
                 "specified separalty",
                 "specified separatly");
 

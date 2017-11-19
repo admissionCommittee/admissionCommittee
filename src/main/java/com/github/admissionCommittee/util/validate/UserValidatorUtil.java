@@ -58,12 +58,18 @@ public class UserValidatorUtil extends ValidatorUtil {
         if (!validateEmail(toValidate.getMail())) {
             errorsList.add("Email is not valid!");
         }
-        if (!ValidatorUtil.validateFullName(toValidate.getFirstName()
-                        + toValidate.getLastName() + toValidate.getPatronymic(),
-                "Full" + "name")) {
-            errorsList.add("Full name is not valid!");
+        if (!ValidatorUtil.validateFullName(toValidate.getFirstName(),
+                "First name is invalid!")) {
+            errorsList.add("First name is not valid!");
         }
-
+        if (!ValidatorUtil.validateFullName(toValidate.getPatronymic(),
+                "Patronymic is invalid!")) {
+            errorsList.add("Patronymic is not valid!");
+        }
+        if (!ValidatorUtil.validateFullName(toValidate.getLastName(),
+                "Last name is invalid!")) {
+            errorsList.add("Last name is not valid!");
+        }
         if (!validateBirthDay(toValidate.getBirthDate())) {
             errorsList.add("Birthday's year for registration shouold " +
                     "be belween 1895 and 2012!");
