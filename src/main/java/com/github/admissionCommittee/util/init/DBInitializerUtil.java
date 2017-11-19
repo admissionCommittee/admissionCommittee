@@ -1,11 +1,17 @@
 package com.github.admissionCommittee.util.init;
 
+import com.github.admissionCommittee.model.Faculty;
+import com.github.admissionCommittee.model.Sheet;
+import com.github.admissionCommittee.model.User;
+import com.github.admissionCommittee.service.ServiceFactory;
+import com.github.admissionCommittee.service.SheetService;
 import com.github.admissionCommittee.util.validate.ValidatorUtil;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 //@AllArgsConstructor
@@ -73,9 +79,26 @@ public final class DBInitializerUtil implements InitializerUtil {
     public static void main(String[] args) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-        new DBInitializerUtil().init(10,
+        new DBInitializerUtil().init(1500,
                 "specified separalty",
                 "specified separatly");
+
+       /* User user = ServiceFactory.getUserService().get(3);
+        Faculty faculty = user.getFaculty();
+        System.out.println(faculty);
+
+        SheetService sheetService = ServiceFactory.getSheetService();
+        List<Sheet> byFaculty = sheetService.getByFaculty(faculty);
+        System.out.println(byFaculty.size());
+
+        for (int i = 1; i < 50; i++) {
+
+            List<Object> byFaculty1 = sheetService.getByFaculty(faculty, i);
+
+            System.out.println("Pages Number"+byFaculty.get(0));
+            System.out.println("Sheet's list"+ byFaculty1.get(1));
+            System.out.println(((List<Sheet>)byFaculty1.get(1)).size());
+        }*/
 
         /*Subject subject = new Subject();
         subject.setName(SubjectNameEnum.RUSSIAN);

@@ -81,8 +81,7 @@ public class SheetService extends GenericService<Sheet> {
         List<Sheet> byFaculty = getByFaculty(faculty);
         int linesPerPage = 30;
 
-        int pagesNumber = (int) Math.ceil(byFaculty.size() / linesPerPage);
-
+        int pagesNumber = byFaculty.size() / linesPerPage + 1;
         List<Sheet> linesForPage = null;
         List<Object> resultList = new ArrayList<>();
         resultList.add(pageNumber);
