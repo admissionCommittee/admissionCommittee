@@ -5,6 +5,7 @@ import com.github.admissionCommittee.model.ExamCertificate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -18,7 +19,8 @@ public class ExamCertificateValidatorUtil extends ValidatorUtil {
         ExamCertificate examCertificate = ((ExamCertificate) entityToValidate);
         if (!ValidatorUtil.validateCertificateYear(examCertificate.getYear(),
                 "")) {
-            errorLog.add("Exam's certificate year is invalid!");
+            errorLog.add(String.format("Exam's certificate year is invalid: should be between %d and %d!",
+                    LocalDate.now().getYear() - 117, LocalDate.now().getYear()));
         }
         ValidatorUtil.validateNotNull(examCertificate.getUser(),
                 examCertificate.getSubjects(),
