@@ -28,15 +28,20 @@
     <div id="right-infopanel">
         <div>
             <dl>
-                <dt> &nbsp</dt><dd><h2>${user.lastName}</h2></dd>
+                <dt> &nbsp</dt>
+                <dd><h2>${user.lastName}</h2></dd>
                 <br>
-                <dt><fmt:message key="profile.firstname"/>:</dt> <dd>${user.firstName}</dd>
+                <dt><fmt:message key="profile.firstname"/>:</dt>
+                <dd>${user.firstName}</dd>
                 <br>
-                <dt><fmt:message key="profile.middlename"/>:</dt> <dd>${user.patronymic}</dd>
+                <dt><fmt:message key="profile.middlename"/>:</dt>
+                <dd>${user.patronymic}</dd>
                 <br>
-                <dt><fmt:message key="profile.birthDate"/>:</dt> <dd><ptags:FormatLocalDate date="${user.birthDate}"/></dd>
+                <dt><fmt:message key="profile.birthDate"/>:</dt>
+                <dd><ptags:FormatLocalDate date="${user.birthDate}"/></dd>
                 <br>
-                <dt> &nbsp</dt><dd>${user.mail}</dd>
+                <dt> &nbsp</dt>
+                <dd>${user.mail}</dd>
             </dl>
         </div>
 
@@ -52,7 +57,7 @@
     <form method="get">
         <label for="faculty"><fmt:message key="admin.select"/>:</label>
         <select id="faculty" name="faculty">
-                <ptags:SelectFromList list="${listFaculty}"/>
+            <ptags:SelectFromList list="${listFaculty}"/>
         </select>
         </p>
         <p>
@@ -65,24 +70,34 @@
         <caption><fmt:message key="admin.shetinfo"/><b> ${faculty.name}
             ( <fmt:message key="admin.shetinfo.limit"/> ${faculty.peopleLimit}
             <fmt:message key="admin.shetinfo.submit"/> <ptags:FormatLocalDate date="${now}"/> )</b></caption>
-        <tr><th><b><fmt:message key="admin.shetinfo.fio"/></b></th> <th><b><fmt:message key="admin.shetinfo.ege"/></b></th><th><b><fmt:message key="admin.shetinfo.cettificate"/></b></th></tr>
-        <c:forEach items="${listSheets}" var="sheet" >
-            <tr><td> ${sheet.user.lastName} ${sheet.user.firstName} ${sheet.user.patronymic}</td> <td> ${sheet.sumExamCertificateScore}</td><td> ${sheet.user.schoolCertificate.averageScore}</td></tr>
+        <tr>
+            <th><b><fmt:message key="admin.shetinfo.fio"/></b></th>
+            <th><b><fmt:message key="admin.shetinfo.ege"/></b></th>
+            <th><b><fmt:message key="admin.shetinfo.cettificate"/></b></th>
+        </tr>
+        <c:forEach items="${listSheets}" var="sheet">
+            <tr>
+                <td> ${sheet.user.lastName} ${sheet.user.firstName} ${sheet.user.patronymic}</td>
+                <td> ${sheet.sumExamCertificateScore}</td>
+                <td> ${sheet.user.schoolCertificate.averageScore}</td>
+            </tr>
         </c:forEach>
 
     </table>
 
-    <c:set var="totalPages" value='${requestScope["totalPages"]}' />
+    <c:set var="totalPages" value='${requestScope["totalPages"]}'/>
     <c:if test="${totalPages > 1}">
-    <p><fmt:message key="admin.shetinfo.page"/> ${param.page == null ? "1" : ""} ${param.page} <fmt:message key="admin.shetinfo.of"/> ${totalPages}
+    <p>
+            <fmt:message key="admin.shetinfo.page"/> ${param.page == null ? "1" : ""} ${param.page}
+            <fmt:message key="admin.shetinfo.of"/> ${totalPages}
         <c:forEach var="i" begin="1" end="${totalPages}">
-            | <a href="?faculty=${faculty.id}&page=${i}"> ${i}  </a>
+        | <a href="?faculty=${faculty.id}&page=${i}"> ${i} </a>
         </c:forEach>
         |
-    </c:if>
+        </c:if>
 
     <p><a href=""><img src="${pageContext.request.contextPath}/img/print.png" width="30px"></a>
-    </c:if>
+        </c:if>
 
 </div>
 <jsp:include page="template/footer.jsp"/>

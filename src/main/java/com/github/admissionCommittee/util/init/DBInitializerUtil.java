@@ -66,10 +66,10 @@ public final class DBInitializerUtil implements InitializerUtil {
                 "^/(.:/)", "$1").replace("build/resources/main",
                 "src/main/resources");
 
-        System.out.println(pathToLog);
+        log.info(String.format("Path to errors log: %s.", pathToLog));
 
         //print errors to log
-        ValidatorUtil.printErrorsToFileSystem(errorsLog,pathToLog );
+        ValidatorUtil.printErrorsToFileSystem(errorsLog, pathToLog);
 
         log.info(String.format("DB have been initialized read log, total " +
                 "%s users", usersNumber));
@@ -77,86 +77,14 @@ public final class DBInitializerUtil implements InitializerUtil {
     }
 
     public static void main(String[] args) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+               /*SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
         new DBInitializerUtil().init(1500,
                 "specified separalty",
                 "specified separatly");
 
-       /* User user = ServiceFactory.getUserService().get(3);
-        Faculty faculty = user.getFaculty();
-        System.out.println(faculty);
 
-        SheetService sheetService = ServiceFactory.getSheetService();
-        List<Sheet> byFaculty = sheetService.getByFaculty(faculty);
-        System.out.println(byFaculty.size());
-
-        for (int i = 1; i < 50; i++) {
-
-            List<Object> byFaculty1 = sheetService.getByFaculty(faculty, i);
-
-            System.out.println("Pages Number"+byFaculty.get(0));
-            System.out.println("Sheet's list"+ byFaculty1.get(1));
-            System.out.println(((List<Sheet>)byFaculty1.get(1)).size());
-        }*/
-
-        /*Subject subject = new Subject();
-        subject.setName(SubjectNameEnum.RUSSIAN);
-        SubjectService subjectService = ServiceFactory.)
-                .getSubjectService();
-        subjectService.save(subject);
-        User user = new User
-                (UserAttendeeState.CHALLENGER, UserTypeEnum.USER, "32423",
-                        "qwe", "qwre", "re@mail.ar", "2356262F",
-                        LocalDate.of
-                                (2000, 11, 1));
-
-        UserService userService = ServiceFactory.)
-                .getUserService();
-        Set<String> errors1 = userService.save(user);
-
-
-        Map<Subject, Integer> subjectIntegerHashMap = new HashMap<>();
-        subjectIntegerHashMap.put(subject, -5);
-        Set<String> errors2 = ServiceFactory.)
-                .getSchoolCertificateService().save(
-                        new SchoolCertificate(user, 2017, subjectIntegerHashMap)
-                );
-
-
-        ExamCertificate examCertificate = new ExamCertificate(user, 1700,
-                subjectIntegerHashMap);
-
-        Set<String> errors3 = ServiceFactory.)
-                .getExamCertificateService().save
-                        (examCertificate);
-        List<User> all = userService.getAll();
-        System.out.println(all);
-        System.out.println("errors1" + errors1);
-        System.out.println("errors1" + errors1.size());
-        System.out.println("errors2" + errors2);
-        System.out.println("errors2" + errors2.size());
-        System.out.println("errors2" + errors3);
-        System.out.println("errors2" + errors3.size());
-        /*Faculty faculty = ServiceFactory.)
-                .getFacultyService().get(1);
-        //check
-        System.out.println("Faculty: "+faculty);
-        System.out.println("Get all students by faculty: "+ServiceFactory
-        ()
-                .getSheetService()
-                .getByFaculty
-                (faculty));
-
-        List<User> byFacultyEnlisted = ServiceFactory.)
-                .getUserService().getByFacultyEnlisted(ServiceFactory
-                ()
-                        .getFacultyService().get(1));
-        System.out.println("Get all students by faculty enlisted:
-        "+byFacultyEnlisted);
-
-*/
         sessionFactory.close();
-
+*/
     }
 }

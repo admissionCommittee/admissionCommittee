@@ -80,11 +80,10 @@ public class SheetService extends GenericService<Sheet> {
     public List<Object> getByFaculty(Faculty faculty, int pageNumber) {
         List<Sheet> byFaculty = getByFaculty(faculty);
         int linesPerPage = 30;
-
-        int pagesNumber = byFaculty.size() / linesPerPage + 1;
+        int pagesNumber = (int) Math.ceil((double) byFaculty.size() / (double) linesPerPage);
         List<Sheet> linesForPage = null;
         List<Object> resultList = new ArrayList<>();
-        resultList.add(pageNumber);
+        resultList.add(pagesNumber);
 
         //check page
         if (pageNumber > pagesNumber) {

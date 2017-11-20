@@ -50,20 +50,23 @@ public class AdminController extends HttpServlet {
             int totalPages = 1;
             int currPage = 1;
 
-            if (request.getParameter("page") != null){
+            if (request.getParameter("page") != null) {
                 currPage = Integer.parseInt(request.getParameter("page"));
             }
 
-            List<Object> result = sheetService.getByFaculty(facultyService.get(Long.parseLong(request.getParameter("faculty"))),currPage);
-            totalPages = (int)result.get(0);
-            List<Sheet> sheet = (List)result.get(1);
-
-            System.out.println("Total pages: " + totalPages);
+            List<Object> result = sheetService.getByFaculty(facultyService.get(Long.parseLong(request.getParameter("faculty"))), currPage);
+            List<Sheet> sheet;
+            if(result==null){
+                totalPages=0;
+                sheet=new ArrayList<>();
+            }else {
+                totalPages=(int) result.get(0);
+                sheet=(List) result.get(1);
+            }
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("listSheets", sheet);
             request.setAttribute("faculty", facultyService.get(Integer.parseInt(request.getParameter("faculty"))));
-        }else
-        {
+        } else {
             request.setAttribute("listSheets", new ArrayList<>());
         }
 
