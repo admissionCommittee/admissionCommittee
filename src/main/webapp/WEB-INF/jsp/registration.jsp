@@ -28,17 +28,17 @@
         </li>
 
         <li>
-            <input type="text" name="regLastName" value="${user.lastName}" pattern='[A-z А-я]{4,30}'
+            <input type="text" name="regLastName" value="${user.lastName}"
                    placeholder="<fmt:message key="profile.lastname"/>" required/>
         </li>
 
         <li>
-            <input type="text" name="regFirstName" value="${user.firstName}" pattern='[A-z А-я]{4,30}'
+            <input type="text" name="regFirstName" value="${user.firstName}"
                    placeholder="<fmt:message key="profile.firstname"/>" required/>
         </li>
 
         <li>
-            <input type="text" name="regMiddleName" value="${user.patronymic}" pattern='[A-z А-я]{4,30}'
+            <input type="text" name="regMiddleName" value="${user.patronymic}"
                    placeholder="<fmt:message key="profile.middlename"/>" required/>
         </li>
 

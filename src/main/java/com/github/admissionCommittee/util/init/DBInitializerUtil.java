@@ -77,14 +77,15 @@ public final class DBInitializerUtil implements InitializerUtil {
     }
 
     public static void main(String[] args) {
-               /*SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            /*   SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-        new DBInitializerUtil().init(1500,
+        Set<String> init = new DBInitializerUtil().init(100,
                 "specified separalty",
                 "specified separatly");
+        System.out.println(init);
 
 
-        sessionFactory.close();
-*/
+        sessionFactory.close();*/
+
     }
 }
