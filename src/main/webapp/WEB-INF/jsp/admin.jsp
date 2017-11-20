@@ -69,7 +69,18 @@
         <c:forEach items="${listSheets}" var="sheet" >
             <tr><td> ${sheet.user.lastName} ${sheet.user.firstName} ${sheet.user.patronymic}</td> <td> ${sheet.sumExamCertificateScore}</td><td> ${sheet.user.schoolCertificate.averageScore}</td></tr>
         </c:forEach>
+
     </table>
+
+    <c:set var="totalPages" value='${requestScope["totalPages"]}' />
+    <c:if test="${totalPages > 1}">
+    <p><fmt:message key="admin.shetinfo.page"/> ${param.page == null ? "1" : ""} ${param.page} <fmt:message key="admin.shetinfo.of"/> ${totalPages}
+        <c:forEach var="i" begin="1" end="${totalPages}">
+            | <a href="?faculty=${faculty.id}&page=${i}"> ${i}  </a>
+        </c:forEach>
+        |
+    </c:if>
+
     <p><a href=""><img src="${pageContext.request.contextPath}/img/print.png" width="30px"></a>
     </c:if>
 
