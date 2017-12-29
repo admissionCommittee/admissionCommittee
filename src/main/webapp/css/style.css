@@ -1,0 +1,255 @@
+body{
+    margin:0;
+    font-family: tahoma;
+    background-color: #edeef0;
+    text-align: center;
+}
+
+A{
+    text-decoration: none; /* Убирает подчеркивание для ссылок */
+}
+A:hover {
+    text-decoration: none;  /* Добавляем подчеркивание при наведении курсора на ссылку */
+}
+
+.diverror {
+    color: #d45252;
+}
+
+.none{
+    height: 60px;
+}
+
+.div-none-small{
+    height: 15px;
+}
+
+.div-space{
+    width: 10px;
+}
+
+.flatbutton {
+    margin: 0 auto;
+    padding: 3px;
+    background-color:#6888ad;
+    color:#fff;
+    border-radius: 3px;
+    width:200px;
+}
+
+div#header{
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    width:100%;
+    height:42px;
+    background: #5fb053;
+    position:fixed;
+    z-index: 9999;
+}
+
+div#left_header, #center_header, #logout_header{
+    height: 40px;
+    line-height: 40px;
+}
+
+div#left_header{
+    width:190px;
+}
+
+div#center_header{
+    text-align: left;
+    width:600px;
+}
+
+div#logout_header{
+    color:white;
+    padding-left:15px;
+    width:175px;
+}
+div#logout_header a{
+    color:white;
+}
+div#logout_header:hover{
+    background: #3c9125;
+}
+
+div#contentconteiner{
+    margin:0 auto;
+    width:900px;
+    display: flex;
+    flex-direction: column;
+}
+
+div#infopanel{
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+}
+
+div#left-infopanel{
+    width: 450px;
+}
+
+div#right-infopanel{
+    border-radius: 7px;
+    background: #fafafa;
+    width: 430px;
+
+}
+
+div#avatarcontainter{
+    border-radius: 7px;
+    background-color: white;
+    height: 340px;
+    padding:9px;
+}
+
+div#bavatar{
+    border-radius: 7px;
+    height:100%;
+    background-size: auto 100%;
+}
+
+div#certificate-info{
+    margin: 10px;
+    padding:10px;
+    border-radius: 7px;
+    background-size: auto 100%;
+    background-color: white;
+}
+
+div#faculty-info{
+    margin: 10px;
+    padding:10px;
+    border-radius: 7px;
+    background-size: auto 100%;
+    background-color: white;
+}
+
+.login_form {
+    padding-top:12px;
+    border:1px solid #a2bad5;
+}
+
+.register_form {
+    border:1px solid #a2bad5;
+}
+
+/* стиль для списков с чертой */
+ul {
+    list-style: none outside;
+    margin:0;
+    padding:0;
+}
+
+li{
+    padding:12px;
+    border-bottom:1px solid #eee;
+    position:relative;
+}
+
+dt {
+    text-align: right;
+    float: left;
+    width: 130px;
+}
+
+/* у первого и последнего li - выделенная черта
+li:first-child, li:last-child {
+    border-bottom:1px solid #777;
+}*/
+
+input {
+    height:34px;
+    width:320px;
+    padding:5px 8px;
+}
+
+input:required {
+    background: #fff "*" no-repeat 98% center;
+}
+
+.score {
+    width: 5em;
+}
+
+button {
+    display: inline-block;
+    width:320px;
+    font-family: Arial, Helvetica, FreeSans, sans-serif;
+    color:#fff;
+    font-weight: bold;
+    background: #5fb053;
+    border:0;
+    border-radius: 5px;
+    outline:none;
+    padding: .7em 1.5em;
+}
+
+button:active {
+    background: #59a34e;
+}
+
+.login_form button{
+    width:140px;
+    background: #6888ad;
+}
+
+
+/* цвет и сокрытие placeholder при наведении */
+::-webkit-input-placeholder {
+    color: lightgray;
+}
+
+:focus::-webkit-input-placeholder {
+    opacity: 0; transition: opacity 0.3s ease;
+}
+
+::-webkit-validation-bubble-message {
+    padding: 1em;
+}
+
+/*заголовок формы*/
+.register_form h2 {
+    margin:0;
+    display: inline;
+}
+/* memo Required Field */
+.required_notification {
+    color:#d45252;
+    margin:5px 0 0 0;
+    display:inline;
+    float:right;
+}
+
+table {
+    border: 1px solid #69c;
+}
+th {
+    font-weight: normal;
+    color: #039;
+    border-bottom: 1px dashed #69c;
+    padding: 12px 17px;
+}
+td {
+    color: #669;
+    padding: 7px 17px;
+}
+tr:hover td {background: #ccddff;}
+
+caption {
+    caption-side: top;
+    text-align: right;
+    padding: 10px 0;
+    font-size: 14px;
+}
+
+.slide div,
+.slide [type="checkbox"]{
+    display:none;
+}
+
+.slide [type="checkbox"]:checked ~ div {
+    display:block;
+}

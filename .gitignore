@@ -2,5 +2,6 @@
 .gradle
 .git
 build
+out
 *.class
 *.iml
